@@ -2,14 +2,11 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from sqlmodel import SQLModel
-from app.domain.models.hero import Hero  # 匯入你自己的模型
-from app.core.config import sqlite_url  # 資料庫連接 URL
+from app.domain.models.asset import Asset
 
-# 設定 logging
 config = context.config
 fileConfig(config.config_file_name)
 
-# 將 SQLModel 的 metadata 設置為目標
 target_metadata = SQLModel.metadata
 
 def run_migrations_offline():

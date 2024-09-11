@@ -1,9 +1,12 @@
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel, Session, create_engine
 
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
+DATABASE_URL = "postgresql://postgres:p%40ssw0rd@localhost:5432/NTUB_SecumanageDB"
 
-engine = create_engine(sqlite_url, echo=True)
+engine = create_engine(DATABASE_URL, echo=True)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
+def get_db():
+    with Session(engine) as session:
+        yield session
