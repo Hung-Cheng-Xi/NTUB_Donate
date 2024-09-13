@@ -1,5 +1,31 @@
-version: "3"
+version: "3.8"
+
 services:
+    frontend:
+        build: ./frontend
+        ports:
+            - "80:80"
+        depends_on:
+            - backend
+        networks:
+            - app-network
+
+    backend:
+        build:
+            context: ./backend
+            args:
+                ENVIRONMENT: production 
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postgres
+        environment:
+            ENVIRONMENT: production 
+        env_file:
+            - ./backend/.env.production
+        networks:
+            - app-network
+
     postgres:
         image: postgres:16.4
         container_name: postgres_db
@@ -12,5 +38,12 @@ services:
             - "5432:5432"
         volumes:
             - postgres_data:/var/lib/postgresql/data
+        networks:
+            - app-network
+
 volumes:
     postgres_data:
+
+
+networks:
+    app-network:
