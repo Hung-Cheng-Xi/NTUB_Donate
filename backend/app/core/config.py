@@ -1,12 +1,23 @@
-from sqlmodel import SQLModel, Session, create_engine
+import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import ClassVar
 
-DATABASE_URL = "postgresql://postgres:p%40ssw0rd@localhost:5432/NTUB_SecumanageDB"
 
-engine = create_engine(DATABASE_URL, echo=True)
+class settings(BaseSettings):
+    app_name: str
+    admin_email: str
+    items_per_user: int
+    database_url: str
+    enable_docs: bool = True
 
-def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+    env: ClassVar[str] = os.getenv("ENVIRONMENT", "development")
 
-def get_db():
-    with Session(engine) as session:
-        yield session
+    model_config: ClassVar[SettingsConfigDict]
+
+    if env == "production":
+        model_config = SettingsConfigDict(env_file=".env.production")
+    else:
+        model_config = SettingsConfigDict(env_file=".env.development")
+
+
+settings = settings()

@@ -1,39 +1,42 @@
-from sqlmodel import Session, select
-from app.domain.models.asset import Asset
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import select
+from app.domain.models.asset import asset
 
-class AssetRepository:
-    def __init__(self, session: Session):
+
+class assetRepository:
+    def __init__(self, session: AsyncSession):
         self.session = session
 
-    def create_asset(self, asset: Asset):
+    async def create_asset(self, new_asset: asset):
         """新增一個資產到資料庫"""
-        self.session.add(asset)
-        self.session.commit()
-        self.session.refresh(asset)
-        return asset
+        self.session.add(new_asset)
+        await self.session.commit()
+        await self.session.refresh(new_asset)
+        return new_asset
 
-    def get_asset_by_id(self, asset_id: int):
+    async def get_asset_by_id(self, asset_id: int):
         """根據資產 ID 取得資產"""
-        return self.session.get(Asset, asset_id)
+        result = await self.session.get(asset, asset_id)
+        return result
 
-    def get_all_assets(self):
+    async def get_all_assets(self):
         """取得所有資產"""
-        statement = select(Asset)
-        results = self.session.exec(statement)
-        return results.all()
+        statement = select(asset)
+        results = await self.session.execute(statement)
+        return results.scalars().all()
 
-    def update_asset(self, asset: Asset):
+    async def update_asset(self, updated_asset: asset):
         """更新一個資產"""
-        self.session.add(asset)
-        self.session.commit()
-        self.session.refresh(asset)
-        return asset
+        self.session.add(updated_asset)
+        await self.session.commit()
+        await self.session.refresh(updated_asset)
+        return updated_asset
 
-    def delete_asset(self, asset_id: int):
+    async def delete_asset(self, asset_id: int):
         """刪除一個資產"""
-        asset = self.get_asset_by_id(asset_id)
-        if asset:
-            self.session.delete(asset)
-            self.session.commit()
+        asset_to_delete = await self.get_asset_by_id(asset_id)
+        if asset_to_delete:
+            await self.session.delete(asset_to_delete)
+            await self.session.commit()
             return True
         return False

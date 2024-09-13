@@ -2,7 +2,8 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from sqlmodel import SQLModel
-from app.domain.models.asset import Asset
+from app.domain.models.asset import asset
+from app.domain.models.vulnerability_threat import vulnerabilityThreat
 
 config = context.config
 fileConfig(config.config_file_name)

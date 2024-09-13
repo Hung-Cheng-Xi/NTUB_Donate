@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime
 from typing import Optional
 
-class Asset(SQLModel, table=True):
+class asset(SQLModel, table=True):
     asset_id: int | None = Field(default=None, primary_key=True)
     asset_name: str
     asset_type: str
