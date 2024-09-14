@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
     frontend:
         build: ./frontend
@@ -13,16 +11,10 @@ services:
     backend:
         build:
             context: ./backend
-            args:
-                ENVIRONMENT: production 
         ports:
             - "8000:8000"
         depends_on:
             - postgres
-        environment:
-            ENVIRONMENT: production 
-        env_file:
-            - ./backend/.env.production
         networks:
             - app-network
 
