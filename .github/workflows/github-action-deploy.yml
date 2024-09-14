@@ -15,7 +15,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Deploy with Docker Compose
-              run: docker-compose up --build -d
+              run: docker compose up --build -d
 
             - name: Verify Deployment
               run: |
