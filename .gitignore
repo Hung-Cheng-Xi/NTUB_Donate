@@ -1,55 +1,65 @@
-.idea
-.ipynb_checkpoints
-.mypy_cache
-.vscode
-__pycache__
-.pytest_cache
-htmlcov
-dist
-site
-.coverage*
-coverage.xml
-.netlify
-test.db
-log.txt
-Pipfile.lock
-env3.*
-env
-docs_build
-site_build
-venv
-docs.zip
-archive.zip
-
-# vim temporary files
-*~
-.*.sw?
-.cache
-
-# macOS
-.DS_Store
-
 # Logs
-logs
+logs/*
+!logs/.gitkeep
 *.log
+log.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Python specific
+__pycache__/
+*.py[cod]
+.pytest_cache/
+htmlcov/
+.coverage*
+coverage.xml
+dist/
+Pipfile.lock
+env/
+venv/
+env3.*
+
+# Jupyter specific
+.ipynb_checkpoints/
+
+# Testing and documentation
+docs_build/
+site_build/
+docs.zip
+archive.zip
+
+# SQLite database files
+test.db
+
+# Node.js specific
+node_modules/
+dist/
+dist-ssr/
 *.local
 
 # Editor directories and files
-.vscode/*
+.vscode/
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+.DS_Store
+
+# mypy cache
+.mypy_cache/
+
+# Netlify specific
+.netlify/
+
+# Temporary files
+*~
+.*.sw?
+.cache
+
+# macOS specific
+.DS_Store
