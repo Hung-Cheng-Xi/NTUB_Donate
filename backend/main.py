@@ -1,10 +1,11 @@
 import logging
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.core.database import create_db_and_tables
-from app.application.endpoints.asset import router as asset_router
-from app.application.endpoints.vulnerability_threat import router as vulnerability_threat_router
+
 from app.core.config import settings
+from app.core.database import create_db_and_tables
+from app.application.endpoints.user import router as user_router
+from app.application.endpoints.donation import router as donation_router
 
 
 @asynccontextmanager
@@ -21,5 +22,5 @@ app = FastAPI(
     redoc_url="/redoc" if settings.enable_docs else None
 )
 
-app.include_router(asset_router)
-app.include_router(vulnerability_threat_router)
+app.include_router(user_router)
+app.include_router(donation_router)
