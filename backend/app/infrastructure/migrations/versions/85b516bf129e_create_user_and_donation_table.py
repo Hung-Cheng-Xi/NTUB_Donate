@@ -1,19 +1,20 @@
 """create User and Donation table
 
-Revision ID: 7b1fb9b3dc8a
+Revision ID: 85b516bf129e
 Revises: cb633635ef2e
-Create Date: 2024-09-21 00:51:53.726389
+Create Date: 2024-09-21 19:17:52.413393
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects.postgresql import ENUM
 import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = '7b1fb9b3dc8a'
+revision: str = '85b516bf129e'
 down_revision: Union[str, None] = 'cb633635ef2e'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,11 +25,15 @@ def upgrade() -> None:
     op.create_table('user',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('user_name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('user_email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('user_birthday', sa.Date(), nullable=True),
+    sa.Column('user_id_card', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('user_phone_number', sa.Integer(), nullable=True),
-    sa.Column('user_address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('user_email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('user_identity', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('user_household_address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('user_correspondence_address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.PrimaryKeyConstraint('user_id')
     )
     op.create_table('donation',
@@ -38,6 +43,7 @@ def upgrade() -> None:
     sa.Column('payment_method', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('payment_status', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('transaction_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('public_status', sa.Enum('FULL_PUBLIC', 'PARTIALLY_PUBLIC', 'NOT_PUBLIC', name='publicstatus'), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
