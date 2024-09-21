@@ -1,10 +1,9 @@
 from typing import Optional
 from datetime import datetime
 
-# from sqlalchemy.sql import func
-from sqlalchemy import Column, DateTime, func
-from sqlalchemy import Enum as SQLAlchemyEnum, Column
 from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy import Column, DateTime, func
+from sqlalchemy import Enum as SQLAlchemyEnum
 
 from app.application.schema.donation import PublicStatus
 

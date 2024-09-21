@@ -1,10 +1,8 @@
-# from enum import Enum
 from typing import Optional, List
 from datetime import datetime, date
 
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import Column, DateTime, func
-# from sqlalchemy import Enum as Column
 
 from app.domain.models.donation import Donation
 
