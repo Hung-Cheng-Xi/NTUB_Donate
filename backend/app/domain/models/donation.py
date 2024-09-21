@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Optional
 from datetime import datetime
 
@@ -7,10 +6,7 @@ from sqlalchemy import Column, DateTime, func
 from sqlalchemy import Enum as SQLAlchemyEnum, Column
 from sqlmodel import SQLModel, Field, Relationship
 
-class PublicStatus(str, Enum):
-   FULL_PUBLIC = "FULL_PUBLIC"
-   PARTIALLY_PUBLIC = "PARTIALLY_PUBLIC"
-   NOT_PUBLIC = "NOT_PUBLIC"
+from app.application.schema.donation import PublicStatus
 
 class Donation(SQLModel, table=True):
     """

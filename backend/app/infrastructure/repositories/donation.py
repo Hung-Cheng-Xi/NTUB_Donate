@@ -16,6 +16,7 @@ class DonationRepository:
             payment_method=donation_create.payment_method,
             payment_status=donation_create.payment_status,
             transaction_id=donation_create.transaction_id,
+            public_status=donation_create.public_status,
             user_id=donation_create.user_id
         )
 
