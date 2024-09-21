@@ -12,9 +12,13 @@ class UserRepository:
         """新增一個用戶到資料庫"""
         user = User(
             user_name=new_user.user_name,
-            user_email=new_user.user_email,
+            user_birthday=new_user.user_birthday,
+            user_id_card=new_user.user_id_card,
             user_phone_number=new_user.user_phone_number,
-            user_address=new_user.user_address
+            user_email=new_user.user_email,
+            user_identity=new_user.user_identity,
+            user_household_address=new_user.user_household_address,
+            user_correspondence_address=new_user.user_correspondence_address
         )
 
         self.session.add(user)
