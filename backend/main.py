@@ -4,10 +4,7 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.database import create_db_and_tables
-from app.application.endpoints.user import router as user_router
-from app.application.endpoints.donation import router as donation_router
-from app.application.endpoints.barcode import router as barcode_router
-
+from app.application.endpoints import main_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,6 +20,13 @@ app = FastAPI(
     redoc_url="/redoc" if settings.enable_docs else None
 )
 
-app.include_router(user_router)
-app.include_router(donation_router)
-app.include_router(barcode_router)
+app.include_router(main_router)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True
+    )

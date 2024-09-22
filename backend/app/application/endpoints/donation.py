@@ -7,10 +7,7 @@ from app.domain.models.donation import Donation
 from app.application.schema.donation import DonationCreate
 from app.infrastructure.repositories.donation import DonationRepository
 
-router = APIRouter(
-    prefix="/donations",
-    tags=["Donations"]
-)
+router = APIRouter()
 
 
 @router.get("/", response_model=List[Donation])

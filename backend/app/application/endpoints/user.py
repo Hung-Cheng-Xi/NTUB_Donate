@@ -7,10 +7,7 @@ from app.domain.models.user import User
 from app.application.schema.user import UserCreate
 from app.infrastructure.repositories.user import UserRepository
 
-router = APIRouter(
-    prefix="/users",
-    tags=["Users"]
-)
+router = APIRouter()
 
 
 @router.get("/", response_model=List[User])

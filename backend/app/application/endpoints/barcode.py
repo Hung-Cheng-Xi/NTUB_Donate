@@ -3,9 +3,8 @@ from pydantic import BaseModel
 import httpx
 from app.core.config import settings
 
-router = APIRouter(
-    tags=["BarCode"]
-)
+router = APIRouter()
+
 
 # 定義jsondata的結構
 class JsonData(BaseModel):
