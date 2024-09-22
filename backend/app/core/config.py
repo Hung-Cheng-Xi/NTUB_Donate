@@ -9,6 +9,7 @@ class settings(BaseSettings):
     items_per_user: int
     database_url: str
     enable_docs: bool = True
+    barcode_api_url: str
 
     env: ClassVar[str] = os.getenv("ENVIRONMENT", "development")
 

@@ -1,51 +1,35 @@
-from sqlmodel import select
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.database import get_db
 from app.domain.models.user import User
 from app.application.schema.user import UserCreate
 
-class UserRepository:
-    def __init__(self, session: AsyncSession):
-        self.session = session
+from app.infrastructure.repositories.base import BaseRepository
 
-    async def create_user(self, new_user: UserCreate):
+class UserRepository(BaseRepository[User]):
+    def __init__(self, session: AsyncSession = Depends(get_db)):
+        super().__init__(session)
+
+    async def create_user(self, new_user: UserCreate) -> User:
         """新增一個用戶到資料庫"""
-        user = User(
-            user_name=new_user.user_name,
-            user_email=new_user.user_email,
-            user_phone_number=new_user.user_phone_number,
-            user_address=new_user.user_address
-        )
-
-        self.session.add(user)
-        await self.session.commit()
-        await self.session.refresh(user)
-        return user
+        user = User(**new_user.model_dump())
+        return await self.create_instance(user)
 
 
-    async def get_user_by_id(self, user_id: int):
+    async def get_user_by_id(self, user_id: int) -> User:
         """根據用戶 ID 取得用戶"""
-        result = await self.session.get(User, user_id)
-        return result
+        return await self.get_by_id(user_id, User)
 
-    async def get_all_users(self):
+    async def get_all_users(self) -> list[User]:
         """取得所有用戶"""
-        statement = select(User)
-        results = await self.session.execute(statement)
-        return results.scalars().all()
+        return await self.get_all(User)
 
-    async def update_user(self, updated_user: User):
+    async def update_user(self, user_id, updated_user: User) -> User:
         """更新一個用戶"""
-        self.session.add(updated_user)
-        await self.session.commit()
-        await self.session.refresh(updated_user)
-        return updated_user
+        user = updated_user.model_dump()
+        return await self.update_instance(user_id, user, User)
 
-    async def delete_user(self, user_id: int):
+    async def delete_user(self, user_id: int) -> bool:
         """刪除一個用戶"""
-        user_to_delete = await self.get_user_by_id(user_id)
-        if user_to_delete:
-            await self.session.delete(user_to_delete)
-            await self.session.commit()
-            return True
-        return False
+        return await self.delete_instance(user_id, User)

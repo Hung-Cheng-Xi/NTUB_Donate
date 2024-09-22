@@ -1,52 +1,35 @@
-from sqlmodel import select
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.database import get_db
 from app.domain.models.donation import Donation
 from app.application.schema.donation import DonationCreate
 
+from app.infrastructure.repositories.base import BaseRepository
 
-class DonationRepository:
-    def __init__(self, session: AsyncSession):
-        self.session = session
+
+class DonationRepository(BaseRepository[Donation]):
+    def __init__(self, session: AsyncSession = Depends(get_db)):
+        super().__init__(session)
 
     async def create_donation(self, donation_create: DonationCreate) -> Donation:
-        donation = Donation(
-            amount=donation_create.amount,
-            currency=donation_create.currency,
-            payment_method=donation_create.payment_method,
-            payment_status=donation_create.payment_status,
-            transaction_id=donation_create.transaction_id,
-            user_id=donation_create.user_id
-        )
+        """新增一筆捐款"""
+        donation = Donation(**donation_create.model_dump())
+        return await self.create_instance(donation)
 
-        self.session.add(donation)
-        await self.session.commit()
-        await self.session.refresh(donation)
-        return donation
-
-    async def get_donation_by_id(self, donation_id: int):
+    async def get_donation_by_id(self, donation_id: int) -> Donation:
         """根據捐款 ID 取得捐款"""
-        result = await self.session.get(Donation, donation_id)
-        return result
+        return await self.get_by_id(donation_id, Donation)
 
-    async def get_all_donations(self):
+    async def get_all_donations(self) -> list[Donation]:
         """取得所有捐款"""
-        statement = select(Donation)
-        results = await self.session.execute(statement)
-        return results.scalars().all()
+        return await self.get_all(Donation)
 
-    async def update_donation(self, updated_donation: Donation):
+    async def update_donation(self, donation_id, updated_donation: Donation) -> Donation:
         """更新一筆捐款"""
-        self.session.add(updated_donation)
-        await self.session.commit()
-        await self.session.refresh(updated_donation)
-        return updated_donation
+        donation = updated_donation.model_dump()
+        return await self.update_instance(donation_id, donation, Donation)
 
-    async def delete_donation(self, donation_id: int):
+    async def delete_donation(self, donation_id: int) -> bool:
         """刪除一筆捐款"""
-        donation_to_delete = await self.get_donation_by_id(donation_id)
-        if donation_to_delete:
-            await self.session.delete(donation_to_delete)
-            await self.session.commit()
-            return True
-        return False
+        return await self.delete_instance(donation_id, Donation)
