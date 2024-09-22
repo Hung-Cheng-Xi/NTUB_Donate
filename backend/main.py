@@ -6,6 +6,7 @@ from app.core.config import settings
 from app.core.database import create_db_and_tables
 from app.application.endpoints.user import router as user_router
 from app.application.endpoints.donation import router as donation_router
+from app.application.endpoints.barcode import router as barcode_router
 
 
 @asynccontextmanager
@@ -24,3 +25,4 @@ app = FastAPI(
 
 app.include_router(user_router)
 app.include_router(donation_router)
+app.include_router(barcode_router)
