@@ -25,7 +25,7 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: p@ssw0rd
-            POSTGRES_DB: NTUB_SecumanageDB
+            POSTGRES_DB: NTUB_DonateDB
         ports:
             - "5432:5432"
         volumes:
@@ -35,7 +35,6 @@ services:
 
 volumes:
     postgres_data:
-
 
 networks:
     app-network:
