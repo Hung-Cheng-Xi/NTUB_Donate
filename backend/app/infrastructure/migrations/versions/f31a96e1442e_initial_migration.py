@@ -1,21 +1,19 @@
-"""create User and Donation table
+"""initial migration
 
-Revision ID: 85b516bf129e
-Revises: cb633635ef2e
-Create Date: 2024-09-21 19:17:52.413393
+Revision ID: f31a96e1442e
+Revises:
+Create Date: 2024-09-22 16:14:18.386153
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects.postgresql import ENUM
 import sqlmodel
 
-
 # revision identifiers, used by Alembic.
-revision: str = '85b516bf129e'
-down_revision: Union[str, None] = 'cb633635ef2e'
+revision: str = 'f31a96e1442e'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
