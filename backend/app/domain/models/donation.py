@@ -1,40 +1,34 @@
-from typing import Optional
-from datetime import datetime
+from __future__ import annotations
+from typing import TYPE_CHECKING, Optional
+from datetime import datetime, date
 
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import Column, DateTime, func
-from sqlalchemy import Enum as SQLAlchemyEnum
 
-from app.application.schema.donation import PublicStatus
 
-class Donation(SQLModel, table=True):
-    """
-    Represents a donation record in the system.
+if TYPE_CHECKING:
+    from app.domain.models.donation_purpose import DonationPurpose
 
-    Attributes:
-        donation_id (int | None): The unique identifier for the donation.
-        amount (Optional[float]): 捐款金額
-        currency (str): 捐款貨幣類型
-        payment_method (str): 支付方式
-        payment_status (str): 支付狀態
-        transaction_id (str): 金流平台返還ID
-        public_status (Optional[PublicStatus]): 狀態是否公開
-        created_at (datetime): The timestamp when the donation was created.
-        updated_at (datetime): The timestamp when the donation was last updated.
-    """
 
-    donation_id: int | None = Field(default=None, primary_key=True)
-    amount: Optional[float] = None
-    currency: str
-    payment_method: str
-    payment_status: str
+class Donations(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    username: str
+    user_birthday: date
+    id_card: str
+    phone_number: str
+    email: str
+    identity: str
+    year: str
+    gept: str
+    res_address: str
+    registered_address: str
+    public_status: str
+    memo: Optional[str] = None
+    amount: int
+    account: str
+    type: str
+    status: str
     transaction_id: str
-    public_status: Optional[PublicStatus] = Field(
-        sa_column=Column(
-            SQLAlchemyEnum(PublicStatus, name="publicstatus", create_type=True)
-        )
-    )
-
     created_at: datetime = Field(
         sa_column=Column(DateTime(timezone=True), server_default=func.now())
     )
@@ -45,6 +39,7 @@ class Donation(SQLModel, table=True):
             onupdate=func.now()
         )
     )
+    purpose_id: int = Field(foreign_key="donationpurpose.id")
 
-    user_id: Optional[int] = Field(default=None, foreign_key="user.user_id")
-    user: Optional["User"] = Relationship(back_populates="donations")
+
+purpose: Optional["DonationPurpose"] = Relationship(back_populates="donations")
