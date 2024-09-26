@@ -4,6 +4,10 @@ from typing import TYPE_CHECKING, Optional
 from datetime import date
 
 from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy import Column, DateTime, func
+from sqlalchemy import Enum as SQLAlchemyEnum
+
+from app.application.schema.donation import PublicStatus
 
 
 class DonationType(str, Enum):

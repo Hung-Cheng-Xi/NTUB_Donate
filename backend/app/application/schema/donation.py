@@ -78,3 +78,4 @@ class DonationsDetail(DonationsInDBBase):
 
     class Config:
         from_attribute = True
+

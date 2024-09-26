@@ -6,6 +6,7 @@ from app.core.config import settings
 from app.core.database import create_db_and_tables
 from app.application.endpoints import main_router
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.info("Starting the app")
