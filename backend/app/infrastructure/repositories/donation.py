@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.domain.models.donation import Donations
-from app.application.schema.donation import DonationCreate
+from app.application.schema.donation import DonationsCreate
 
 from app.infrastructure.repositories.base import BaseRepository
 
@@ -12,7 +12,7 @@ class DonationRepository(BaseRepository[Donations]):
     def __init__(self, session: AsyncSession = Depends(get_db)):
         super().__init__(session)
 
-    async def create_donation(self, donation_create: DonationCreate) -> Donations:
+    async def create_donation(self, donation_create: DonationsCreate) -> Donations:
         """新增一筆捐款"""
         donation = Donations(**donation_create.model_dump())
         return await self.create_instance(donation)
