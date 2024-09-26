@@ -1,10 +1,37 @@
 from __future__ import annotations
+from enum import Enum
 from typing import TYPE_CHECKING, Optional
-from datetime import datetime, date
+from datetime import date
 
 from sqlmodel import SQLModel, Field, Relationship
-from sqlalchemy import Column, DateTime, func
 
+
+class DonationType(str, Enum):
+    """
+    表示捐款方式的 Enum。
+    STORE: 使用實體店支付。
+    BANK: 使用銀行支付。
+    """
+    STORE = "STORE"
+    BANK = "BANK"
+
+
+class DonorType(Enum):
+    """
+    表示捐款者身份的 Enum。
+    ALUMNI: 校友
+    STAFF: 教職員
+    PARENT: 家長
+    COMMUNITY: 社區成員
+    CORPORATION: 公司
+    OTHER: 其他
+    """
+    ALUMNI = "ALUMNI"
+    STAFF = "STAFF"
+    PARENT = "PARENT"
+    COMMUNITY = "COMMUNITY"
+    CORPORATION = "CORPORATION"
+    OTHER = "OTHER"
 
 if TYPE_CHECKING:
     from app.domain.models.donation_purpose import DonationPurpose
@@ -17,29 +44,24 @@ class Donations(SQLModel, table=True):
     id_card: str
     phone_number: str
     email: str
-    identity: str
-    year: str
-    gept: str
+    identity: DonorType = Field(
+        default=DonorType.ALUMNI,
+        description="捐款者身分"
+    )
+    year: Optional[str] = None
+    gept: Optional[str] = None
     res_address: str
     registered_address: str
     public_status: str
     memo: Optional[str] = None
     amount: int
     account: str
-    type: str
-    status: str
-    transaction_id: str
-    created_at: datetime = Field(
-        sa_column=Column(DateTime(timezone=True), server_default=func.now())
+    type: DonationType = Field(
+        default=DonationType.STORE,
+        description="捐款方式"
     )
-    updated_at: datetime = Field(
-        sa_column=Column(
-            DateTime(timezone=True),
-            server_default=func.now(),
-            onupdate=func.now()
-        )
-    )
-    purpose_id: int = Field(foreign_key="donationpurpose.id")
+    status: Optional[int] = None
+    transaction_id: Optional[str] = None
 
-
-purpose: Optional["DonationPurpose"] = Relationship(back_populates="donations")
+    purpose_id: Optional[int] = Field(default=None, foreign_key="donationpurpose.id")
+    purpose: Optional["DonationPurpose"] = Relationship(back_populates="donations")

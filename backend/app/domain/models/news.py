@@ -4,6 +4,8 @@ from datetime import date
 
 from sqlmodel import SQLModel, Field, Relationship
 
+from app.domain.models.unit import Unit
+
 
 if TYPE_CHECKING:
     from app.domain.models.unit import Unit
@@ -14,6 +16,6 @@ class News(SQLModel, table=True):
     title: str
     description: str
     is_show: bool
-    unit_id: int = Field(foreign_key="unit.id")
 
+    unit_id: Optional[int] = Field(default=None, foreign_key="unit.id")
     unit: Optional["Unit"] = Relationship(back_populates="news")
