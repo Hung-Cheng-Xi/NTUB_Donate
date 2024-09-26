@@ -12,8 +12,8 @@ router = APIRouter()
 
 @router.get("/", response_model=List[User])
 async def read_users(db: AsyncSession = Depends(get_db)):
-    user_repo = UserRepository(db)
-    users = await user_repo.get_all_users()
+    donation_purpose_repo = UserRepository(db)
+    users = await donation_purpose_repo.get_all_users()
     return users
 
 
