@@ -1,17 +1,15 @@
-from __future__ import annotations
 from typing import TYPE_CHECKING, Optional
 from datetime import date
 
 from sqlmodel import SQLModel, Field, Relationship
 
-from app.domain.models.unit import Unit
-
 
 if TYPE_CHECKING:
     from app.domain.models.unit import Unit
 
+
 class News(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
     date: date
     title: str
     description: str

@@ -1,4 +1,3 @@
-from __future__ import annotations
 from enum import Enum
 from typing import TYPE_CHECKING, Optional
 from datetime import date
@@ -33,12 +32,13 @@ class DonorType(Enum):
     CORPORATION = "CORPORATION"
     OTHER = "OTHER"
 
+
 if TYPE_CHECKING:
     from app.domain.models.donation_purpose import DonationPurpose
 
 
 class Donations(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
     username: str
     user_birthday: date
     id_card: str
@@ -63,5 +63,10 @@ class Donations(SQLModel, table=True):
     status: Optional[int] = None
     transaction_id: Optional[str] = None
 
-    purpose_id: Optional[int] = Field(default=None, foreign_key="donationpurpose.id")
-    purpose: Optional["DonationPurpose"] = Relationship(back_populates="donations")
+    purpose_id: Optional[int] = Field(
+        default=None,
+        foreign_key="donationpurpose.id"
+    )
+    purpose: Optional["DonationPurpose"] = Relationship(
+        back_populates="donations"
+    )

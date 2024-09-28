@@ -1,4 +1,3 @@
-from __future__ import annotations
 from typing import TYPE_CHECKING, Optional, List
 from sqlmodel import SQLModel, Field, Relationship
 
@@ -10,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class DonationPurpose(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
     name: str
     summary: str
     memo: Optional[str] = None
@@ -18,5 +17,4 @@ class DonationPurpose(SQLModel, table=True):
 
     unit_id: Optional[int] = Field(default=None, foreign_key="unit.id")
     unit: Optional["Unit"] = Relationship(back_populates="donation_purposes")
-
     donations: List["Donations"] = Relationship(back_populates="purpose")
