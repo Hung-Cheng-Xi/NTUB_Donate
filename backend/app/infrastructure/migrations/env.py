@@ -4,9 +4,16 @@ from alembic import context
 from sqlmodel import SQLModel
 
 from app.domain.models import *
+from app.core.database import get_database_url
+
+
+database_url = get_database_url(async_mode=False)
+
+database_url = database_url.replace('%', '%%')
 
 
 config = context.config
+config.set_main_option("sqlalchemy.url", database_url)
 fileConfig(config.config_file_name)
 
 target_metadata = SQLModel.metadata
