@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
+from app.core.database import get_db_session
 from app.domain.models.donation import Donations
 from app.application.schema.donation import DonationsCreate
 
@@ -9,7 +9,7 @@ from app.infrastructure.repositories.base import BaseRepository
 
 
 class DonationRepository(BaseRepository[Donations]):
-    def __init__(self, session: AsyncSession = Depends(get_db)):
+    def __init__(self, session: AsyncSession = Depends(get_db_session)):
         super().__init__(session)
 
     async def create_donation(self, donation_create: DonationsCreate) -> Donations:

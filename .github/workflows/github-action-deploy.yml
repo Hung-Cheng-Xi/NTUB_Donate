@@ -14,6 +14,11 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: Set up environment variable
+              run: |
+                echo "Setting up environment variable..."
+                echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
             - name: Deploy with Docker Compose
               run: docker compose up --build -d
 

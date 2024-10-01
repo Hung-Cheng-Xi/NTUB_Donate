@@ -17,21 +17,28 @@ services:
             - postgres
         networks:
             - app-network
+        environment:
+            - ENVIRONMENT=${ENVIRONMENT}
+        env_file:
+            - ./backend/.env.${ENVIRONMENT}
 
     postgres:
         image: postgres:16.4
         container_name: postgres_db
         restart: always
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: p@ssw0rd
-            POSTGRES_DB: NTUB_DonateDB
+        env_file:
+            - ./backend/.env.${ENVIRONMENT}
         ports:
             - "5432:5432"
         volumes:
             - postgres_data:/var/lib/postgresql/data
         networks:
             - app-network
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
 
 volumes:
     postgres_data:

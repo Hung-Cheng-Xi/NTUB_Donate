@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
+from app.core.database import get_db_session
 from app.domain.models.news import News
 from app.application.schema.news import NewsCreate
 
@@ -9,7 +9,7 @@ from app.infrastructure.repositories.base import BaseRepository
 
 
 class NewsRepository(BaseRepository[News]):
-    def __init__(self, session: AsyncSession = Depends(get_db)):
+    def __init__(self, session: AsyncSession = Depends(get_db_session)):
         super().__init__(session)
 
     async def create_news(self, news_create: NewsCreate) -> News:

@@ -7,9 +7,13 @@ class settings(BaseSettings):
     app_name: str
     admin_email: str
     items_per_user: int
-    database_url: str
     enable_docs: bool = True
     barcode_api_url: str
+    postgres_user: str
+    postgres_password: str
+    postgres_host: str
+    postgres_port: int
+    postgres_db: str
 
     env: ClassVar[str] = os.getenv("ENVIRONMENT", "development")
 
