@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
+from app.core.database import get_db_session
 from app.domain.models.unit import Unit
 from app.application.schema.unit import UnitCreate
 
@@ -9,7 +9,7 @@ from app.infrastructure.repositories.base import BaseRepository
 
 
 class UnitRepository(BaseRepository[Unit]):
-    def __init__(self, session: AsyncSession = Depends(get_db)):
+    def __init__(self, session: AsyncSession = Depends(get_db_session)):
         super().__init__(session)
 
     async def create_unit(self, unit_create: UnitCreate) -> Unit:
