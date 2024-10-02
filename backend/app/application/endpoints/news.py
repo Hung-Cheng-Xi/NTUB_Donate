@@ -25,7 +25,7 @@ async def create_news(
     logging.info("新增 News 資料到資料庫")
     return await repository.create_news(new_news)
 
-
+  
 @router.get("/{news_id}", response_model=News)
 async def get_news(
     news_id: int,

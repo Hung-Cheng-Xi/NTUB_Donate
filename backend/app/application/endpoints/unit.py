@@ -25,7 +25,7 @@ async def create_unit(
     logging.info("新增 Unit 資料到資料庫")
     return await repository.create_unit(new_unit)
 
-
+  
 @router.get("/{unit_id}", response_model=Unit)
 async def get_unit(
     unit_id: int,
