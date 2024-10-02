@@ -1,5 +1,5 @@
 import logging
-from typing import Dict
+from typing import List
 from fastapi import APIRouter, Depends
 
 from app.application.schema.barcode import BarCodeData
@@ -13,6 +13,6 @@ router = APIRouter()
 async def generate_barcode(
     barcode_data: BarCodeData,
     barcode_service: BarCodeService = Depends()
-) -> Dict:
+) -> List[str]:
     logging.info("生成條碼")
     return await barcode_service.generate_barcode(barcode_data)
