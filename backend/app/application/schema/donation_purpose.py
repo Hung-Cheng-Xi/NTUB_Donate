@@ -46,7 +46,7 @@ class DonationPurposeInDBBase(DonationPurposeBase):
     unit_id: int
 
     class Config:
-        from_attribute = True
+        orm_mode = True
 
 
 class DonationPurpose(DonationPurposeInDBBase):
@@ -66,4 +66,4 @@ class DonationPurposeDetail(DonationPurposeInDBBase):
     donations: List["Donations"] = []
 
     class Config:
-        from_attribute = True
+        orm_mode = True

@@ -41,7 +41,7 @@ class NewsInDBBase(NewsBase):
     id: Optional[int]
 
     class Config:
-        from_attribute = True
+        orm_mode = True
 
 
 class News(NewsInDBBase):
@@ -59,4 +59,4 @@ class NewsDetail(NewsInDBBase):
     unit: Optional["Unit"]
 
     class Config:
-        from_attribute = True
+        orm_mode = True

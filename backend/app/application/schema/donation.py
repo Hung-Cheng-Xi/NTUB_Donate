@@ -59,7 +59,7 @@ class DonationsInDBBase(DonationsBase):
     updated_at: datetime
 
     class Config:
-        from_attribute = True
+        orm_mode = True
 
 
 class Donations(DonationsInDBBase):
@@ -77,4 +77,4 @@ class DonationsDetail(DonationsInDBBase):
     purpose: Optional["DonationPurpose"]
 
     class Config:
-        from_attribute = True
+        orm_mode = True
