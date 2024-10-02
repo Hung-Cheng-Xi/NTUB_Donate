@@ -1,9 +1,7 @@
 import logging
 from typing import List
 from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db_session
 from app.domain.models.donation import Donations
 from app.application.schema.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
@@ -12,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Donations])
-async def read_donations(
+async def get_donations(
     repository: DonationRepository = Depends(),
 ):
     logging.info("取得 Donation 資料")

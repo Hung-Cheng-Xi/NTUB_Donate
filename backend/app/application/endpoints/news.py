@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[News])
-async def read_News(
+async def get_news(
     repository: NewsRepository = Depends(),
 ):
     logging.info("取得 News 資料")

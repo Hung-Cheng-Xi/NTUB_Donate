@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[DonationPurpose])
-async def read_donation_purposes(
+async def get_donation_purposes(
     repository: DonationPurposeRepository = Depends(),
 ):
     logging.info("取得 Donation Purpose 資料")

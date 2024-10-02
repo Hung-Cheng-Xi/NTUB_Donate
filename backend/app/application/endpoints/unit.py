@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Unit])
-async def read_units(
+async def get_units(
     repository: UnitRepository = Depends(),
 ):
     logging.info("取得 Unit 資料")
