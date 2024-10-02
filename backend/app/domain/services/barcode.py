@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 import httpx
-from typing import Dict
+from typing import List
 
 from app.core.config import settings
 from app.application.schema.barcode import BarCodeData
@@ -11,8 +11,9 @@ class BarCodeService:
         pass
 
     async def generate_barcode(
+            self,
             barcode_data: BarCodeData
-    ) -> Dict:
+    ) -> List[str]:
         url = settings.barcode_api_url
         async with httpx.AsyncClient() as client:
             try:
