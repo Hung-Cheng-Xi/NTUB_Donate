@@ -55,7 +55,29 @@ class BaseRepository(Generic[T]):
         await self.session.refresh(instance)
         return instance
 
-    async def delete_instance(self, id: int, model: Type[T]) -> bool:
+    async def patch_instance(
+        self,
+        id: int,
+        new_data: dict,
+        model: Type[T]
+    ) -> T:
+        """部分更新實例的方法"""
+        instance = await self.get_by_id(id, model)
+        if not instance:
+            raise HTTPException(
+                status_code=404,
+                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料"
+            )
+
+        for key, value in new_data.items():
+            if value is not None:
+                setattr(instance, key, value)
+
+        await self.session.commit()
+        await self.session.refresh(instance)
+        return instance
+
+    async def delete_instance(self, id: int, model: Type[T]) -> T:
         """刪除實例的方法"""
         instance = await self.get_by_id(id, model)
         if not instance:
@@ -64,9 +86,9 @@ class BaseRepository(Generic[T]):
                 detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料"
             )
 
-        self.session.delete(instance)
+        await self.session.delete(instance)
         await self.session.commit()
-        return True
+        return instance
 
     async def check_exists(
         self,
