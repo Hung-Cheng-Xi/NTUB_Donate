@@ -12,16 +12,17 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Donations])
-async def read_donations(db: AsyncSession = Depends(get_db_session)):
-    donation_repo = DonationRepository(db)
-    donations = await donation_repo.get_all_donations()
+async def read_donations(
+    repository: DonationRepository = Depends(),
+):
     logging.info("取得 Donation 資料")
-    return donations
+    return await repository.get_all_donations()
 
 
 @router.post("/", response_model=Donations)
-async def create_donation(new_donation: DonationsCreate, db: AsyncSession = Depends(get_db_session)):
-    donation_repo = DonationRepository(db)
-    created_donation = await donation_repo.create_donation(new_donation)
+async def create_donation(
+    new_donation: DonationsCreate,
+    repository: DonationRepository = Depends(),
+):
     logging.info("新增 Donation 資料到資料庫")
-    return created_donation
+    return await repository.create_donation(new_donation)

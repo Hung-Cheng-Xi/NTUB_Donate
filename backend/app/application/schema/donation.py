@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 from datetime import datetime, date
-from pydantic import BaseModel
+from sqlmodel import SQLModel
 
 from app.domain.models.donation import DonorType, DonationType
 
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from app.application.schema.donation_purpose import DonationPurpose
 
 
-class DonationsBase(BaseModel):
+class DonationsBase(SQLModel):
     """
     Donations 的基本 schema，包含基本的字段定義，用於創建或更新捐款記錄。
     不包含自動生成的字段如 id、created_at 和 updated_at。
@@ -59,7 +59,7 @@ class DonationsInDBBase(DonationsBase):
     updated_at: datetime
 
     class Config:
-        from_attribute = True
+        orm_mode = True
 
 
 class Donations(DonationsInDBBase):
@@ -77,4 +77,4 @@ class DonationsDetail(DonationsInDBBase):
     purpose: Optional["DonationPurpose"]
 
     class Config:
-        from_attribute = True
+        orm_mode = True

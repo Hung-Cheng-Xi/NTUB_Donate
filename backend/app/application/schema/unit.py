@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING, List, Optional
-from pydantic import BaseModel
+from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
     from app.application.schema.donation_purpose import DonationPurpose
     from app.application.schema.news import News
 
 
-class UnitBase(BaseModel):
+class UnitBase(SQLModel):
     """
     Unit 的基本 schema，包含必要的字段，用於創建或更新 Unit 記錄。
     """

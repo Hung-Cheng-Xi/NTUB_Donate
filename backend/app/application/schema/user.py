@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from sqlmodel import SQLModel
 
 
-class UserBase(BaseModel):
+class UserBase(SQLModel):
     """
     User 的基本 schema，包含必要的字段，如 account。
     不包含自動生成的 id 和 created_at。
