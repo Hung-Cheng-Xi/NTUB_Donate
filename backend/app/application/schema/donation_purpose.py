@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING, Optional, List
 from datetime import datetime
-from pydantic import BaseModel
+from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
     from app.application.schema.unit import Unit
     from app.application.schema.donation import Donations
 
 
-class DonationPurposeBase(BaseModel):
+class DonationPurposeBase(SQLModel):
     """
     包含所有 DonationPurpose 模型的基本字段，這些字段通常是創建和更新操作需要的數據。
     不包括自動生成的 id、created_at 和 updated_at。

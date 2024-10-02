@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+from sqlmodel import SQLModel
 
 
-class AddressData(BaseModel):
+class AddressData(SQLModel):
     address: str = Field(..., example="臺中市西屯區臺灣大道三段99號")

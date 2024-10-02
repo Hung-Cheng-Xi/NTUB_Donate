@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING, Optional
 from datetime import date
-from pydantic import BaseModel
+from sqlmodel import SQLModel
 
 
 if TYPE_CHECKING:
     from app.application.schema.unit import Unit
 
 
-class NewsBase(BaseModel):
+class NewsBase(SQLModel):
     """
     News 的基本 schema，包含必要的字段，
     這些字段主要用於創建或更新最新消息記錄。
