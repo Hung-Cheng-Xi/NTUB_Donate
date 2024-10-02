@@ -28,7 +28,12 @@ class NewsRepository(BaseRepository[News]):
     async def update_news(self, news_id: int, updated_news: News) -> News:
         """更新一筆最新消息"""
         news = updated_news.model_dump()
-        return await self.update_instance(news_id, news, news)
+        return await self.update_instance(news_id, news, News)
+
+    async def patch_news(self, news_id: int, updated_news: News) -> News:
+        """部分更新一筆最新消息"""
+        news = updated_news.model_dump()
+        return await self.patch_instance(news_id, news, News)
 
     async def delete_news(self, news_id: int) -> bool:
         """刪除一筆最新消息"""
