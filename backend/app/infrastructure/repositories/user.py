@@ -30,6 +30,11 @@ class UserRepository(BaseRepository[User]):
         user = updated_user.model_dump()
         return await self.update_instance(user_id, user, User)
 
-    async def delete_user(self, user_id: int) -> bool:
+    async def patch_user(self, user_id: int, updated_user: User) -> User:
+        """部分更新一筆用戶"""
+        user = updated_user.model_dump()
+        return await self.patch_instance(user_id, user, User)
+
+    async def delete_user(self, user_id: int) -> User:
         """刪除一筆用戶"""
         return await self.delete_instance(user_id, User)

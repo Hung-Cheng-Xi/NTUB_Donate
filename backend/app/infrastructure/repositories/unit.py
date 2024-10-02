@@ -28,7 +28,12 @@ class UnitRepository(BaseRepository[Unit]):
     async def update_unit(self, unit_id: int, updated_unit: Unit) -> Unit:
         """更新一筆單位"""
         unit = updated_unit.model_dump()
-        return await self.update_instance(unit_id, unit, unit)
+        return await self.update_instance(unit_id, unit, Unit)
+
+    async def patch_unit(self, unit_id: int, updated_unit: Unit) -> Unit:
+        """部分更新一筆單位"""
+        unit = updated_unit.model_dump()
+        return await self.patch_instance(unit_id, unit, Unit)
 
     async def delete_unit(self, unit_id: int) -> bool:
         """刪除一筆單位"""

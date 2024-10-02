@@ -30,6 +30,11 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         purpose = updated_donation_purpose.model_dump()
         return await self.update_instance(donation_purpose_id, purpose, DonationPurpose)
 
+    async def patch_donation_purpose(self, donation_purpose_id: int, updated_donation_purpose: DonationPurpose) -> DonationPurpose:
+        """部分更新一筆捐款目的"""
+        purpose = updated_donation_purpose.model_dump()
+        return await self.patch_instance(donation_purpose_id, purpose, DonationPurpose)
+
     async def delete_donation_purpose(self, donation_purpose_id: int) -> bool:
         """刪除一筆捐款目的"""
         return await self.delete_instance(donation_purpose_id, DonationPurpose)
