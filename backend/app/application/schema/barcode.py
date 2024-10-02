@@ -1,8 +1,9 @@
+from pydantic import Field
 from sqlmodel import SQLModel
 
 
 class BarCodeData(SQLModel):
-    Group: str = "730044" # 預設值
-    SerialNumber: str = "00001" # 預設值
-    Time: str = "9991230"  # 預設值
-    Money: str = "1000" # 預設值
+    group: str = Field(..., example="730044")
+    serial_number: str = Field(..., example="00001")
+    time: str = Field(..., example="9991230")
+    money: str = Field(..., example="1000")
