@@ -100,3 +100,14 @@ class BaseRepository(Generic[T]):
         statement = select(model).where(getattr(model, field_name) == value)
         result = await self.session.execute(statement)
         return result.scalars().first() is not None
+
+    async def get_paginated_items(
+        self,
+        model: Type[T],
+        skip: int = 0,
+        limit: int = 10,
+    ) -> List[T]:
+        """取得分頁的實例資料的方法"""
+        statement = select(model).offset(skip).limit(limit)
+        results = await self.session.execute(statement)
+        return results.scalars().all()

@@ -17,6 +17,16 @@ async def get_donation_purposes(
     return await repository.get_all_donation_purposes()
 
 
+@router.get("/items", response_model=List[DonationPurpose])
+async def get_items(
+    skip: int = 10,
+    limit: int = 0,
+    repository: DonationPurposeRepository = Depends(),
+):
+    logging.info("取得分頁的 Donation Purpose 資料")
+    return await repository.get_donation_purpose_items(skip, limit)
+
+
 @router.post("/", response_model=DonationPurpose)
 async def create_donation_purpose(
     new_donation_purpose: DonationPurposeCreate,

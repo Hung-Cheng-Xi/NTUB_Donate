@@ -38,3 +38,7 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
     async def delete_donation_purpose(self, donation_purpose_id: int) -> bool:
         """刪除一筆捐款目的"""
         return await self.delete_instance(donation_purpose_id, DonationPurpose)
+
+    async def get_donation_purpose_items(self, skip: int, limit: int) -> list[DonationPurpose]:
+        """取得分頁的捐款目的"""
+        return await self.get_paginated_items(DonationPurpose, skip, limit)
