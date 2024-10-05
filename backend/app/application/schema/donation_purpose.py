@@ -13,6 +13,7 @@ class DonationPurposeBase(SQLModel):
     不包括自動生成的 id、created_at 和 updated_at。
     """
     name: str
+    lump_sum: int
     summary: str
     memo: Optional[str] = None
     is_show: bool
