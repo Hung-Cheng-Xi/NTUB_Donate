@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.unit import Unit
-from app.application.schema.unit import UnitCreate
+from app.application.client.schemas.unit import UnitCreate
 
 from app.infrastructure.repositories.base import BaseRepository
 

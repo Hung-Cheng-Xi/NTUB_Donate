@@ -3,7 +3,7 @@ import httpx
 from typing import List
 
 from app.core.config import settings
-from app.application.schema.barcode import BarCodeData
+from app.application.client.schemas.barcode import BarCodeData
 
 
 class BarCodeService:
@@ -17,7 +17,10 @@ class BarCodeService:
         url = settings.barcode_api_url
         async with httpx.AsyncClient() as client:
             try:
-                response = await client.post(url, json=barcode_data.model_dump())
+                response = await client.post(
+                    url,
+                    json=barcode_data.model_dump()
+                )
                 return response.json()
 
             except httpx.RequestError as exc:

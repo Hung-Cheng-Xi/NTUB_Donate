@@ -3,14 +3,14 @@ from typing import List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.news import News
-from app.application.schema.news import NewsCreate
+from app.application.client.schemas.news import NewsCreate
 from app.infrastructure.repositories.news import NewsRepository
 
 router = APIRouter()
 
 
 @router.get("/", response_model=List[News])
-async def get_news(
+async def get_all_news(
     repository: NewsRepository = Depends(),
 ):
     logging.info("取得 News 資料")

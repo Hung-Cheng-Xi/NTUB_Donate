@@ -6,7 +6,7 @@ from app.domain.models.donation import DonorType, DonationType
 
 
 if TYPE_CHECKING:
-    from app.application.schema.donation_purpose import DonationPurpose
+    from app.application.client.schemas.donation_purpose import DonationPurpose
 
 
 class DonationsBase(SQLModel):

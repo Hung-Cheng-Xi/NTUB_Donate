@@ -3,8 +3,12 @@ from typing import List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation_purpose import DonationPurpose
-from app.application.schema.donation_purpose import DonationPurposeCreate
-from app.infrastructure.repositories.donation_purpose import DonationPurposeRepository
+from app.application.client.schemas.donation_purpose import (
+    DonationPurposeCreate
+)
+from app.infrastructure.repositories.donation_purpose import (
+    DonationPurposeRepository
+)
 
 router = APIRouter()
 
@@ -52,7 +56,10 @@ async def update_donation_purpose(
     repository: DonationPurposeRepository = Depends(),
 ):
     logging.info("更新 Donation Purpose 資料")
-    return await repository.update_donation_purpose(donation_purpose_id, new_donation_purpose)
+    return await repository.update_donation_purpose(
+        donation_purpose_id,
+        new_donation_purpose
+    )
 
 
 @router.patch("/{donation_purpose_id}", response_model=DonationPurpose)
@@ -62,7 +69,10 @@ async def patch_donation_purpose(
     repository: DonationPurposeRepository = Depends(),
 ):
     logging.info("部分更新 Donation Purpose 資料")
-    return await repository.patch_donation_purpose(donation_purpose_id, new_donation_purpose)
+    return await repository.patch_donation_purpose(
+        donation_purpose_id,
+        new_donation_purpose
+    )
 
 
 @router.delete("/{donation_purpose_id}", response_model=DonationPurpose)
