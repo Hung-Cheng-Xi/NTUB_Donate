@@ -2,8 +2,8 @@ from typing import TYPE_CHECKING, List, Optional
 from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
-    from app.application.schema.donation_purpose import DonationPurpose
-    from app.application.schema.news import News
+    from app.application.client.schemas.donation_purpose import DonationPurpose
+    from app.application.client.schemas.news import News
 
 
 class UnitBase(SQLModel):

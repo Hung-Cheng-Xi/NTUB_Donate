@@ -2,7 +2,7 @@ import logging
 from typing import List
 from fastapi import APIRouter, Depends
 
-from app.application.schema.barcode import BarCodeData
+from app.application.client.schemas.barcode import BarCodeData
 from app.domain.services.barcode import BarCodeService
 
 router = APIRouter()

@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation import Donations
-from app.application.schema.donation import DonationsCreate
+from app.application.client.schemas.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
 
 router = APIRouter()

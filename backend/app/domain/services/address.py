@@ -3,7 +3,7 @@ import httpx
 from typing import Dict
 
 from app.core.config import settings
-from app.application.schema.address import AddressData
+from app.application.client.schemas.address import AddressData
 
 
 class AddressService:

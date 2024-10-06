@@ -2,13 +2,12 @@ import logging
 from typing import Dict
 from fastapi import APIRouter, Depends
 
-from app.application.schema.address import AddressData
+from app.application.client.schemas.address import AddressData
 from app.domain.services.address import AddressService
 
 router = APIRouter()
 
 
-# 呼叫查詢郵遞區號的端點
 @router.post("/get_zipcode/")
 async def get_zipcode(
     address_data: AddressData,

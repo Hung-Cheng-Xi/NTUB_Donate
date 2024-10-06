@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.unit import Unit
-from app.application.schema.unit import UnitCreate
+from app.application.client.schemas.unit import UnitCreate
 from app.infrastructure.repositories.unit import UnitRepository
 
 router = APIRouter()
@@ -25,7 +25,7 @@ async def create_unit(
     logging.info("新增 Unit 資料到資料庫")
     return await repository.create_unit(new_unit)
 
-  
+
 @router.get("/{unit_id}", response_model=Unit)
 async def get_unit(
     unit_id: int,
