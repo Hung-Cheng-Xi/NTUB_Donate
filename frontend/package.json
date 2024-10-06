@@ -6,8 +6,10 @@
     "scripts": {
         "lint": "eslint .",
         "preview": "vite preview",
-        "dev-admin": "vite --config admin/vite.config.js",
-        "dev-client": "vite --config client/vite.config.js"
+        "build-admin": "tsc -b && vite build --config app/admin/vite.config.ts",
+        "build-client": "tsc -b && vite build --config app/client/vite.config.ts",
+        "dev-admin": "vite --config app/admin/vite.config.ts",
+        "dev-client": "vite --config app/client/vite.config.ts"
     },
     "dependencies": {
         "react": "^18.3.1",
