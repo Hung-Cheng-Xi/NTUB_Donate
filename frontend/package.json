@@ -5,11 +5,13 @@
     "type": "module",
     "scripts": {
         "lint": "eslint .",
-        "preview": "vite preview",
+        "preview-admin": "vite preview --config app/admin/vite.config.ts",
+        "preview-client": "vite preview --config app/client/vite.config.ts",
         "build-admin": "tsc -b && vite build --config app/admin/vite.config.ts",
         "build-client": "tsc -b && vite build --config app/client/vite.config.ts",
         "dev-admin": "vite --config app/admin/vite.config.ts",
-        "dev-client": "vite --config app/client/vite.config.ts"
+        "dev-client": "vite --config app/client/vite.config.ts",
+        "generate-client": "rm -rf ./app/shared/openapi && npx @hey-api/openapi-ts -i http://120.97.28.11:8081/openapi.json -o app/shared/openapi -c @hey-api/client-axios"
     },
     "dependencies": {
         "react": "^18.3.1",
