@@ -6,8 +6,8 @@ from sqlmodel import SQLModel, Field, Relationship
 
 
 class DonationType(str, Enum):
-    """
-    表示捐款方式的 Enum。
+    """表示捐款方式的 Enum。
+
     STORE: 使用實體店支付。
     BANK: 使用銀行支付。
     """
@@ -16,8 +16,8 @@ class DonationType(str, Enum):
 
 
 class DonorType(Enum):
-    """
-    表示捐款者身份的 Enum。
+    """表示捐款者身份的 Enum。
+
     ALUMNI: 校友
     STAFF: 教職員
     PARENT: 家長
