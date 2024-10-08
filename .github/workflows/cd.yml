@@ -20,7 +20,7 @@ jobs:
           echo "ENVIRONMENT=production" >> $GITHUB_ENV
 
       - name: Deploy with Docker Compose
-        run: docker compose up --build -d
+        run: docker compose up --build --abort-on-container-exit
 
       - name: Verify Deployment
         run: |

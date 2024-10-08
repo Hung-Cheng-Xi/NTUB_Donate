@@ -11,8 +11,8 @@ class AddressService:
         self.API_URL = settings.zipcode_api_url
 
     async def get_zipcode(
-            self,
-            address_data: AddressData
+        self,
+        address_data: AddressData
     ) -> Dict:
         url = f"{self.API_URL}?adrs={address_data.address}"
 
