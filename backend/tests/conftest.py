@@ -7,7 +7,7 @@ def base_url():
     environment = os.getenv("ENVIRONMENT", "development")
 
     if environment == "production":
-        return "http://120.97.28.11:8081/api"
+        return "http://backend:8000/api"
     elif environment == "development":
         return "http://localhost:8000/api"
     else:
