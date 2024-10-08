@@ -1,13 +1,16 @@
 import pytest
-import os
+
+
+def pytest_generate_tests(metafunc):
+    if "environment" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "environment", ["development", "production"])
 
 
 @pytest.fixture
-def base_url():
-    environment = os.getenv("ENVIRONMENT", "development")
-
+def base_url(environment):
     if environment == "production":
-        return "http://backend:8000/api"
+        return "http://120.97.28.11:8081/api"
     elif environment == "development":
         return "http://localhost:8000/api"
     else:
