@@ -1,47 +1,63 @@
 services:
-    frontend:
-        build: ./frontend
-        ports:
-            - "80:80"
-        depends_on:
-            - backend
-        networks:
-            - app-network
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
-    backend:
-        build:
-            context: ./backend
-        ports:
-            - "8000:8000"
-        depends_on:
-            - postgres
-        networks:
-            - app-network
-        environment:
-            - ENVIRONMENT=${ENVIRONMENT}
-        env_file:
-            - ./backend/.env.${ENVIRONMENT}
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+    env_file:
+      - ./backend/.env.${ENVIRONMENT}
 
-    postgres:
-        image: postgres:16.4
-        container_name: postgres_db
-        restart: always
-        env_file:
-            - ./backend/.env.${ENVIRONMENT}
-        ports:
-            - "5432:5432"
-        volumes:
-            - postgres_data:/var/lib/postgresql/data
-        networks:
-            - app-network
-        healthcheck:
-            test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
-            interval: 30s
-            timeout: 10s
-            retries: 5
+  postgres:
+    image: postgres:16.4
+    container_name: postgres_db
+    restart: always
+    env_file:
+      - ./backend/.env.${ENVIRONMENT}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  tests:
+    build:
+      context: ./backend
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    command: >
+      sh -c "pytest --maxfail=1 --disable-warnings -v"
+    volumes:
+      - ./backend:/app
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+    env_file:
+      - ./backend/.env.${ENVIRONMENT}
 
 volumes:
-    postgres_data:
+  postgres_data:
 
 networks:
-    app-network:
+  app-network:
