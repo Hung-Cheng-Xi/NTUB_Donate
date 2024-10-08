@@ -40,22 +40,6 @@ services:
       timeout: 10s
       retries: 5
 
-  tests:
-    build:
-      context: ./backend
-    depends_on:
-      - backend
-    networks:
-      - app-network
-    command: >
-      sh -c "/app/wait-for-it.sh backend:8000 -- pytest --maxfail=1 --disable-warnings -v"
-    volumes:
-      - ./backend:/app
-    environment:
-      - ENVIRONMENT=${ENVIRONMENT}
-    env_file:
-      - ./backend/.env.${ENVIRONMENT}
-
 volumes:
   postgres_data:
 
