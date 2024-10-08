@@ -5,10 +5,10 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-    { ignores: ["admin/dist", "client/dist"] },
+    { ignores: ["app/*/dist"] },
     {
         extends: [js.configs.recommended, ...tseslint.configs.recommended],
-        files: ["admin/**/*.{ts,tsx}", "client/**/*.{ts,tsx}"],
+        files: ["app/**/*.{ts,tsx}"],
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,

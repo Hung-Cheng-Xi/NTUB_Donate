@@ -9,7 +9,7 @@ class settings(BaseSettings):
     items_per_user: int
     enable_docs: bool = True
     barcode_api_url: str
-    address_api_url: str
+    zipcode_api_url: str
     postgres_user: str
     postgres_password: str
     postgres_host: str

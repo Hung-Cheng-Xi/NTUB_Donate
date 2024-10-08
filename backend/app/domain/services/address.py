@@ -8,7 +8,7 @@ from app.application.client.schemas.address import AddressData
 
 class AddressService:
     def __init__(self):
-        self.API_URL = settings.address_api_url
+        self.API_URL = settings.zipcode_api_url
 
     async def get_zipcode(
             self,
