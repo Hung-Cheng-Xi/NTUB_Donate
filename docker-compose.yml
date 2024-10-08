@@ -48,7 +48,7 @@ services:
     networks:
       - app-network
     command: >
-      sh -c "pytest --maxfail=1 --disable-warnings -v"
+      sh -c "/app/wait-for-it.sh backend:8000 -- pytest --maxfail=1 --disable-warnings -v"
     volumes:
       - ./backend:/app
     environment:
