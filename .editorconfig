@@ -1,12 +1,37 @@
-# EditorConfig is awesome: https://EditorConfig.org
-
 # top-most EditorConfig file
 root = true
 
+# Common settings for all files
 [*]
-indent_style = space
-indent_size = 4
-end_of_line = lf
 charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+# Specific settings for Python files in all directories
+[**/*.py]
+indent_size = 4
+max_line_length = 79
+
+# Specific settings for JavaScript and TypeScript files in all directories
+[**/*.{js,jsx,ts,tsx}]
+indent_size = 2
+quote_type = single
+
+# Specific settings for JSON files in all directories
+[**/*.json]
+indent_size = 2
+
+# Specific settings for HTML, CSS, and SCSS files in all directories
+[**/*.{html,css,scss}]
+indent_size = 2
+
+# Specific settings for Markdown files in all directories
+[**/*.md]
 trim_trailing_whitespace = false
-insert_final_newline = false
+
+# Specific settings for YAML files in all directories
+[**/*.yml]
+indent_size = 2
