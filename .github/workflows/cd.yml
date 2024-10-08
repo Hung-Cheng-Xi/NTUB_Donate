@@ -1,0 +1,33 @@
+name: Docker Compose Deployment on Self-Hosted Runner
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy Using Docker Compose
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment variable
+        run: |
+          echo "Setting up environment variable..."
+          echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
+      - name: Deploy with Docker Compose
+        run: docker compose up --build -d
+
+      - name: Verify Deployment
+        run: |
+          echo "Listing running containers..."
+          docker ps
+
+      - name: Cleanup on Failure
+        if: ${{ failure() }}
+        run: docker-compose down
+        continue-on-error: true
