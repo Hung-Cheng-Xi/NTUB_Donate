@@ -1,4 +1,6 @@
 import logging
+import logging.config
+import configparser
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
@@ -17,6 +19,13 @@ from app.domain.services.ftp_service import FTPService
 
 # Scheduler setup for refreshing data daily
 scheduler = AsyncIOScheduler()
+
+def configure_logging():
+    config = configparser.ConfigParser()
+    config.read('log.ini')
+    logging.config.fileConfig('log.ini')
+    logging.info(f"Logging configured for {settings.env} environment")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
