@@ -1,13 +1,15 @@
 from fastapi import APIRouter
-from .test import router as tese_router
+
+from .auth import router as auth_router
 from .excel import router as excel_router
+
 
 admin_router = APIRouter(prefix="/admin")
 
 admin_router.include_router(
-    tese_router,
-    prefix="/test",
-    tags=["Admin - test"]
+    auth_router,
+    prefix="/auth",
+    tags=["Admin - auth"]
 )
 
 admin_router.include_router(
