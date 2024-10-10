@@ -1,16 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// 定義 NavLink 的屬性類型
-type NavLink = {
-  label: string;
-  href: string;
-};
-
-// 定義 NavBar 的屬性類型
-type NavBarProps = {
-  links: NavLink[];
-};
+import { NavBarProps } from '../../../types/nav';
 
 const NavContainer = styled.div`
   display: flex;
@@ -34,15 +24,17 @@ const NavLinkItem = styled.a`
   margin-left: 22px;
   font-size: 20px;
   font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 
   &:hover {
-    background-color: #0C2D65; /* Tailwind button-darkblue equivalent */
+    background-color: #0c2d65; /* Tailwind button-darkblue equivalent */
     color: white;
   }
 `;
 
-const NavBar: React.FC<NavBarProps> = ({ links }) => {
+const NavBarItem: React.FC<NavBarProps> = ({ links }) => {
   return (
     <NavContainer>
       <Nav>
@@ -56,4 +48,4 @@ const NavBar: React.FC<NavBarProps> = ({ links }) => {
   );
 };
 
-export default NavBar;
+export default NavBarItem;
