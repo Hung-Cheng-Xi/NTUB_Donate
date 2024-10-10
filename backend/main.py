@@ -1,4 +1,6 @@
 import logging
+import logging.config
+import configparser
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
@@ -9,11 +11,22 @@ from app.application.client.endpoints import client_router
 from app.application.admin.endpoints import admin_router
 
 
+def configure_logging():
+    config = configparser.ConfigParser()
+    config.read('log.ini')
+    logging.config.fileConfig('log.ini')
+    logging.info(f"Logging configured for {settings.env} environment")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logging.info("Starting the app")
+    logging.info("啟動應用程式")
     yield
-    logging.info("Shutting down the app")
+    logging.info("關閉應用程式")
+
+
+def create_app() -> FastAPI:
+    configure_logging()
 
 app = FastAPI(
     lifespan=lifespan,
