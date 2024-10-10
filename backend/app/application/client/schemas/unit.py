@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, List, Optional
 from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
-    from app.application.client.schemas.donation_purpose import DonationPurpose
+    from app.application.client.schemas.donation_purpose import DonationPurposeInfo
     from app.application.client.schemas.news import News
 
 
@@ -29,15 +29,15 @@ class UnitUpdate(UnitBase):
 
 class UnitInDBBase(UnitBase):
     """
-    表示數據庫中 Unit 記錄的基礎結構，包含自動生成的 id，並啟用 orm_mode 以允許將 ORM 模型轉換為 Pydantic 模型。
+    表示數據庫中 Unit 記錄的基礎結構，包含自動生成的 id，並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
     """
     id: Optional[int]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class Unit(UnitInDBBase):
+class UnitInfo(UnitInDBBase):
     """
     用於返回 Unit 的基本信息，繼承自 UnitInDBBase，適用於讀取操作。
     """
@@ -46,10 +46,10 @@ class Unit(UnitInDBBase):
 
 class UnitDetail(UnitInDBBase):
     """
-    用於返回 Unit 的詳細信息，包含與 DonationPurpose 和 News 的關聯。
+    用於返回 Unit 的詳細信息，包含與 DonationPurposeInfo 和 News 的關聯。
     """
-    donation_purposes: List["DonationPurpose"] = []
+    donation_purposes: List["DonationPurposeInfo"] = []
     news: List["News"] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
