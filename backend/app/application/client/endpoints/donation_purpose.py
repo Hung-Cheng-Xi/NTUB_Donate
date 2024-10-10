@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation_purpose import DonationPurpose
@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/", response_model=List[DonationPurpose])
 async def get_donation_purposes(
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("取得 Donation Purpose 資料")
     return await repository.get_all_donation_purposes()
@@ -23,9 +23,9 @@ async def get_donation_purposes(
 
 @router.get("/items", response_model=List[DonationPurpose])
 async def get_items(
+    repository: Annotated[DonationPurposeRepository, Depends()],
     skip: int = 10,
-    limit: int = 0,
-    repository: DonationPurposeRepository = Depends(),
+    limit: int = 0
 ):
     logging.info("取得分頁的 Donation Purpose 資料")
     return await repository.get_donation_purpose_items(skip, limit)
@@ -34,7 +34,7 @@ async def get_items(
 @router.post("/", response_model=DonationPurpose)
 async def create_donation_purpose(
     new_donation_purpose: DonationPurposeCreate,
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("新增 Donation Purpose 資料到資料庫")
     return await repository.create_donation_purpose(new_donation_purpose)
@@ -43,7 +43,7 @@ async def create_donation_purpose(
 @router.get("/{donation_purpose_id}", response_model=DonationPurpose)
 async def get_donation_purpose(
     donation_purpose_id: int,
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("取得 Donation Purpose 資料")
     return await repository.get_donation_purpose_by_id(donation_purpose_id)
@@ -53,7 +53,7 @@ async def get_donation_purpose(
 async def update_donation_purpose(
     donation_purpose_id: int,
     new_donation_purpose: DonationPurposeCreate,
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("更新 Donation Purpose 資料")
     return await repository.update_donation_purpose(
@@ -66,7 +66,7 @@ async def update_donation_purpose(
 async def patch_donation_purpose(
     donation_purpose_id: int,
     new_donation_purpose: DonationPurposeCreate,
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("部分更新 Donation Purpose 資料")
     return await repository.patch_donation_purpose(
@@ -78,7 +78,7 @@ async def patch_donation_purpose(
 @router.delete("/{donation_purpose_id}", response_model=DonationPurpose)
 async def delete_donation_purpose(
     donation_purpose_id: int,
-    repository: DonationPurposeRepository = Depends(),
+    repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("刪除 Donation Purpose 資料")
     return await repository.delete_donation_purpose(donation_purpose_id)

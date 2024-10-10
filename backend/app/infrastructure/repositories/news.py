@@ -1,3 +1,4 @@
+from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,7 +10,7 @@ from app.infrastructure.repositories.base import BaseRepository
 
 
 class NewsRepository(BaseRepository[News]):
-    def __init__(self, session: AsyncSession = Depends(get_db_session)):
+    def __init__(self, session: Annotated[AsyncSession, Depends(get_db_session)]):
         super().__init__(session)
 
     async def create_news(self, news_create: NewsCreate) -> News:
