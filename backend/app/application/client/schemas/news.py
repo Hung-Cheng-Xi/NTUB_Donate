@@ -36,12 +36,12 @@ class NewsUpdate(NewsBase):
 class NewsInDBBase(NewsBase):
     """
     表示數據庫中 News 記錄的基礎結構，
-    包含自動生成的 id，並啟用 orm_mode 以允許將 ORM 模型轉換為 Pydantic 模型。
+    包含自動生成的 id，並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
     """
     id: Optional[int]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class News(NewsInDBBase):
@@ -59,4 +59,4 @@ class NewsDetail(NewsInDBBase):
     unit: Optional["Unit"]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

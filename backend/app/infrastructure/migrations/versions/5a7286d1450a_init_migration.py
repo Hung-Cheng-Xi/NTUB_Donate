@@ -1,8 +1,8 @@
 """init migration
 
-Revision ID: ed68c67a0e79
+Revision ID: 5a7286d1450a
 Revises:
-Create Date: 2024-10-05 11:47:51.440856
+Create Date: 2024-10-10 20:18:26.310029
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ed68c67a0e79'
+revision: str = '5a7286d1450a'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -64,13 +64,14 @@ def upgrade() -> None:
     sa.Column('gept', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('res_address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('registered_address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('public_status', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('public_status', sa.Enum('PUBLIC', 'ANONYMOUS', 'PARTIALLY', name='pubicstatus'), nullable=False),
     sa.Column('memo', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('amount', sa.Integer(), nullable=False),
     sa.Column('account', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('type', sa.Enum('STORE', 'BANK', name='donationtype'), nullable=False),
     sa.Column('status', sa.Integer(), nullable=True),
     sa.Column('transaction_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('input_date', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('purpose_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['purpose_id'], ['donationpurpose.id'], ),
     sa.PrimaryKeyConstraint('id')

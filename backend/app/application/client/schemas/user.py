@@ -29,13 +29,13 @@ class UserUpdate(UserBase):
 class UserInDBBase(UserBase):
     """
     表示數據庫中 User 記錄的基礎結構，包含自動生成的 id 和 created_at。
-    orm_mode 設置為 True，以允許 SQLAlchemy 模型轉換為 Pydantic 模型。
+    from_attributes 設置為 True，以允許 SQLAlchemy 模型轉換為 Pydantic 模型。
     """
     id: Optional[int]
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class User(UserInDBBase):

@@ -33,6 +33,18 @@ class DonorType(Enum):
     OTHER = "OTHER"
 
 
+class PubicStatus(str, Enum):
+    """表示公開狀態的 Enum。
+
+    PUBLIC: 公開
+    ANONYMOUS: 匿名
+    PARTIALLY: 匿名但受捐單位知曉
+    """
+    PUBLIC = "PUBLIC"
+    ANONYMOUS = "ANONYMOUS"
+    PARTIALLY = "PARTIALLY"
+
+
 if TYPE_CHECKING:
     from app.domain.models.donation_purpose import DonationPurpose
 
@@ -52,7 +64,10 @@ class Donations(SQLModel, table=True):
     gept: Optional[str] = None
     res_address: str
     registered_address: str
-    public_status: str
+    public_status: PubicStatus = Field(
+        default=PubicStatus.PUBLIC,
+        description="公開狀態"
+    )
     memo: Optional[str] = None
     amount: int
     account: str
@@ -62,6 +77,7 @@ class Donations(SQLModel, table=True):
     )
     status: Optional[int] = None
     transaction_id: Optional[str] = None
+    input_date: Optional[str] = None
 
     purpose_id: Optional[int] = Field(
         default=None,

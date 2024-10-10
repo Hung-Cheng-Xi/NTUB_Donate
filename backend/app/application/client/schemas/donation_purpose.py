@@ -3,8 +3,8 @@ from datetime import datetime
 from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
-    from app.application.client.schemas.unit import Unit
-    from app.application.client.schemas.donation import Donations
+    from app.application.client.schemas.unit import UnitInfo
+    from app.application.client.schemas.donation import DonationInfo
 
 
 class DonationPurposeBase(SQLModel):
@@ -39,18 +39,18 @@ class DonationPurposeInDBBase(DonationPurposeBase):
     """
     表示數據庫中 DonationPurpose 的基本結構。
     包含自動生成的字段，如 id、created_at 和 updated_at。
-    orm_mode 被設置為 True 以允許 ORM 模型自動轉換為 Pydantic 模型。
+    from_attributes 被設置為 True 以允許 ORM 模型自動轉換為 Pydantic 模型。
     """
     id: Optional[int]
-    created_at: datetime
-    updated_at: datetime
+    # created_at: datetime
+    # updated_at: datetime
     unit_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
-class DonationPurpose(DonationPurposeInDBBase):
+class DonationPurposeInfo(DonationPurposeInDBBase):
     """
     用於返回 DonationPurpose 的基本信息。
     繼承了 DonationPurposeInDBBase，適用於讀取操作。
@@ -61,10 +61,10 @@ class DonationPurpose(DonationPurposeInDBBase):
 class DonationPurposeDetail(DonationPurposeInDBBase):
     """
     用於返回 DonationPurpose 的詳細信息。
-    包含與 Unit 和 Donations 之間的關聯關係，用於返回更詳細的數據。
+    包含與 UnitInfo 和 DonationInfo 之間的關聯關係，用於返回更詳細的數據。
     """
-    unit: Optional["Unit"]
-    donations: List["Donations"] = []
+    unit: Optional["UnitInfo"]
+    donations: List["DonationInfo"] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

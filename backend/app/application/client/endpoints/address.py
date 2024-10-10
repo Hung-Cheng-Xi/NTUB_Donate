@@ -1,5 +1,5 @@
 import logging
-from typing import Dict
+from typing import Dict, Annotated
 from fastapi import APIRouter, Depends
 
 from app.application.client.schemas.address import AddressData
@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/get_zipcode/")
 async def get_zipcode(
     address_data: AddressData,
-    address_service: AddressService = Depends()
+    address_service: Annotated[AddressService, Depends()]
 ) -> Dict:
     logging.info("查詢郵遞區號")
     return await address_service.get_zipcode(address_data)
