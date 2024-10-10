@@ -20,6 +20,10 @@ class settings(BaseSettings):
     postgres_host: str
     postgres_port: int
     postgres_db: str
+    google_client_id: str
+    google_client_secret: str
+    google_redirect_uri: str
+    signing_key: str
 
     # FTP settings
     ftp_host: str
@@ -31,10 +35,9 @@ class settings(BaseSettings):
 
     model_config: ClassVar[SettingsConfigDict]
 
-    if env == "production":
-        model_config = SettingsConfigDict(env_file=".env.production")
-    else:
-        model_config = SettingsConfigDict(env_file=".env.development")
+    model_config = SettingsConfigDict(
+        env_file=f".env.{env}"
+    )
 
 
-settings = settings()
+settings = Settings()
