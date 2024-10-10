@@ -2,7 +2,7 @@ from fastapi import HTTPException
 import httpx
 from typing import List
 
-from app.core.config import settings
+from app.core.settings import settings
 from app.application.client.schemas.barcode import BarCodeData
 
 
@@ -26,9 +26,11 @@ class BarCodeService:
             except httpx.RequestError as exc:
                 raise HTTPException(
                     status_code=500,
-                    detail=f"HTTP error occurred: {str(exc)}")
+                    detail=f"HTTP error occurred: {str(exc)}"
+                )
 
             except Exception as exc:
                 raise HTTPException(
                     status_code=500,
-                    detail=f"An error occurred: {str(exc)}")
+                    detail=f"An error occurred: {str(exc)}"
+                )
