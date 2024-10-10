@@ -62,6 +62,7 @@ class Donations(SQLModel, table=True):
     )
     status: Optional[int] = None
     transaction_id: Optional[str] = None
+    input_date: Optional[str] = None
 
     purpose_id: Optional[int] = Field(
         default=None,

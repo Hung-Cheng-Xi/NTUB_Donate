@@ -31,6 +31,7 @@ class DonationsBase(SQLModel):
     type: DonationType = DonationType.STORE
     status: Optional[int] = None
     transaction_id: Optional[str] = None
+    input_date: Optional[str] = None
     purpose_id: int
 
 
