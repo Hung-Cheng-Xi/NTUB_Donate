@@ -4,15 +4,27 @@ from contextlib import asynccontextmanager
 
 from fastapi.routing import APIRoute
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+
 from app.core.config import settings
 from app.application.client.endpoints import client_router
 from app.application.admin.endpoints import admin_router
 
+from app.application.admin.endpoints.ftp import refresh_data as refresh_ftp_data
+from app.domain.services.ftp_service import FTPService
+
+
+# Scheduler setup for refreshing data daily
+scheduler = AsyncIOScheduler()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.info("Starting the app")
+    scheduler.add_job(refresh_ftp_data, CronTrigger(hour=0, minute=0), args=[FTPService()])  # 安排每天午夜刷新 FTP 資料
+    scheduler.start()
     yield
+    scheduler.shutdown()
     logging.info("Shutting down the app")
 
 app = FastAPI(
