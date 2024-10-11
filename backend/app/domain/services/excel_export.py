@@ -1,9 +1,9 @@
-from typing import Annotated
-from openpyxl import Workbook
+import pandas as pd
 from io import BytesIO
-from fastapi import Depends
-from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import select
+from typing import Annotated
+from fastapi import Depends
 
 from app.core.database import get_db_session
 from app.application.client.schemas.unit import UnitInfo
@@ -18,49 +18,64 @@ class ExcelService:
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db_session)]):
         self.session = session
 
-    async def create_workbook(self):
-        # 創建一個新的工作簿
-        workbook = Workbook()
-        sheet = workbook.active
-        sheet.title = "Data"
+    async def fetch_data(self):
+        """從資料庫中獲取捐款記錄、捐款目的及受捐單位資料"""
 
-        # 添加標題行
-        headers = [
-            "編號", "受捐單位", "捐款名義", "捐款金額", "捐款方式", "捐款人姓名(公司名稱)", "身分證字號(統一編號)", "生日",
-            "聯絡電話(行動電話)", "email信箱", "捐款人身分", "畢業年", "學制/科/系/所", "戶籍地址", "通訊地址", "公開資訊",
-            "備註", "繳費單代碼", "繳款日期"
-        ]
-        sheet.append(headers)
-
-        # 使用 JOIN 獲取數據
         statement = (
             select(Donations, DonationPurpose, Unit)
             .join(DonationPurpose, Donations.purpose_id == DonationPurpose.id)
             .join(Unit, DonationPurpose.unit_id == Unit.id)
         )
         result = await self.session.execute(statement)
-        records = result.all()
+        return result.all()
 
-        # 填充表格數據
-        for donation, purpose, unit in records:
-            donation_info = DonationInfo.model_validate(donation)
-            purpose_info = DonationPurposeInfo.model_validate(
-                purpose) if purpose else None
-            unit_info = UnitInfo.model_validate(unit) if unit else None
+    def transform_to_dict(self, donation, purpose, unit):
+        """將資料轉換為字典格式，用於創建 DataFrame"""
 
-            row = [
-                donation_info.id, unit_info.name if unit_info else "N/A", purpose_info.name, donation_info.amount, donation_info.type.value, donation_info.username,
-                donation_info.id_card, donation_info.user_birthday, donation_info.phone_number, donation_info.email, donation_info.identity.value,
-                donation_info.year, donation_info.gept, donation_info.registered_address, donation_info.res_address, donation_info.public_status,
-                donation_info.memo, donation_info.account, donation_info.input_date
-            ]
-            sheet.append(row)
+        donation_info = DonationInfo.model_validate(donation)
+        purpose_info = DonationPurposeInfo.model_validate(purpose) if purpose else None
+        unit_info = UnitInfo.model_validate(unit) if unit else None
 
-        return workbook
+        return {
+            "編號": donation_info.id,
+            "受捐單位": unit_info.name if unit_info else "N/A",
+            "捐款名義": purpose_info.name if purpose_info else "N/A",
+            "捐款金額": donation_info.amount,
+            "捐款方式": donation_info.type.value,
+            "捐款人姓名(公司名稱)": donation_info.username,
+            "身分證字號(統一編號)": donation_info.id_card,
+            "生日": donation_info.user_birthday,
+            "聯絡電話(行動電話)": donation_info.phone_number,
+            "email信箱": donation_info.email,
+            "捐款人身分": donation_info.identity.value,
+            "畢業年": donation_info.year,
+            "學制/科/系/所": donation_info.gept,
+            "戶籍地址": donation_info.registered_address,
+            "通訊地址": donation_info.res_address,
+            "公開資訊": donation_info.public_status,
+            "備註": donation_info.memo,
+            "繳費單代碼": donation_info.account,
+            "繳款日期": donation_info.input_date,
+        }
 
-    async def export_to_bytes(self, workbook):
-        # 將工作簿儲存到內存中的 BytesIO
+    async def create_workbook(self):
+        """創建一個包含捐款資料的 DataFrame"""
+
+        # 獲取資料
+        records = await self.fetch_data()
+
+        # 將資料轉換為字典列表
+        data = [self.transform_to_dict(donation, purpose, unit) for donation, purpose, unit in records]
+
+        # 創建 DataFrame
+        df = pd.DataFrame(data)
+        return df
+
+    async def export_to_bytes(self, df: pd.DataFrame):
+        """將 DataFrame 匯出為 Excel 文件並儲存到 BytesIO"""
+        
         output = BytesIO()
-        workbook.save(output)
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            df.to_excel(writer, index=False, sheet_name="Data")
         output.seek(0)
         return output
