@@ -6,7 +6,7 @@ export const Layout: React.FC = () => {
 
   // 首頁的 NavBar 項目
   const links = [
-    { label: '最新消息', href: '#' },
+    { label: '最新消息', href: '/admin/news/' },
     { label: '最新消息', href: '#' },
     { label: '最新消息', href: '#' },
     { label: '最新消息', href: '#' },
