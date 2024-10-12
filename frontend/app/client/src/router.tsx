@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './components/Layout/Layout';
-import DonatePage from './pages/donate.page';
+import DonateHomePage from './pages/donate.Homepage';
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
         path: '/client/',
         index: true,
         async lazy() {
-          return { Component: DonatePage };
+          return { Component: DonateHomePage };
         },
       },
     ],
