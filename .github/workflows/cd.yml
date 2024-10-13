@@ -18,11 +18,18 @@ jobs:
         run: |
           echo "Setting up environment variables..."
           echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
+          echo "BARCODE_API_URL=$${{secrets.BARCODE_API_URL }}" >> .env.production
+
           echo "GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}" >> .env.production
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.production
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
           echo "SIGNING_KEY=${{ secrets.SIGNING_KEY }}" >> .env.production
-          echo "BARCODE_API_URL=$${{secrets.BARCODE_API_URL }}" >> .env.production
+
+          echo "FTP_HOST=${{ secrets.FTP_HOST }}" >> .env.production
+          echo "FTP_USER=${{ secrets.FTP_USER }}" >> .env.production
+          echo "FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}" >> .env.production
+          echo "FTP_PORT=${{ secrets.FTP_PORT }}" >> .env.production
 
       - name: Deploy with Docker Compose
         run: docker compose up --build -d
