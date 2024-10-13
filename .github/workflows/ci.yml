@@ -37,7 +37,7 @@ jobs:
 
       - name: Create ZIP file of frontend and backend
         run: |
-          zip -r build_artifacts.zip frontend/app/admin/dist frontend/app/client/dist backend
+          tar -czf build_artifacts.tar.gz frontend/app/admin/dist frontend/app/client/dist backend
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
