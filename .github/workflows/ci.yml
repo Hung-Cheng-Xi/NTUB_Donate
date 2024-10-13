@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build_artifacts.zip
+          path: build_artifacts.tar.gz
 
   release:
     if: github.ref == 'refs/heads/main'
