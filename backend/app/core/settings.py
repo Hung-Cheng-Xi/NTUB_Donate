@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     postgres_db: str
     google_client_id: str
     google_client_secret: str
-    google_redirect_uri: str
+    google_redirect_url: str
     signing_key: str
 
     ftp_host: str
