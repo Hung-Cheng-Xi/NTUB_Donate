@@ -12,8 +12,8 @@ if TYPE_CHECKING:
 
 
 class DonationsBase(SQLModel):
-    """
-    Donations 的基本 schema，包含基本的字段定義，用於創建或更新捐款記錄。
+    """Donations 的基本 schema，
+    包含基本的字段定義，用於創建或更新捐款記錄。
     不包含自動生成的字段如 id、created_at 和 updated_at。
     """
     username: str
@@ -38,25 +38,20 @@ class DonationsBase(SQLModel):
 
 
 class DonationsCreate(DonationsBase):
-    """
-    用於創建 Donations 記錄的 schema，繼承 DonationsBase。
+    """用於創建 Donations 記錄的 schema，繼承 DonationsBase。
     包含用戶需要提交的所有字段。
     """
     pass
 
 
 class DonationsUpdate(DonationsBase):
-    """
-    用於更新 Donations 記錄的 schema，允許部分字段更新。
-    """
+    """用於更新 Donations 記錄的 schema，允許部分字段更新。"""
     pass
 
 
 class DonationsInDBBase(DonationsBase):
-    """
-    表示數據庫中 Donations 記錄的基礎結構。
-    包含自動生成的 id、created_at 和 updated_at，
-    並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
+    """表示數據庫中 Donations 記錄的基礎結構。
+    包含自動生成的 id、created_at 和 updated_at，並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
     """
     id: Optional[int]
     # created_at: datetime
@@ -67,16 +62,14 @@ class DonationsInDBBase(DonationsBase):
 
 
 class DonationInfo(DonationsInDBBase):
-    """
-    用於返回 Donations 的基本信息。
+    """用於返回 Donations 的基本信息。
     繼承 DonationsInDBBase，適用於讀取操作。
     """
     pass
 
 
 class DonationsDetail(DonationsInDBBase):
-    """
-    用於返回 Donations 的詳細信息，包含與 DonationPurposeInfo 的關聯。
+    """用於返回 Donations 的詳細信息，包含與 DonationPurposeInfo 的關聯。
     """
     purpose: Optional["DonationPurposeInfo"]
 

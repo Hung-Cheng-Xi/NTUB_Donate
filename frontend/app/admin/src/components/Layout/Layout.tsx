@@ -6,10 +6,10 @@ export const Layout: React.FC = () => {
 
   // 首頁的 NavBar 項目
   const links = [
+    { label: '捐款清單', href: '/admin/' },
     { label: '最新消息', href: '/admin/news/' },
-    { label: '最新消息', href: '#' },
-    { label: '最新消息', href: '#' },
-    { label: '最新消息', href: '#' },
+    { label: '捐款名目', href: '/admin/purpose/' },
+    { label: '相關文件', href: '/admin/document/' },
   ];
 
   return (
