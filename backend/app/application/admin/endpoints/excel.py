@@ -19,7 +19,11 @@ async def excel_export(
     # 使用 StreamingResponse 返回 Excel 檔案
     response = StreamingResponse(
         output,
-        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        media_type=(
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
     )
-    response.headers["Content-Disposition"] = "attachment; filename=donations.xlsx"
+    response.headers["Content-Disposition"] = (
+        "attachment; filename=donations.xlsx"
+    )
     return response

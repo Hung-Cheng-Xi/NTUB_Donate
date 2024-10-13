@@ -7,9 +7,8 @@ from app.domain.services.ftp_service import FTPService
 router = APIRouter()
 
 
-
 @router.post("/refresh-data")
-async def refresh_data(ftp_service: Annotated[FTPService, Depends()]):
+async def refresh_ftp_data(ftp_service: Annotated[FTPService, Depends()]):
     logging.info("刷新 FTP 伺服器中的檔案")
     try:
         ftp_service.refresh_data()

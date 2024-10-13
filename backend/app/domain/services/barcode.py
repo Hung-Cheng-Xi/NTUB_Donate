@@ -7,9 +7,6 @@ from app.application.client.schemas.barcode import BarCodeData
 
 
 class BarCodeService:
-    def __init__(self):
-        pass
-
     async def generate_barcode(
             self,
             barcode_data: BarCodeData

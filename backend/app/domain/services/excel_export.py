@@ -15,7 +15,10 @@ from app.domain.models.donation_purpose import DonationPurpose
 
 
 class ExcelService:
-    def __init__(self, session: Annotated[AsyncSession, Depends(get_db_session)]):
+    def __init__(
+        self,
+        session: Annotated[AsyncSession, Depends(get_db_session)]
+    ):
         self.session = session
 
     async def fetch_data(self):
@@ -33,7 +36,8 @@ class ExcelService:
         """將資料轉換為字典格式，用於創建 DataFrame"""
 
         donation_info = DonationInfo.model_validate(donation)
-        purpose_info = DonationPurposeInfo.model_validate(purpose) if purpose else None
+        purpose_info = DonationPurposeInfo.model_validate(
+            purpose) if purpose else None
         unit_info = UnitInfo.model_validate(unit) if unit else None
 
         return {
@@ -65,7 +69,10 @@ class ExcelService:
         records = await self.fetch_data()
 
         # 將資料轉換為字典列表
-        data = [self.transform_to_dict(donation, purpose, unit) for donation, purpose, unit in records]
+        data = [
+            self.transform_to_dict(donation, purpose, unit)
+            for donation, purpose, unit in records
+        ]
 
         # 創建 DataFrame
         df = pd.DataFrame(data)
@@ -73,7 +80,7 @@ class ExcelService:
 
     async def export_to_bytes(self, df: pd.DataFrame):
         """將 DataFrame 匯出為 Excel 文件並儲存到 BytesIO"""
-        
+
         output = BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
             df.to_excel(writer, index=False, sheet_name="Data")
