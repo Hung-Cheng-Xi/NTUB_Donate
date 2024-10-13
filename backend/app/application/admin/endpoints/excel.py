@@ -18,6 +18,14 @@ async def excel_export(
     # 返回 Excel 文件作為下載
     headers = {
         'Content-Disposition': 'attachment; filename="data.xlsx"',
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        'Content-Type': (
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
     }
-    return Response(content=output.read(), headers=headers, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    return Response(
+        content=output.read(),
+        headers=headers,
+        media_type=(
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    )
