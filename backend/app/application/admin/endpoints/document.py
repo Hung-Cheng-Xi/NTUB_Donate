@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from app.domain.models.domcument import Document
 from app.application.admin.schemas.document import DocumentCreate
-from backend.app.infrastructure.repositories.document import DocumentRepository
+from app.infrastructure.repositories.document import DocumentRepository
 
 router = APIRouter()
 
