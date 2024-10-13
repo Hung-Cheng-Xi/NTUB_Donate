@@ -18,12 +18,11 @@ jobs:
         run: |
           echo "Setting up environment variables..."
           echo "ENVIRONMENT=production" >> $GITHUB_ENV
-
-          # Add Google OAuth and Signing Key to .env.production
           echo "GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}" >> .env.production
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.production
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
           echo "SIGNING_KEY=${{ secrets.SIGNING_KEY }}" >> .env.production
+          echo "BARCODE_API_URL=$${{secrets.BARCODE_API_URL }}" >> .env.production
 
       - name: Deploy with Docker Compose
         run: docker compose up --build -d
