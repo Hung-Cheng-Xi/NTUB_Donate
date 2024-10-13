@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 
 class DonationPurpose(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
-    name: str
+    title: str
     lump_sum: int
-    summary: str
+    description: str
     memo: Optional[str] = None
     is_show: bool
 
