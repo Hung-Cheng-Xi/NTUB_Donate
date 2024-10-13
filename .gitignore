@@ -1,3 +1,6 @@
+# env file
+backend/.env.development
+
 # Logs
 logs/*
 !logs/.gitkeep
