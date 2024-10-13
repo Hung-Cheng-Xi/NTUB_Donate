@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemType } from './GenericPage';
+import type { ListItemType } from '../../../types/ItemType';
 
 // ListItem Component
 interface ListItemProps {

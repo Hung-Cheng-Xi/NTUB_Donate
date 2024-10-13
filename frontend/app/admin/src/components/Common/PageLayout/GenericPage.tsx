@@ -5,68 +5,13 @@ import Pagination from '../Pagination';
 import FormModal from '../Modal/Modal';
 import ListItem from './ListItem';
 import TableItem from './TableItem';
+import { formatListItemType, formatTableItemType } from '../../../utils/format';
+import { ListItemType, TableItemType } from '../../../types/ItemType';
 
 const Container = styled.div`
   margin: 97.5px 97.5px 10.5px 97.5px;
   width: 1245px;
 `;
-
-export interface ListItemType {
-  id: number;
-  date?: string;
-  title: string;
-  lump_sum?: number;
-  memo?: string;
-  description?: string;
-  category?: string;
-  description_link?: string;
-}
-
-export interface TableItemType {
-  id: number;
-  createDate: string;
-  donateDate: string;
-  idCard: string;
-  name: string;
-  category: string;
-  type: string;
-  amount: number;
-  paymentCode: string;
-  phoneNumber: string;
-  email: string;
-  memo: string;
-}
-
-// Formatting functions for ListItemType and TableItemType
-export const formatListItemType = (
-  item: ListItemType,
-): { [key: string]: string } => ({
-  id: String(item.id),
-  date: item.date || '',
-  title: item.title,
-  lump_sum: String(item.lump_sum || 0),
-  memo: item.memo || '',
-  description: item.description || '',
-  category: item.category || '',
-  description_link: item.description_link || '',
-});
-
-export const formatTableItemType = (
-  item: TableItemType,
-): { [key: string]: string } => ({
-  id: String(item.id),
-  createDate: item.createDate,
-  donateDate: item.donateDate,
-  idCard: item.idCard,
-  name: item.name,
-  category: item.category,
-  type: item.type,
-  amount: String(item.amount),
-  paymentCode: item.paymentCode,
-  phoneNumber: item.phoneNumber,
-  email: item.email,
-  memo: item.memo,
-});
 
 interface GenericPageProps<T> {
   data: T[];

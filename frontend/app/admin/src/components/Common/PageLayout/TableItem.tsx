@@ -1,5 +1,5 @@
 import React from 'react';
-import type { TableItemType } from './GenericPage';
+import type { TableItemType } from '../../../types/ItemType';
 
 // TableItem Component
 interface TableItemProps {
