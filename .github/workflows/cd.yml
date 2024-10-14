@@ -14,28 +14,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy with Docker Compose
+      - name: Create and deploy using Docker Compose
         run: |
-          docker compose up --build -d \
-          -e APP_NAME=${{ secrets.APP_NAME }} \
-          -e ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-          -e ITEMS_PER_USER=${{ secrets.ITEMS_PER_USER }} \
-          -e BARCODE_API_URL="${{ secrets.BARCODE_API_URL }}" \
-          -e ZIPCODE_API_URL=${{ secrets.ZIPCODE_API_URL }} \
-          -e ENABLE_DOCS=${{ secrets.ENABLE_DOCS }} \
-          -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-          -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-          -e POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} \
-          -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
-          -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
-          -e GOOGLE_REDIRECT_URI="${{ secrets.GOOGLE_REDIRECT_URI }}" \
-          -e GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" \
-          -e GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
-          -e SIGNING_KEY="${{ secrets.SIGNING_KEY }}" \
-          -e FTP_HOST="${{ secrets.FTP_HOST }}" \
-          -e FTP_USER="${{ secrets.FTP_USER }}" \
-          -e FTP_PASSWORD="${{ secrets.FTP_PASSWORD }}" \
-          -e FTP_PORT="${{ secrets.FTP_PORT }}"
+          cat <<EOF > ./backend/.env
+          APP_NAME=${{ secrets.APP_NAME }}
+          ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+          ITEMS_PER_USER=${{ secrets.ITEMS_PER_USER }}
+          BARCODE_API_URL=${{ secrets.BARCODE_API_URL }}
+          ZIPCODE_API_URL=${{ secrets.ZIPCODE_API_URL }}
+          ENABLE_DOCS=${{ secrets.ENABLE_DOCS }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          SIGNING_KEY=${{ secrets.SIGNING_KEY }}
+          FTP_HOST=${{ secrets.FTP_HOST }}
+          FTP_USER=${{ secrets.FTP_USER }}
+          FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
+          FTP_PORT=${{ secrets.FTP_PORT }}
+          EOF
+          docker-compose up --build -d
 
       - name: Verify Deployment
         run: |
@@ -44,5 +46,5 @@ jobs:
 
       - name: Cleanup on Failure
         if: ${{ failure() }}
-        run: docker compose down
+        run: docker-compose down
         continue-on-error: true
