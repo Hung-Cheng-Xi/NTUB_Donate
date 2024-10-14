@@ -7,11 +7,18 @@ class DonationPurposeBase(SQLModel):
     這些字段通常是創建和更新操作需要的數據。
     不包括自動生成的 id、created_at 和 updated_at。
     """
-    name: str
+    title: str
     lump_sum: int
     summary: str
+    description: str
     memo: Optional[str] = None
     is_show: bool
+
+
+class DonationPurposeItem(DonationPurposeBase):
+    id: int
+    total_donation: float
+    achieved_percentage: float
 
 
 class DonationPurposeInDBBase(DonationPurposeBase):
