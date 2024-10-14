@@ -82,17 +82,12 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
                 donation.amount for donation in purpose.donations)
             achieved_percentage: Any = (
                 total_donation / purpose.lump_sum) if purpose.lump_sum > 0 else 0
-            response_list.append(DonationPurposeItem(
-                id=purpose.id,
-                description=purpose.description,
-                is_show=purpose.is_show,
-                lump_sum=purpose.lump_sum,
-                title=purpose.title,
-                memo=purpose.memo,
-                unit_id=purpose.unit_id,
-                total_donation=total_donation,
-                achieved_percentage=achieved_percentage
-            ))
+
+            # 使用 model_dump 將 purpose 轉換為字典，然後添加 total_donation
+            purpose_dict = purpose.model_dump()
+            purpose_dict['total_donation'] = total_donation
+            purpose_dict['achieved_percentage'] = achieved_percentage
+            response_list.append(DonationPurposeItem(**purpose_dict))
 
         # 按達成百分比排序
         sorted_purposes = sorted(

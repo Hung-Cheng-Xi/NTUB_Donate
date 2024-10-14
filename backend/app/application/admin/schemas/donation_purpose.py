@@ -13,7 +13,6 @@ class DonationPurposeBase(SQLModel):
     """
     title: str
     lump_sum: int
-    summary: str
     description: str
     memo: Optional[str] = None
     is_show: bool
