@@ -14,25 +14,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up environment variables
+      - name: Create and deploy using Docker Compose
         run: |
-          echo "Setting up environment variables..."
-          echo "ENVIRONMENT=production" >> $GITHUB_ENV
-
-          echo "BARCODE_API_URL=$${{secrets.BARCODE_API_URL }}" >> .env.production
-
-          echo "GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}" >> .env.production
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.production
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
-          echo "SIGNING_KEY=${{ secrets.SIGNING_KEY }}" >> .env.production
-
-          echo "FTP_HOST=${{ secrets.FTP_HOST }}" >> .env.production
-          echo "FTP_USER=${{ secrets.FTP_USER }}" >> .env.production
-          echo "FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}" >> .env.production
-          echo "FTP_PORT=${{ secrets.FTP_PORT }}" >> .env.production
-
-      - name: Deploy with Docker Compose
-        run: docker compose up --build -d
+          cat <<EOF > ./backend/.env
+          APP_NAME=${{ secrets.APP_NAME }}
+          ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+          ITEMS_PER_USER=${{ secrets.ITEMS_PER_USER }}
+          BARCODE_API_URL=${{ secrets.BARCODE_API_URL }}
+          ZIPCODE_API_URL=${{ secrets.ZIPCODE_API_URL }}
+          ENABLE_DOCS=${{ secrets.ENABLE_DOCS }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          SIGNING_KEY=${{ secrets.SIGNING_KEY }}
+          FTP_HOST=${{ secrets.FTP_HOST }}
+          FTP_USER=${{ secrets.FTP_USER }}
+          FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
+          FTP_PORT=${{ secrets.FTP_PORT }}
+          EOF
+          docker compose up --build -d
 
       - name: Verify Deployment
         run: |
@@ -41,5 +46,5 @@ jobs:
 
       - name: Cleanup on Failure
         if: ${{ failure() }}
-        run: docker compose down
+        run: docker-compose down
         continue-on-error: true
