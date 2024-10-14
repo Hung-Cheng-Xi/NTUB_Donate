@@ -101,7 +101,7 @@ class BaseRepository(Generic[T]):
         result = await self.session.execute(statement)
         return result.scalars().first() is not None
 
-    async def get_paginated_items(
+    async def get_paginated_all(
         self,
         model: Type[T],
         skip: int = 0,

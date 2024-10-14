@@ -32,10 +32,6 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         """根據捐款目的 ID 取得捐款目的"""
         return await self.get_by_id(donation_purpose_id, DonationPurpose)
 
-    async def get_all_donation_purposes(self) -> list[DonationPurpose]:
-        """取得所有捐款目的"""
-        return await self.get_all(DonationPurpose)
-
     async def update_donation_purpose(
         self, donation_purpose_id: int,
         updated_donation_purpose: DonationPurpose
@@ -63,7 +59,7 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         """刪除一筆捐款目的"""
         return await self.delete_instance(donation_purpose_id, DonationPurpose)
 
-    async def get_donation_purpose_items(
+    async def get_donation_purpose_all(
         self,
         skip: int,
         limit: int
