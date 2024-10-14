@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-button-darkblue text-white py-4">
+    <footer className="bg-button-darkblue text-white py-4 mt-[120px]">
       <div className="max-w-7xl mx-auto flex justify-center text-sm">
         <p className="text-center">
           Copyright ©2020 國立臺北商業大學 ALL RIGHTS RESERVED.
