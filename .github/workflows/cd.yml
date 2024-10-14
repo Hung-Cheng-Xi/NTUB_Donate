@@ -37,7 +37,7 @@ jobs:
           FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}
           FTP_PORT=${{ secrets.FTP_PORT }}
           EOF
-          docker-compose up --build -d
+          docker compose up --build -d
 
       - name: Verify Deployment
         run: |
