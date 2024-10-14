@@ -10,7 +10,32 @@ export const AddressDataSchema = {
     },
     type: 'object',
     required: ['address'],
-    title: 'AddressData'
+    title: 'AddressData',
+    description: '用於創建 Address 記錄的 schema，'
+} as const;
+
+export const AuthRequestSchema = {
+    properties: {
+        code: {
+            type: 'string',
+            title: 'Code'
+        }
+    },
+    type: 'object',
+    required: ['code'],
+    title: 'AuthRequest'
+} as const;
+
+export const AuthResponseSchema = {
+    properties: {
+        access_token: {
+            type: 'string',
+            title: 'Access Token'
+        }
+    },
+    type: 'object',
+    required: ['access_token'],
+    title: 'AuthResponse'
 } as const;
 
 export const BarCodeDataSchema = {
@@ -38,7 +63,76 @@ export const BarCodeDataSchema = {
     },
     type: 'object',
     required: ['Group', 'SerialNumber', 'Time', 'Money'],
-    title: 'BarCodeData'
+    title: 'BarCodeData',
+    description: '用於創建 BarCode 記錄的 schema，'
+} as const;
+
+export const DocumentSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/DocumentCategory',
+            description: '相關法規類別',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show'],
+    title: 'Document'
+} as const;
+
+export const DocumentCategorySchema = {
+    type: 'string',
+    enum: ['ALL', 'DEPARTMENT_LAWS', 'COMMERCIAL_LAW', 'TAX_RELATED_LAWS', 'DONATION_FORMS_DOWNLOAD'],
+    title: 'DocumentCategory',
+    description: `表示相關法規方式的 Enum。
+
+ALL: 全部
+DEPARTMENT_LAWS: 各部法規
+COMMERCIAL_LAW: 北商大法規
+TAX_RELATED_LAWS: 相關稅法
+DONATION_FORMS_DOWNLOAD: 捐款相關表單下載`
+} as const;
+
+export const DocumentCreateSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/DocumentCategory',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show'],
+    title: 'DocumentCreate',
+    description: `用於創建 Document 記錄的 schema，
+繼承了 DocumentBase，包含相關法規提交的所有必要字段。`
 } as const;
 
 export const DonationPurposeSchema = {
@@ -47,17 +141,17 @@ export const DonationPurposeSchema = {
             type: 'integer',
             title: 'Id'
         },
-        name: {
+        title: {
             type: 'string',
-            title: 'Name'
+            title: 'Title'
         },
         lump_sum: {
             type: 'integer',
             title: 'Lump Sum'
         },
-        summary: {
+        description: {
             type: 'string',
-            title: 'Summary'
+            title: 'Description'
         },
         memo: {
             anyOf: [
@@ -87,7 +181,7 @@ export const DonationPurposeSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'lump_sum', 'summary', 'is_show'],
+    required: ['title', 'lump_sum', 'description', 'is_show'],
     title: 'DonationPurpose'
 } as const;
 
@@ -205,8 +299,9 @@ export const DonationsSchema = {
             title: 'Registered Address'
         },
         public_status: {
-            type: 'string',
-            title: 'Public Status'
+            '$ref': '#/components/schemas/PubicStatus',
+            description: '公開狀態',
+            default: 'PUBLIC'
         },
         memo: {
             anyOf: [
@@ -254,6 +349,17 @@ export const DonationsSchema = {
             ],
             title: 'Transaction Id'
         },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
         purpose_id: {
             anyOf: [
                 {
@@ -267,7 +373,7 @@ export const DonationsSchema = {
         }
     },
     type: 'object',
-    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'public_status', 'amount', 'account'],
+    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account'],
     title: 'Donations'
 } as const;
 
@@ -329,8 +435,8 @@ export const DonationsCreateSchema = {
             title: 'Registered Address'
         },
         public_status: {
-            type: 'string',
-            title: 'Public Status'
+            '$ref': '#/components/schemas/PubicStatus',
+            default: 'PUBLIC'
         },
         memo: {
             anyOf: [
@@ -377,13 +483,24 @@ export const DonationsCreateSchema = {
             ],
             title: 'Transaction Id'
         },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
         purpose_id: {
             type: 'integer',
             title: 'Purpose Id'
         }
     },
     type: 'object',
-    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'public_status', 'amount', 'account', 'purpose_id'],
+    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account', 'purpose_id'],
     title: 'DonationsCreate',
     description: `用於創建 Donations 記錄的 schema，繼承 DonationsBase。
 包含用戶需要提交的所有字段。`
@@ -486,6 +603,17 @@ export const NewsCreateSchema = {
     title: 'NewsCreate',
     description: `用於創建 News 記錄的 schema，
 繼承了 NewsBase，包含用戶提交的所有必要字段。`
+} as const;
+
+export const PubicStatusSchema = {
+    type: 'string',
+    enum: ['PUBLIC', 'ANONYMOUS', 'PARTIALLY'],
+    title: 'PubicStatus',
+    description: `表示公開狀態的 Enum。
+
+PUBLIC: 公開
+ANONYMOUS: 匿名
+PARTIALLY: 匿名但受捐單位知曉`
 } as const;
 
 export const UnitSchema = {
