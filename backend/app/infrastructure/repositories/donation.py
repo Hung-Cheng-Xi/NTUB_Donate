@@ -6,9 +6,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.donation import Donations
+from app.application.admin.schemas.donation import DonationInfo as DonationInfoAdmin
 from app.application.client.schemas.donation import (
     DonationsCreate,
-    DonationInfo,
+    DonationInfo as DonationInfoClient,
 )
 
 from app.infrastructure.repositories.base import BaseRepository
@@ -30,25 +31,33 @@ class DonationRepository(BaseRepository[Donations]):
         """根據捐款 ID 取得捐款"""
         return await self.get_by_id(donation_id, Donations)
 
-    async def get_all_donations(self) -> list[DonationInfo]:
-        """取得所有捐款，包含捐款目的的詳細信息"""
+    async def get_donations_admin_all(self, skip, limit) -> list[DonationInfoAdmin]:
+        """取得所有捐款分頁資料"""
+        donations = await self.get_paginated_all(Donations, skip, limit)
+        return [DonationInfoAdmin.model_dump(donation) for donation in donations]
+
+    async def get_donations_client_all(self, skip, limit) -> list[DonationInfoClient]:
+        """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
         async with self.session as session:
             # 使用 select 加載 Donations，並同時載入相關的 DonationPurpose 資料
             result = await session.execute(
                 select(Donations)
                 .options(selectinload(Donations.purpose))
+                .offset(skip)
+                .limit(limit)
             )
             donations = result.scalars().all()
 
-            # 將結果轉換為 DonationInfo 格式
+            # 將結果轉換為 DonationInfoClient 格式
             donation_info_list = [
-                DonationInfo(
+                DonationInfoClient(
                     username=donation.username,
                     amount=donation.amount,
                     purpose=donation.purpose,  # 這裡會自動映射到 DonationPurpose 子模型
                     input_date=donation.input_date
                 )
                 for donation in donations
+                if donation.input_date is not None and donation.input_date != "string"
             ]
 
         return donation_info_list

@@ -7,6 +7,7 @@ from app.application.client.endpoints.donation_purpose import (
 )
 from app.application.client.endpoints.news import router as news_purpose_router
 from app.application.client.endpoints.address import router as address_router
+from app.application.client.endpoints.document import router as document_router
 
 client_router = APIRouter(prefix="/client")
 
@@ -26,6 +27,12 @@ client_router.include_router(
     news_purpose_router,
     prefix="/news",
     tags=["Client - News"]
+)
+
+client_router.include_router(
+    document_router,
+    prefix="/document",
+    tags=["Client - Document"]
 )
 
 client_router.include_router(

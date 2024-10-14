@@ -4,7 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.news import News
-from app.application.admin.schemas.news import NewsCreate
+from app.application.admin.schemas.news import (
+    NewsCreate,
+    NewsInfo
+)
 
 from app.infrastructure.repositories.base import BaseRepository
 
@@ -22,9 +25,10 @@ class NewsRepository(BaseRepository[News]):
         """根據最新消息 ID 取得最新消息"""
         return await self.get_by_id(news_id, News)
 
-    async def get_all_newss(self) -> list[News]:
-        """取得所有最新消息"""
-        return await self.get_all(News)
+    async def get_news_all(self, skip: int, limit: int) -> list[NewsInfo]:
+        """取得分頁的最新消息"""
+        news = await self.get_paginated_all(News, skip, limit)
+        return [NewsInfo.model_dump(new) for new in news]
 
     async def update_news(self, news_id: int, updated_news: News) -> News:
         """更新一筆最新消息"""

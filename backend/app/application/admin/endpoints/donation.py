@@ -3,19 +3,20 @@ from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation import Donations
-from app.application.admin.schemas.donation import DonationsCreate
+from app.application.admin.schemas.donation import DonationInfo, DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
 
 router = APIRouter()
 
 
-# Schma 設定一個前台的少量資料
 @router.get("/", response_model=List[Donations])
 async def get_donations(
-    repository: Annotated[DonationRepository, Depends()]
-):
-    logging.info("取得 Donation 資料")
-    return await repository.get_all_donations()
+    repository: Annotated[DonationRepository, Depends()],
+    skip: int = 0,
+    limit: int = 10,
+) -> List[DonationInfo]:
+    logging.info("取得分頁的 Donation 資料")
+    return await repository.get_donations_admin_all(skip, limit)
 
 
 @router.post("/", response_model=Donations)
