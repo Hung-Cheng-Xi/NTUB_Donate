@@ -2,8 +2,8 @@ import React from 'react';
 
 const LoginPage: React.FC = () => {
   const googleAuthParams = {
-    client_id: '',
-    redirect_uri: '',
+    client_id: '452962124993-i7tb7ic5b4e0ei05c6v6hplkb64huqjn.apps.googleusercontent.com',
+    redirect_uri: 'http://donate.ntub.edu.tw:8001/admin/',
     response_type: 'code',
     scope: 'email',
   };
