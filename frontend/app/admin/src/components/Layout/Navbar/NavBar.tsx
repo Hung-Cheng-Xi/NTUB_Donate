@@ -4,9 +4,9 @@ import { NavBarProps } from '../../../types/nav';
 
 const HomeNavBar: React.FC<NavBarProps> = ({ links }) => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-[24px]">
       <div
-        className="fixed bg-white mx-auto flex justify-between items-center shadow-md h-[84px] z-50 w-full rounded-none"
+        className="bg-white mx-auto flex justify-between items-center shadow-md h-[84px] w-full rounded-none"
       >
         <div className="flex items-center">
           <img

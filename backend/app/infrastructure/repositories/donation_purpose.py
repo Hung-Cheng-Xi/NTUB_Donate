@@ -1,12 +1,15 @@
-from typing import Annotated
+from typing import Annotated, Any
 from fastapi import Depends
+from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.client.schemas.donation_purpose import (
-    DonationPurposeCreate
+from app.application.admin.schemas.donation_purpose import (
+    DonationPurposeCreate,
+    DonationPurposeItem,
 )
 
 
@@ -64,6 +67,36 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         self,
         skip: int,
         limit: int
-    ) -> list[DonationPurpose]:
-        """取得分頁的捐款目的"""
-        return await self.get_paginated_items(DonationPurpose, skip, limit)
+    ) -> list[DonationPurposeItem]:
+        """取得分頁的捐款目的，按達到金額上限百分比排序"""
+        # 取得 DonationPurpose 並預加載捐款以避免 N+1 問題
+        statement = select(DonationPurpose).options(
+            selectinload(DonationPurpose.donations))
+        results = await self.session.execute(statement)
+        purposes = results.scalars().all()
+
+        # 計算每個捐款目的的達成百分比，並存放在暫時屬性中
+        response_list = []
+        for purpose in purposes:
+            total_donation: Any = sum(
+                donation.amount for donation in purpose.donations)
+            achieved_percentage: Any = (
+                total_donation / purpose.lump_sum) if purpose.lump_sum > 0 else 0
+            response_list.append(DonationPurposeItem(
+                id=purpose.id,
+                description=purpose.description,
+                is_show=purpose.is_show,
+                lump_sum=purpose.lump_sum,
+                title=purpose.title,
+                memo=purpose.memo,
+                unit_id=purpose.unit_id,
+                total_donation=total_donation,
+                achieved_percentage=achieved_percentage
+            ))
+
+        # 按達成百分比排序
+        sorted_purposes = sorted(
+            response_list, key=lambda p: p.achieved_percentage, reverse=True)
+
+        # 返回分頁結果
+        return sorted_purposes[skip:skip + limit]

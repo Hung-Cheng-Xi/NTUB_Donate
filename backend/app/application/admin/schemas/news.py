@@ -4,7 +4,7 @@ from sqlmodel import SQLModel
 
 
 if TYPE_CHECKING:
-    from app.application.client.schemas.unit import UnitInfo
+    from app.application.admin.schemas.unit import UnitInfo
 
 
 class NewsBase(SQLModel):
