@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends
 
 from app.domain.models.donation_purpose import DonationPurpose
 from app.application.admin.schemas.donation_purpose import (
-    DonationPurposeCreate
+    DonationPurposeCreate,
+    DonationPurposeItem
 )
 from app.infrastructure.repositories.donation_purpose import (
     DonationPurposeRepository
@@ -13,20 +14,12 @@ from app.infrastructure.repositories.donation_purpose import (
 router = APIRouter()
 
 
-@router.get("/", response_model=List[DonationPurpose])
+@router.get("/", response_model=List[DonationPurposeItem])
 async def get_donation_purposes(
-    repository: Annotated[DonationPurposeRepository, Depends()]
-):
-    logging.info("取得 Donation Purpose 資料")
-    return await repository.get_all_donation_purposes()
-
-
-@router.get("/items", response_model=List[DonationPurpose])
-async def get_items(
     repository: Annotated[DonationPurposeRepository, Depends()],
-    skip: int = 10,
-    limit: int = 0
-):
+    skip: int = 0,
+    limit: int = 10,
+) -> List[DonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
     return await repository.get_donation_purpose_items(skip, limit)
 
