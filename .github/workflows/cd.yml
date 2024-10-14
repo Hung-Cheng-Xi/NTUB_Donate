@@ -14,25 +14,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up environment variables
-        run: |
-          echo "Setting up environment variables..."
-          echo "ENVIRONMENT=production" >> $GITHUB_ENV
-
-          echo "BARCODE_API_URL=$${{secrets.BARCODE_API_URL }}" >> .env.production
-
-          echo "GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}" >> .env.production
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.production
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
-          echo "SIGNING_KEY=${{ secrets.SIGNING_KEY }}" >> .env.production
-
-          echo "FTP_HOST=${{ secrets.FTP_HOST }}" >> .env.production
-          echo "FTP_USER=${{ secrets.FTP_USER }}" >> .env.production
-          echo "FTP_PASSWORD=${{ secrets.FTP_PASSWORD }}" >> .env.production
-          echo "FTP_PORT=${{ secrets.FTP_PORT }}" >> .env.production
-
       - name: Deploy with Docker Compose
-        run: docker compose up --build -d
+        run: |
+          docker compose up --build -d \
+          -e APP_NAME=${{ secrets.APP_NAME }} \
+          -e ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
+          -e ITEMS_PER_USER=${{ secrets.ITEMS_PER_USER }} \
+          -e BARCODE_API_URL="${{ secrets.BARCODE_API_URL }}" \
+          -e ZIPCODE_API_URL=${{ secrets.ZIPCODE_API_URL }} \
+          -e ENABLE_DOCS=${{ secrets.ENABLE_DOCS }} \
+          -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+          -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+          -e POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} \
+          -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
+          -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+          -e GOOGLE_REDIRECT_URI="${{ secrets.GOOGLE_REDIRECT_URI }}" \
+          -e GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" \
+          -e GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+          -e SIGNING_KEY="${{ secrets.SIGNING_KEY }}" \
+          -e FTP_HOST="${{ secrets.FTP_HOST }}" \
+          -e FTP_USER="${{ secrets.FTP_USER }}" \
+          -e FTP_PASSWORD="${{ secrets.FTP_PASSWORD }}" \
+          -e FTP_PORT="${{ secrets.FTP_PORT }}"
 
       - name: Verify Deployment
         run: |

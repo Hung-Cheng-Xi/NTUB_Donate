@@ -1,6 +1,4 @@
-import os
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import ClassVar
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -29,6 +27,7 @@ class Settings(BaseSettings):
         env (ClassVar[str]): 應用程式運行的環境。
         model_config (ClassVar[SettingsConfigDict]): 設定模型的配置。
     """
+
     app_name: str
     admin_email: str
     items_per_user: int
@@ -44,7 +43,7 @@ class Settings(BaseSettings):
     postgres_db: str
     google_client_id: str
     google_client_secret: str
-    google_redirect_url: str
+    google_redirect_uri: str
     signing_key: str
 
     ftp_host: str
@@ -52,13 +51,8 @@ class Settings(BaseSettings):
     ftp_user: str
     ftp_password: str
 
-    env: ClassVar[str] = os.getenv("ENVIRONMENT", "development")
-
-    model_config: ClassVar[SettingsConfigDict]
-
-    model_config = SettingsConfigDict(
-        env_file=f".env.{env}"
-    )
+    class Config:
+        env_file = ".env"
 
 
 settings = Settings()

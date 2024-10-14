@@ -17,17 +17,15 @@ services:
       - postgres
     networks:
       - app-network
-    environment:
-      - ENVIRONMENT=${ENVIRONMENT}
     env_file:
-      - ./backend/.env.${ENVIRONMENT}
+      - ./backend/.env
 
   postgres:
     image: postgres:16.4
     container_name: postgres_db
     restart: always
     env_file:
-      - ./backend/.env.${ENVIRONMENT}
+      - ./backend/.env
     ports:
       - "5432:5432"
     volumes:
