@@ -1,24 +1,10 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import Optional
 from sqlmodel import SQLModel
-
-if TYPE_CHECKING:
-    from app.application.client.schemas.donation_purpose import DonationPurposeInfo
-    from app.application.client.schemas.news import NewsInfo
 
 
 class UnitBase(SQLModel):
     """Unit 的基本 schema，包含必要的字段，用於創建或更新 Unit 記錄。"""
     name: str
-
-
-class UnitCreate(UnitBase):
-    """用於創建 Unit 記錄的 schema，繼承了 UnitBase，包含用戶提交的所有必要字段。"""
-    pass
-
-
-class UnitUpdate(UnitBase):
-    """用於更新 Unit 記錄的 schema，允許部分字段更新。"""
-    pass
 
 
 class UnitInDBBase(UnitBase):
@@ -34,12 +20,3 @@ class UnitInDBBase(UnitBase):
 class UnitInfo(UnitInDBBase):
     """用於返回 Unit 的基本信息，繼承自 UnitInDBBase，適用於讀取操作。"""
     pass
-
-
-class UnitDetail(UnitInDBBase):
-    """用於返回 Unit 的詳細信息，包含與 DonationPurposeInfo 和 News 的關聯。"""
-    donation_purposes: List["DonationPurposeInfo"] = []
-    news: List["NewsInfo"] = []
-
-    class Config:
-        from_attributes = True
