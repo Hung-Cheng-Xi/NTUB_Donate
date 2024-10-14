@@ -4,7 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.domcument import Document
-from app.application.admin.schemas.document import DocumentCreate
+from app.application.admin.schemas.document import (
+    DocumentCreate,
+    DocumentInfo
+)
 
 from app.infrastructure.repositories.base import BaseRepository
 
@@ -22,9 +25,11 @@ class DocumentRepository(BaseRepository[Document]):
         """根據相關法規 ID 取得相關法規"""
         return await self.get_by_id(document_id, Document)
 
-    async def get_all_documents(self) -> list[Document]:
-        """取得所有相關法規"""
-        return await self.get_all(Document)
+
+    async def get_document_all(self, skip: int, limit: int) -> list[DocumentInfo]:
+        """取得分頁的相關法規"""
+        documents = await self.get_paginated_all(Document, skip, limit)
+        return [DocumentInfo.model_dump(document) for document in documents]
 
     async def update_document(self, document_id: int, updated_document: Document) -> Document:
         """更新一筆相關法規"""

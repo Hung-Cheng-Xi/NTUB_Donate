@@ -21,7 +21,7 @@ async def get_donation_purposes(
     limit: int = 10,
 ) -> List[DonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
-    return await repository.get_donation_purpose_items(skip, limit)
+    return await repository.get_donation_purpose_all(skip, limit)
 
 
 @router.post("/", response_model=DonationPurpose)

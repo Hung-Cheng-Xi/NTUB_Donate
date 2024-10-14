@@ -5,16 +5,19 @@ from fastapi import APIRouter, Depends
 from app.domain.models.donation import Donations
 from app.application.client.schemas.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
+from app.application.client.schemas.donation import DonationInfo
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Donations])
+@router.get("/", response_model=List[DonationInfo])
 async def get_donations(
-    repository: Annotated[DonationRepository, Depends()]
-):
+    repository: Annotated[DonationRepository, Depends()],
+    skip: int = 0,
+    limit: int = 10,
+) -> List[DonationInfo]:
     logging.info("取得 Donation 資料")
-    return await repository.get_all_donations()
+    return await repository.get_donations_client_all(skip, limit)
 
 
 @router.post("/", response_model=Donations)

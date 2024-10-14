@@ -3,18 +3,23 @@ from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
 from app.domain.models.news import News
-from app.application.admin.schemas.news import NewsCreate
+from app.application.admin.schemas.news import (
+    NewsCreate,
+    NewsInfo,
+)
 from app.infrastructure.repositories.news import NewsRepository
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[News])
-async def get_all_news(
-    repository: Annotated[NewsRepository, Depends()]
-):
-    logging.info("取得 News 資料")
-    return await repository.get_all_newss()
+@router.get("/", response_model=List[NewsInfo])
+async def get_news(
+    repository: Annotated[NewsRepository, Depends()],
+    skip: int = 0,
+    limit: int = 10,
+) -> List[NewsInfo]:
+    logging.info("取得分頁的 News 資料")
+    return await repository.get_news_all(skip, limit)
 
 
 @router.post("/", response_model=News)
