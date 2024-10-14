@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db_session
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.client.schemas.donation_purpose import (
+from app.application.admin.schemas.donation_purpose import (
     DonationPurposeCreate
 )
 
