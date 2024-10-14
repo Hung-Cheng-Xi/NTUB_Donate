@@ -9,7 +9,6 @@ class DonationPurposeBase(SQLModel):
     """
     title: str
     lump_sum: int
-    summary: str
     description: str
     memo: Optional[str] = None
     is_show: bool
@@ -33,7 +32,7 @@ class DonationPurposeInDBBase(DonationPurposeBase):
         from_attributes = True
 
 
-class DonationPurposeInfo(DonationPurposeInDBBase):
+class DonationPurposeInfo(DonationPurposeBase):
     """用於返回 DonationPurpose 的基本信息。
     繼承了 DonationPurposeInDBBase，適用於讀取操作。
     """

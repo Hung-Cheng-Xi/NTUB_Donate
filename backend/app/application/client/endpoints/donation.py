@@ -5,11 +5,12 @@ from fastapi import APIRouter, Depends
 from app.domain.models.donation import Donations
 from app.application.client.schemas.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
+from app.application.client.schemas.donation import DonationInfo
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Donations])
+@router.get("/", response_model=List[DonationInfo])
 async def get_donations(
     repository: Annotated[DonationRepository, Depends()]
 ):

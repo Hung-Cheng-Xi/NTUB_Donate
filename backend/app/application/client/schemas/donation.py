@@ -3,6 +3,7 @@ from datetime import date
 from sqlmodel import SQLModel
 
 from app.domain.models.donation import DonorType, DonationType, PubicStatus
+from .donation_purpose import DonationPurposeInfo
 
 
 class DonationsBase(SQLModel):
@@ -48,8 +49,11 @@ class DonationsInDBBase(DonationsBase):
         from_attributes = True
 
 
-class DonationInfo(DonationsInDBBase):
+class DonationInfo(SQLModel):
     """用於返回 Donations 的基本信息。
     繼承 DonationsInDBBase，適用於讀取操作。
     """
-    pass
+    username: str
+    amount: int
+    input_date: Optional[str] = None
+    purpose: DonationPurposeInfo # 嵌入 DonationPurposeInfo 子模型

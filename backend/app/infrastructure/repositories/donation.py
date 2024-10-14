@@ -1,10 +1,15 @@
 from typing import Annotated
 from fastapi import Depends
+from sqlmodel import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.donation import Donations
-from app.application.admin.schemas.donation import DonationsCreate
+from app.application.client.schemas.donation import (
+    DonationsCreate,
+    DonationInfo,
+)
 
 from app.infrastructure.repositories.base import BaseRepository
 
@@ -25,9 +30,28 @@ class DonationRepository(BaseRepository[Donations]):
         """根據捐款 ID 取得捐款"""
         return await self.get_by_id(donation_id, Donations)
 
-    async def get_all_donations(self) -> list[Donations]:
-        """取得所有捐款"""
-        return await self.get_all(Donations)
+    async def get_all_donations(self) -> list[DonationInfo]:
+        """取得所有捐款，包含捐款目的的詳細信息"""
+        async with self.session as session:
+            # 使用 select 加載 Donations，並同時載入相關的 DonationPurpose 資料
+            result = await session.execute(
+                select(Donations)
+                .options(selectinload(Donations.purpose))
+            )
+            donations = result.scalars().all()
+
+            # 將結果轉換為 DonationInfo 格式
+            donation_info_list = [
+                DonationInfo(
+                    username=donation.username,
+                    amount=donation.amount,
+                    purpose=donation.purpose,  # 這裡會自動映射到 DonationPurpose 子模型
+                    input_date=donation.input_date
+                )
+                for donation in donations
+            ]
+
+        return donation_info_list
 
     async def update_donation(
         self,
