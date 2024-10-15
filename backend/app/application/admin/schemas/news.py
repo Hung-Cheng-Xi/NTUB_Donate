@@ -1,7 +1,7 @@
-from typing import TYPE_CHECKING, Optional
 from datetime import date
-from sqlmodel import SQLModel
+from typing import TYPE_CHECKING, Optional
 
+from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
     from app.application.admin.schemas.unit import UnitInfo

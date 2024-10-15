@@ -1,13 +1,10 @@
 import logging
-from fastapi.responses import JSONResponse
-from fastapi import APIRouter, Depends, Request
 from typing import Annotated
 
+from app.application.admin.schemas.auth import AuthRequest, AuthResponse
 from app.domain.services.auth import AuthService
-from app.application.admin.schemas.auth import (
-    AuthRequest,
-    AuthResponse
-)
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 

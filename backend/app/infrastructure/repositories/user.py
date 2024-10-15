@@ -1,11 +1,5 @@
-from typing import Annotated
-from fastapi import Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.core.database import get_db_session
-from app.domain.models.user import User
 from app.application.admin.schemas.user import UserCreate
-
+from app.domain.models.user import User
 from app.infrastructure.repositories.base import BaseRepository
 
 

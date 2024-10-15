@@ -6,13 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.donation import Donations
-from app.application.admin.schemas.donation import DonationInfo as DonationInfoAdmin
-from app.application.client.schemas.donation import (
-    DonationsCreate,
-    DonationInfo as DonationInfoClient,
-)
-
 from app.infrastructure.repositories.base import BaseRepository
+from sqlalchemy.orm import selectinload
+from sqlmodel import select
 
 
 class DonationRepository(BaseRepository[Donations]):

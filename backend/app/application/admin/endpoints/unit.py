@@ -1,10 +1,10 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
-from app.domain.models.unit import Unit
 from app.application.admin.schemas.unit import UnitCreate
+from app.domain.models.unit import Unit
 from app.infrastructure.repositories.unit import UnitRepository
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
@@ -14,7 +14,7 @@ async def get_units(
     repository: Annotated[UnitRepository, Depends()],
 ):
     logging.info("取得 Unit 資料")
-    return await repository.get_all_units()
+    return await repository.get_units()
 
 
 @router.post("/", response_model=Unit)
@@ -32,7 +32,7 @@ async def get_unit(
     repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("取得 Unit 資料")
-    return await repository.get_unit_by_id(unit_id)
+    return await repository.get_unit(unit_id)
 
 
 @router.put("/{unit_id}", response_model=Unit)

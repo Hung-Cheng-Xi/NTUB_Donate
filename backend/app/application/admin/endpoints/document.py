@@ -1,10 +1,10 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
-from app.domain.models.domcument import Document
 from app.application.admin.schemas.document import DocumentCreate, DocumentInfo
+from app.domain.models.domcument import Document
 from app.infrastructure.repositories.document import DocumentRepository
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 

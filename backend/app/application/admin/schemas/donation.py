@@ -1,14 +1,12 @@
-from typing import TYPE_CHECKING, Optional
 from datetime import date
+from typing import TYPE_CHECKING, Optional
+
+from app.domain.models.donation import DonationType, DonorType, PubicStatus
 from sqlmodel import SQLModel
 
-from app.domain.models.donation import DonorType, DonationType, PubicStatus
-
-
 if TYPE_CHECKING:
-    from app.application.admin.schemas.donation_purpose import (
+    from app.application.admin.schemas.donation_purpose import \
         DonationPurposeInfo
-    )
 
 
 class DonationsBase(SQLModel):

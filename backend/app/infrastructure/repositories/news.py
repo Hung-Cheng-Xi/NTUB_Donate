@@ -4,11 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.domain.models.news import News
-from app.application.admin.schemas.news import (
-    NewsCreate,
-    NewsInfo
-)
-
 from app.infrastructure.repositories.base import BaseRepository
 
 

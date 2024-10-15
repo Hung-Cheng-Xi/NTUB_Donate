@@ -1,7 +1,7 @@
 from typing import Optional
-from sqlmodel import SQLModel
 
 from app.domain.models.domcument import DocumentCategory
+from sqlmodel import SQLModel
 
 
 class DocumentBase(SQLModel):

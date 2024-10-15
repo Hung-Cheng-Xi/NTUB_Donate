@@ -1,9 +1,9 @@
-from fastapi import HTTPException
-import httpx
 from typing import Dict
 
-from app.core.settings import settings
+import httpx
 from app.application.client.schemas.address import AddressData
+from app.core.settings import settings
+from fastapi import HTTPException
 
 
 class AddressService:

@@ -1,9 +1,9 @@
-from fastapi import HTTPException
-import httpx
 from typing import List
 
-from app.core.settings import settings
+import httpx
 from app.application.client.schemas.barcode import BarCodeData
+from app.core.settings import settings
+from fastapi import HTTPException
 
 
 class BarCodeService:

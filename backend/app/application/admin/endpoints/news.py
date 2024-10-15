@@ -1,13 +1,10 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
+from app.application.admin.schemas.news import NewsCreate, NewsInfo
 from app.domain.models.news import News
-from app.application.admin.schemas.news import (
-    NewsCreate,
-    NewsInfo,
-)
 from app.infrastructure.repositories.news import NewsRepository
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 

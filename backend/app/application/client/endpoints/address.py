@@ -1,9 +1,9 @@
 import logging
-from typing import Dict, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, Dict
 
 from app.application.client.schemas.address import AddressData
 from app.domain.services.address import AddressService
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
