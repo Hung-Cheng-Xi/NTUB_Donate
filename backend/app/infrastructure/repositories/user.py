@@ -4,9 +4,6 @@ from app.infrastructure.repositories.base import BaseRepository
 
 
 class UserRepository(BaseRepository[User]):
-    def __init__(self, session: Annotated[AsyncSession, Depends(get_db_session)]):
-        super().__init__(session)
-
     async def create_user(self, user_create: UserCreate) -> User:
         """新增一筆用戶"""
         user = User(**user_create.model_dump())
