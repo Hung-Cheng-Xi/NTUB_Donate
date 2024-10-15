@@ -14,7 +14,7 @@ async def get_users(
     repository: Annotated[UserRepository, Depends()]
 ):
     logging.info("取得 User 資料")
-    return await repository.get_all_users()
+    return await repository.get_users()
 
 
 @router.post("/", response_model=User)
@@ -32,7 +32,7 @@ async def get_user(
     repository: Annotated[UserRepository, Depends()]
 ):
     logging.info("取得 User 資料")
-    return await repository.get_user_by_id(user_id)
+    return await repository.get_user(user_id)
 
 
 @router.put("/{user_id}", response_model=User)

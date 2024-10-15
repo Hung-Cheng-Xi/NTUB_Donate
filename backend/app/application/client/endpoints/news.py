@@ -16,13 +16,13 @@ async def get_news(
     limit: int = 10,
 ) -> List[NewsInfo]:
     logging.info("取得分頁的 News 資料")
-    return await repository.get_news_all(skip, limit)
+    return await repository.get_news(skip, limit)
 
 
 @router.get("/{news_id}", response_model=News)
-async def get_news(
+async def get_new(
     news_id: int,
     repository: Annotated[NewsRepository, Depends()]
 ):
     logging.info("取得 News 資料")
-    return await repository.get_news_by_id(news_id)
+    return await repository.get_new(news_id)

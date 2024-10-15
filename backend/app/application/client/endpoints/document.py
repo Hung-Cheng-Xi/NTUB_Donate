@@ -16,7 +16,7 @@ async def get_documents(
     limit: int = 10,
 ) -> List[DocumentInfo]:
     logging.info("取得分頁的 Documents 資料")
-    return await repository.get_document_all(skip, limit)
+    return await repository.get_documents(skip, limit)
 
 @router.get("/{document_id}", response_model=Document)
 async def get_document(
@@ -24,4 +24,4 @@ async def get_document(
     repository: Annotated[DocumentRepository, Depends()]
 ):
     logging.info("取得 Document 資料")
-    return await repository.get_document_by_id(document_id)
+    return await repository.get_document(document_id)

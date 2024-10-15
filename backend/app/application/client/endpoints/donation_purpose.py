@@ -20,7 +20,7 @@ async def get_donation_purposes(
     limit: int = 10,
 ) -> List[DonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
-    return await repository.get_donation_purpose_all(skip, limit)
+    return await repository.get_donation_purposes(skip, limit)
 
 
 @router.get("/{donation_purpose_id}", response_model=DonationPurpose)
@@ -29,4 +29,4 @@ async def get_donation_purpose(
     repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("取得 Donation Purpose 資料")
-    return await repository.get_donation_purpose_by_id(donation_purpose_id)
+    return await repository.get_donation_purpose(donation_purpose_id)

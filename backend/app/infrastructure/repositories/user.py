@@ -12,11 +12,11 @@ class UserRepository(BaseRepository[User]):
         user = User(**user_create.model_dump())
         return await self.create_instance(user)
 
-    async def get_user_by_id(self, user_id: int) -> User:
+    async def get_user(self, user_id: int) -> User:
         """根據用戶 ID 取得用戶"""
         return await self.get_by_id(user_id, User)
 
-    async def get_all_users(self) -> list[User]:
+    async def get_users(self) -> list[User]:
         """取得所有用戶"""
         return await self.get_all(User)
 

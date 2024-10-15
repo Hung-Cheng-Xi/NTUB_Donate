@@ -18,11 +18,11 @@ class UnitRepository(BaseRepository[Unit]):
         unit = Unit(**unit_create.model_dump())
         return await self.create_instance(unit)
 
-    async def get_unit_by_id(self, unit_id: int) -> Unit:
+    async def get_unit(self, unit_id: int) -> Unit:
         """根據單位 ID 取得單位"""
         return await self.get_by_id(unit_id, Unit)
 
-    async def get_all_units(self) -> list[Unit]:
+    async def get_units(self) -> list[Unit]:
         """取得所有單位"""
         return await self.get_all(Unit)
 
