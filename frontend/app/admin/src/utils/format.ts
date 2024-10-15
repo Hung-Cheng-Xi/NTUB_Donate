@@ -1,4 +1,4 @@
-import { ListItemType, TableItemType } from '../types/ItemType';
+import { ListItemType, TableItemType } from '../types/itemType';
 
 // Formatting functions for TableItemType
 export const formatListItemType = (

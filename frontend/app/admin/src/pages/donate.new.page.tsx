@@ -1,5 +1,5 @@
 import React from 'react';
-import GenericPage from '../components/Common/PageLayout/GenericPage';
+import GenericPage from '../components/common/pageLayout/generic.page';
 
 interface NewsProps {
   id: number;

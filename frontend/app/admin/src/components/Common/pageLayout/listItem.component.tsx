@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ListItemType } from '../../../types/ItemType';
+import type { ListItemType } from '../../../types/itemType';
 
 // ListItem Component
 interface ListItemProps {
@@ -10,7 +10,10 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({ item, openModal }) => (
   <ul>
     {item.map((item) => (
-      <li key={item.id} className="p-4 mb-3 border rounded-md shadow-sm bg-gray-50">
+      <li
+        key={item.id}
+        className="p-4 mb-3 border rounded-md shadow-sm bg-gray-50"
+      >
         <div className="flex justify-between items-center">
           <h3 className="text-xl font-semibold text-gray-800">
             {'category' in item ? item.category : item.title}

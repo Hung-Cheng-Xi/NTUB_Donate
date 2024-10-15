@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewsSection from '../News/NewsSection';
+import NewsSection from '../new/newsSection.component';
 
 interface DonationItem {
   date: string;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Pagination from '../Common/Pagination';
+import Pagination from '../common/pagination.component';
 
 interface CategorySelectBoxProps {
   value: string;

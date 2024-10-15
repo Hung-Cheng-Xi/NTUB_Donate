@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import Pagination from '../Pagination';
-import FormModal from '../Modal/Modal';
-import ListItem from './ListItem';
-import TableItem from './TableItem';
+import Pagination from '../pagination.component';
+import FormModal from '../modal/modal.component';
+import ListItem from './listItem.component';
+import TableItem from './tableItem.component';
 import { formatListItemType, formatTableItemType } from '../../../utils/format';
-import { ListItemType, TableItemType } from '../../../types/ItemType';
+import { ListItemType, TableItemType } from '../../../types/itemType';
 
 const Container = styled.div`
   margin: 97.5px 97.5px 10.5px 97.5px;
