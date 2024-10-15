@@ -1,7 +1,6 @@
 import paramiko
-from fastapi import HTTPException
-
 from app.core.settings import settings
+from fastapi import HTTPException
 
 
 class FTPService:

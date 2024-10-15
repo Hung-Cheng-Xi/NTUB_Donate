@@ -1,16 +1,13 @@
-from fastapi import HTTPException
-import jwt
-import httpx
 import logging
-
 from datetime import datetime, timedelta, timezone
-from starlette.responses import JSONResponse
+
+import httpx
+import jwt
+from app.application.admin.schemas.auth import (AuthRequest, AuthResponse,
+                                                GoogleTokenResponse)
 from app.core.settings import settings
-from app.application.admin.schemas.auth import (
-    AuthRequest,
-    AuthResponse,
-    GoogleTokenResponse
-)
+from fastapi import HTTPException
+from starlette.responses import JSONResponse
 
 
 class AuthService:

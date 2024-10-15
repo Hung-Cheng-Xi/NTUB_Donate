@@ -1,13 +1,18 @@
-from fastapi import HTTPException
+from typing import Annotated, Generic, List, Optional, Type, TypeVar
+
+from app.core.database import get_db_session
+from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import SQLModel, select
-from typing import Generic, List, TypeVar, Type, Optional
 
 T = TypeVar("T", bound=SQLModel)
 
 
 class BaseRepository(Generic[T]):
-    def __init__(self, session: AsyncSession):
+    def __init__(
+        self,
+        session: Annotated[AsyncSession, Depends(get_db_session)]
+    ):
         self.session = session
 
     async def create_multiple(self, instances: List[T]) -> List[T]:

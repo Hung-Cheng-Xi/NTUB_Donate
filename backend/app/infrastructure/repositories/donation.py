@@ -1,24 +1,15 @@
-from typing import Annotated
-from fastapi import Depends
-from sqlmodel import select
-from sqlalchemy.orm import selectinload
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.core.database import get_db_session
+from app.application.admin.schemas.donation import \
+    DonationInfo as DonationInfoAdmin
+from app.application.client.schemas.donation import \
+    DonationInfo as DonationInfoClient
+from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donations
-from app.application.admin.schemas.donation import DonationInfo as DonationInfoAdmin
-from app.application.client.schemas.donation import (
-    DonationsCreate,
-    DonationInfo as DonationInfoClient,
-)
-
 from app.infrastructure.repositories.base import BaseRepository
+from sqlalchemy.orm import selectinload
+from sqlmodel import select
 
 
 class DonationRepository(BaseRepository[Donations]):
-    def __init__(self, session: Annotated[AsyncSession, Depends(get_db_session)]):
-        super().__init__(session)
-
     async def create_donation(
         self,
         donation_create: DonationsCreate
@@ -31,12 +22,20 @@ class DonationRepository(BaseRepository[Donations]):
         """根據捐款 ID 取得捐款"""
         return await self.get_by_id(donation_id, Donations)
 
-    async def get_donations_admin_all(self, skip, limit) -> list[DonationInfoAdmin]:
+    async def admin_get_donations(
+        self,
+        skip,
+        limit
+    ) -> list[DonationInfoAdmin]:
         """取得所有捐款分頁資料"""
         donations = await self.get_paginated_all(Donations, skip, limit)
         return [DonationInfoAdmin.model_dump(donation) for donation in donations]
 
-    async def get_donations_client_all(self, skip, limit) -> list[DonationInfoClient]:
+    async def client_get_donations(
+        self,
+        skip,
+        limit
+    ) -> list[DonationInfoClient]:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
         async with self.session as session:
             # 使用 select 加載 Donations，並同時載入相關的 DonationPurpose 資料

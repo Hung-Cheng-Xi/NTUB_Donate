@@ -1,10 +1,11 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
+from app.application.admin.schemas.donation import (DonationInfo,
+                                                    DonationsCreate)
 from app.domain.models.donation import Donations
-from app.application.admin.schemas.donation import DonationInfo, DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
@@ -16,7 +17,7 @@ async def get_donations(
     limit: int = 10,
 ) -> List[DonationInfo]:
     logging.info("取得分頁的 Donation 資料")
-    return await repository.get_donations_admin_all(skip, limit)
+    return await repository.admin_get_donations(skip, limit)
 
 
 @router.post("/", response_model=Donations)

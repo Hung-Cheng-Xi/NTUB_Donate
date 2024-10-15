@@ -17,7 +17,7 @@ async def get_donations(
     limit: int = 10,
 ) -> List[DonationInfo]:
     logging.info("取得 Donation 資料")
-    return await repository.get_donations_client_all(skip, limit)
+    return await repository.client_get_donations(skip, limit)
 
 
 @router.post("/", response_model=Donations)

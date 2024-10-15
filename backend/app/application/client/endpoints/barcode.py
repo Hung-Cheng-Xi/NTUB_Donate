@@ -1,9 +1,9 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
 from app.application.client.schemas.barcode import BarCodeData
 from app.domain.services.barcode import BarCodeService
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 

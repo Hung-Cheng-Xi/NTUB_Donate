@@ -1,10 +1,10 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
-from app.domain.models.domcument import Document
 from app.application.admin.schemas.document import DocumentCreate, DocumentInfo
+from app.domain.models.domcument import Document
 from app.infrastructure.repositories.document import DocumentRepository
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
@@ -16,7 +16,7 @@ async def get_documents(
     limit: int = 10,
 ) -> List[DocumentInfo]:
     logging.info("取得分頁的 Documents 資料")
-    return await repository.get_document_all(skip, limit)
+    return await repository.get_documents(skip, limit)
 
 
 @router.post("/", response_model=Document)
@@ -34,7 +34,7 @@ async def get_document(
     repository: Annotated[DocumentRepository, Depends()]
 ):
     logging.info("取得 Document 資料")
-    return await repository.get_document_by_id(document_id)
+    return await repository.get_document(document_id)
 
 
 @router.put("/{document_id}", response_model=Document)

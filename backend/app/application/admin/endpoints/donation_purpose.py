@@ -1,15 +1,12 @@
 import logging
-from typing import List, Annotated
-from fastapi import APIRouter, Depends
+from typing import Annotated, List
 
-from app.domain.models.donation_purpose import DonationPurpose
 from app.application.admin.schemas.donation_purpose import (
-    DonationPurposeCreate,
-    DonationPurposeItem
-)
-from app.infrastructure.repositories.donation_purpose import (
+    DonationPurposeCreate, DonationPurposeItem)
+from app.domain.models.donation_purpose import DonationPurpose
+from app.infrastructure.repositories.donation_purpose import \
     DonationPurposeRepository
-)
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
 
@@ -21,7 +18,7 @@ async def get_donation_purposes(
     limit: int = 10,
 ) -> List[DonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
-    return await repository.get_donation_purpose_all(skip, limit)
+    return await repository.get_donation_purposes(skip, limit)
 
 
 @router.post("/", response_model=DonationPurpose)
@@ -39,7 +36,7 @@ async def get_donation_purpose(
     repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("取得 Donation Purpose 資料")
-    return await repository.get_donation_purpose_by_id(donation_purpose_id)
+    return await repository.get_donation_purpose(donation_purpose_id)
 
 
 @router.put("/{donation_purpose_id}", response_model=DonationPurpose)

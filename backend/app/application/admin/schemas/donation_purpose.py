@@ -1,9 +1,10 @@
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, List, Optional
+
 from sqlmodel import SQLModel
 
 if TYPE_CHECKING:
-    from app.application.admin.schemas.unit import UnitInfo
     from app.application.admin.schemas.donation import DonationInfo
+    from app.application.admin.schemas.unit import UnitInfo
 
 
 class DonationPurposeBase(SQLModel):
