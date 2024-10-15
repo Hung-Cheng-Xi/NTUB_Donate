@@ -5,6 +5,7 @@ import DonateHomePage from './pages/donate.HomePage';
 import DonateNewsPage from './pages/donate.NewsPage';
 import PurposePage from './pages/donate.PurposePage';
 import DocumentPage from './pages/donate.DocumentPage';
+import { RequireAuthService } from './libs/services/RequireAuthService';
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
   },
   {
     Component: Layout,
-    // loader: RequireAuthService,
+    loader: RequireAuthService,
     children: [
       {
         path: '/admin/',

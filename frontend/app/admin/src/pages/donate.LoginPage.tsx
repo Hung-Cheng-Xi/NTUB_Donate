@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { loginWithGoogle } from '../libs/services/authService';
 
 const LoginPage: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const googleAuthParams = {
-    client_id: '452962124993-i7tb7ic5b4e0ei05c6v6hplkb64huqjn.apps.googleusercontent.com',
-    redirect_uri: 'http://donate.ntub.edu.tw:8001/admin/',
+    client_id:
+      '452962124993-i7tb7ic5b4e0ei05c6v6hplkb64huqjn.apps.googleusercontent.com',
+    // redirect_uri: 'http://donate.ntub.edu.tw:8001/admin/',
+    redirect_uri: 'http://localhost:5173/admin/login/',
     response_type: 'code',
     scope: 'email',
   };
@@ -14,14 +21,24 @@ const LoginPage: React.FC = () => {
     window.location.href = `${baseUrl}?${queryParams}`;
   };
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const code = queryParams.get('code');
+
+    if (code) {
+      loginWithGoogle(code)
+        .then(() => {
+          navigate('/admin/');
+        })
+        .catch((error) => {
+          console.error('Failed to login with Google', error);
+        });
+    }
+  }, [location, navigate]);
+
   return (
-    <div
-      className="flex items-center justify-center min-h-screen bg-blue-100 bg-cover bg-center"
-      style={{
-        backgroundImage: `url('https://s3-alpha-sig.figma.com/img/90ac/40b7/8e7f07c3515688a250b9503246027cf5?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jk~2Jds~r1YSHCiwEUmRifm5-t6qtxzNJWKxseHjZXSEwkqgevqrgQ3MLT6dnkGamDx3iwSrMHrZbqh90FGSgCd54wUMzE9s7GWRpj2cx7hYNioIOu5K5mIqLn~bIloR9wxR~-30RfnztGm15sHlxi972WPaOy-Y3O5Q2lnUeGBlQgxoZJnXoxiz76nWgKM3SLbjnFZUr72JE~XejSLTbwuwJoK9n-Sfhx05ma9pAEplKxbuiO4k-x09WP7Dbh3GCtu8wu~dwsIsHQH~GeGt~nJge-zgTebP1Q18pjPdWR8ydp5k54nosKMW5jXcxJzAWRlL2w1JU9zXCb~odtST9w__')`,
-      }}
-    >
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-md shadow-md">
+    <div className="flex items-center justify-center min-h-screen bg-blue-white bg-cover bg-center">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-md shadow-md border">
         <img
           src={'http://i.imgur.com/YJjEvK8.gif'}
           alt="NTUB Logo"
