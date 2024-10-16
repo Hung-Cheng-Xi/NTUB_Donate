@@ -1,15 +1,15 @@
 from fastapi import APIRouter
 
+from .ftp import router as ftp_router
 from .auth import router as auth_router
 from .excel import router as excel_router
-from .ftp import router as ftp_router
-from .document import router as document_router
 
-from .donation_purpose import router as donation_purpose_router
-from .donation import router as donation_router
-from .news import router as news_router
-from .unit import router as unit_router
 from .user import router as user_router
+from .unit import router as unit_router
+from .donation import router as donation_router
+from .regulation import router as regulation_router
+from .announcement import router as announcement_router
+from .donation_purpose import router as donation_purpose_router
 
 
 admin_router = APIRouter(prefix="/admin")
@@ -33,9 +33,9 @@ admin_router.include_router(
 )
 
 admin_router.include_router(
-    document_router,
-    prefix="/document",
-    tags=["Admin - document"]
+    regulation_router,
+    prefix="/regulation",
+    tags=["Admin - regulation"]
 )
 
 admin_router.include_router(
@@ -51,9 +51,9 @@ admin_router.include_router(
 )
 
 admin_router.include_router(
-    news_router,
-    prefix="/news",
-    tags=["Admin - News"]
+    announcement_router,
+    prefix="/announcement",
+    tags=["Admin - Announcement"]
 )
 
 admin_router.include_router(
