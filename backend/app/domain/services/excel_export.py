@@ -14,62 +14,62 @@ from app.infrastructure.repositories.donation import DonationRepository
 class ExcelService:
     def __init__(
         self,
-        session: Annotated[AsyncSession, Depends(get_db_session)]
+        session: Annotated[AsyncSession, Depends(get_db_session)],
+        donation_repository: Annotated[DonationRepository, Depends()]
     ):
         self.session = session
+        self.donation_repository = donation_repository
 
-    async def fetch_data(self):
-        """從資料庫中獲取捐款記錄、捐款目的及受捐單位資料"""
-
-        statement = (
-            select(Donations, DonationPurpose, Unit)
-            .join(DonationPurpose, Donations.purpose_id == DonationPurpose.id)
-            .join(Unit, DonationPurpose.unit_id == Unit.id)
-        )
-        result = await self.session.execute(statement)
-        return result.all()
-
-    def transform_to_dict(self, donation, purpose, unit):
+    def transform_to_dict(
+        self,
+        export_data: List[ExcelExportInfo],
+    ) -> Dict:
         """將資料轉換為字典格式，用於創建 DataFrame"""
 
-        donation_info = DonationInfo.model_validate(donation)
-        purpose_info = DonationPurposeInfo.model_validate(
-            purpose) if purpose else None
-        unit_info = UnitInfo.model_validate(unit) if unit else None
+        transformed_data = []
 
-        return {
-            "編號": donation_info.id,
-            "受捐單位": unit_info.name if unit_info else "N/A",
-            "捐款名義": purpose_info.name if purpose_info else "N/A",
-            "捐款金額": donation_info.amount,
-            "捐款方式": donation_info.type.value,
-            "捐款人姓名(公司名稱)": donation_info.username,
-            "身分證字號(統一編號)": donation_info.id_card,
-            "生日": donation_info.user_birthday,
-            "聯絡電話(行動電話)": donation_info.phone_number,
-            "email信箱": donation_info.email,
-            "捐款人身分": donation_info.identity.value,
-            "畢業年": donation_info.year,
-            "學制/科/系/所": donation_info.gept,
-            "戶籍地址": donation_info.registered_address,
-            "通訊地址": donation_info.res_address,
-            "公開資訊": donation_info.public_status,
-            "備註": donation_info.memo,
-            "繳費單代碼": donation_info.account,
-            "繳款日期": donation_info.input_date,
-        }
+        for data in export_data:
+            transformed_data.append({
+                "編號": data.id,
+                "受捐單位": data.purpose.unit.name if data.purpose.unit else "N/A",
+                "捐款名義": data.purpose.title if data.purpose else "N/A",
+                "捐款金額": data.amount,
+                "捐款方式": data.type.to_chinese(),
+                "捐款人姓名(公司名稱)": data.username,
+                "身分證字號(統一編號)": data.id_card,
+                "生日": data.user_birthday,
+                "聯絡電話(行動電話)": data.phone_number,
+                "email信箱": data.email,
+                "捐款人身分": data.identity.to_chinese(),
+                "畢業年": data.year,
+                "學制/科/系/所": data.gept,
+                "戶籍地址": data.registered_address,
+                "通訊地址": data.res_address,
+                "公開資訊": data.public_status.to_chinese(),
+                "備註": data.memo,
+                "繳費單代碼": data.account,
+                "繳款日期": data.input_date,
+            })
 
-    async def create_workbook(self):
+        return transformed_data
+
+    async def create_workbook(
+        self,
+        skip: int,
+        limit: int
+    ):
         """創建一個包含捐款資料的 DataFrame"""
 
         # 獲取資料
-        records = await self.fetch_data()
+        records = await self.donation_repository.export_excel(skip, limit)
 
         # 將資料轉換為字典列表
-        data = [
-            self.transform_to_dict(donation, purpose, unit)
-            for donation, purpose, unit in records
+        export_data = [
+            ExcelExportInfo.model_validate(record)
+            for record in records
         ]
+
+        data = self.transform_to_dict(export_data)
 
         # 創建 DataFrame
         df = pd.DataFrame(data)

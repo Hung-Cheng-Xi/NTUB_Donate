@@ -14,6 +14,14 @@ class DonationType(str, Enum):
     STORE = "STORE"
     BANK = "BANK"
 
+    def to_chinese(self) -> str:
+        if self == DonationType.STORE:
+            return "實體店支付"
+        elif self == DonationType.BANK:
+            return "銀行支付"
+
+        return "未知"
+
 
 class DonorType(Enum):
     """表示捐款者身份的 Enum。
@@ -32,6 +40,22 @@ class DonorType(Enum):
     CORPORATION = "CORPORATION"
     OTHER = "OTHER"
 
+    def to_chinese(self) -> str:
+        if self == DonorType.ALUMNI:
+            return "校友"
+        elif self == DonorType.STAFF:
+            return "教職員"
+        elif self == DonorType.PARENT:
+            return "家長"
+        elif self == DonorType.COMMUNITY:
+            return "社區成員"
+        elif self == DonorType.CORPORATION:
+            return "公司"
+        elif self == DonorType.OTHER:
+            return "其他"
+
+        return "未知"
+
 
 class PubicStatus(str, Enum):
     """表示公開狀態的 Enum。
@@ -43,6 +67,16 @@ class PubicStatus(str, Enum):
     PUBLIC = "PUBLIC"
     ANONYMOUS = "ANONYMOUS"
     PARTIALLY = "PARTIALLY"
+
+    def to_chinese(self) -> str:
+        if self == PubicStatus.PUBLIC:
+            return "公開"
+        elif self == PubicStatus.ANONYMOUS:
+            return "匿名"
+        elif self == PubicStatus.PARTIALLY:
+            return "匿名但受捐單位知曉"
+
+        return "未知"
 
 
 if TYPE_CHECKING:
