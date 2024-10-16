@@ -2,7 +2,7 @@ import logging
 from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
-from app.domain.models.donation import Donations
+from app.domain.models.donation import Donation
 from app.application.client.schemas.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
 from app.application.client.schemas.donation import DonationInfo
@@ -20,7 +20,7 @@ async def get_donations(
     return await repository.client_get_donations(skip, limit)
 
 
-@router.post("/", response_model=Donations)
+@router.post("/", response_model=Donation)
 async def create_donation(
     new_donation: DonationsCreate,
     repository: Annotated[DonationRepository, Depends()]

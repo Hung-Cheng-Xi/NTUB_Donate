@@ -1,16 +1,16 @@
-from .donation import Donations
-from .domcument import Document
-from .donation_purpose import DonationPurpose
-from .unit import Unit
-from .news import News
 from .user import User
+from .unit import Unit
+from .donation import Donation
+from .regulation import Regulation
+from .announcement import Announcement
+from .donation_purpose import DonationPurpose
 
 
 __all__ = [
-    "Donations",
-    "Document",
+    "Donation",
+    "Regulation",
     "DonationPurpose",
     "Unit",
-    "News",
+    "Announcement",
     "User",
 ]

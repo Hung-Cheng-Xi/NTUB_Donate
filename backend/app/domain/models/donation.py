@@ -1,6 +1,6 @@
 from enum import Enum
-from typing import TYPE_CHECKING, Optional
 from datetime import date
+from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import SQLModel, Field, Relationship
 
@@ -49,7 +49,7 @@ if TYPE_CHECKING:
     from app.domain.models.donation_purpose import DonationPurpose
 
 
-class Donations(SQLModel, table=True):
+class Donation(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     username: str
     user_birthday: date
@@ -75,14 +75,13 @@ class Donations(SQLModel, table=True):
         default=DonationType.STORE,
         description="捐款方式"
     )
-    status: Optional[int] = None
     transaction_id: Optional[str] = None
-    input_date: Optional[str] = None
+    input_date: Optional[date] = None
 
-    purpose_id: Optional[int] = Field(
+    purpose_id: int = Field(
         default=None,
         foreign_key="donationpurpose.id"
     )
-    purpose: Optional["DonationPurpose"] = Relationship(
+    purpose: 'DonationPurpose' = Relationship(
         back_populates="donations"
     )
