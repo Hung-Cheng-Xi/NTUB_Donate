@@ -1,16 +1,19 @@
 import logging
-from typing import Annotated, List
 
-from app.application.admin.schemas.donation import (DonationInfo,
-                                                    DonationsCreate)
-from app.domain.models.donation import Donations
-from app.infrastructure.repositories.donation import DonationRepository
+from typing import Annotated, List
 from fastapi import APIRouter, Depends
+
+from app.domain.models.donation import Donation
+from app.application.admin.schemas.donation import DonationInfo
+from app.application.admin.schemas.donation import DonationUpdate
+from app.application.client.schemas.donation import DonationsCreate
+from app.infrastructure.repositories.donation import DonationRepository
+
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Donations])
+@router.get("/", response_model=List[Donation])
 async def get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
@@ -20,7 +23,7 @@ async def get_donations(
     return await repository.admin_get_donations(skip, limit)
 
 
-@router.post("/", response_model=Donations)
+@router.post("/", response_model=Donation)
 async def create_donation(
     new_donation: DonationsCreate,
     repository: Annotated[DonationRepository, Depends()]
@@ -29,7 +32,7 @@ async def create_donation(
     return await repository.create_donation(new_donation)
 
 
-@router.get("/{donation_id}", response_model=Donations)
+@router.get("/{donation_id}", response_model=Donation)
 async def get_donation(
     donation_id: int,
     repository: Annotated[DonationRepository, Depends()]
@@ -38,27 +41,17 @@ async def get_donation(
     return await repository.get_donation_by_id(donation_id)
 
 
-@router.put("/{donation_id}", response_model=Donations)
+@router.put("/{donation_id}", response_model=Donation)
 async def update_donation(
     donation_id: int,
-    new_donation: DonationsCreate,
+    new_donation: DonationUpdate,
     repository: Annotated[DonationRepository, Depends()]
 ):
     logging.info("更新 Donation 資料")
     return await repository.update_donation(donation_id, new_donation)
 
 
-@router.patch("/{donation_id}", response_model=Donations)
-async def patch_donation(
-    donation_id: int,
-    new_donation: DonationsCreate,
-    repository: Annotated[DonationRepository, Depends()]
-):
-    logging.info("部分更新 Donation 資料")
-    return await repository.patch_donation(donation_id, new_donation)
-
-
-@router.delete("/{donation_id}", response_model=Donations)
+@router.delete("/{donation_id}", response_model=Donation)
 async def delete_donation(
     donation_id: int,
     repository: Annotated[DonationRepository, Depends()]

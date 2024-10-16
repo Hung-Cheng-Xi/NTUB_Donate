@@ -1,6 +1,8 @@
 from app.domain.models.unit import Unit
-from app.application.admin.schemas.unit import UnitCreate
-
+from app.application.admin.schemas.unit import (
+    UnitCreate,
+    UnitUpdate
+)
 from app.infrastructure.repositories.base import BaseRepository
 
 

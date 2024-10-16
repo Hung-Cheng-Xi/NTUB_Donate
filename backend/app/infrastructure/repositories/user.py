@@ -1,5 +1,9 @@
 from app.application.admin.schemas.user import UserCreate
 from app.domain.models.user import User
+from app.application.admin.schemas.user import (
+    UserCreate,
+    UserUpdate
+    )
 from app.infrastructure.repositories.base import BaseRepository
 
 

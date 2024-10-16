@@ -1,9 +1,10 @@
 from typing import Annotated, Generic, List, Optional, Type, TypeVar
 
-from app.core.database import get_db_session
 from fastapi import Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import SQLModel, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.database import get_db_session
 
 T = TypeVar("T", bound=SQLModel)
 

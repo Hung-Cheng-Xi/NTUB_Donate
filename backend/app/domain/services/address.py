@@ -1,9 +1,10 @@
-from typing import Dict
-
 import httpx
-from app.application.client.schemas.address import AddressData
-from app.core.settings import settings
+
+from typing import Dict
 from fastapi import HTTPException
+
+from app.core.settings import settings
+from app.application.client.schemas.address import AddressData
 
 
 class AddressService:

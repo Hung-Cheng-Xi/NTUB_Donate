@@ -1,11 +1,16 @@
-from typing import Any
+from typing import List
 
-from app.application.admin.schemas.donation_purpose import (
-    DonationPurposeCreate, DonationPurposeItem)
-from app.domain.models.donation_purpose import DonationPurpose
-from app.infrastructure.repositories.base import BaseRepository
 from sqlalchemy.orm import selectinload
-from sqlmodel import select
+
+from app.application.utils.schemas.donation_purpose import (
+    AdminDonationPurposeItem
+)
+from app.application.admin.schemas.donation_purpose import (
+    DonationPurposeCreate
+)
+
+from app.infrastructure.repositories.base import BaseRepository
+from app.domain.models.donation_purpose import DonationPurpose
 
 
 class DonationPurposeRepository(BaseRepository[DonationPurpose]):
