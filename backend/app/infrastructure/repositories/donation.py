@@ -46,13 +46,12 @@ class DonationRepository(BaseRepository[Donations]):
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
         async with self.session as session:
             # 使用 select 加載 Donations，並同時載入相關的 DonationPurpose 資料
-            result = await session.execute(
-                select(Donations)
-                .options(selectinload(Donations.purpose))
-                .offset(skip)
-                .limit(limit)
+            donations = await self.model_relations(
+                Donation,
+                skip,
+                limit,
+                [joinedload(Donation.purpose)]
             )
-            donations = result.scalars().all()
 
             # 將結果轉換為 DonationInfoClient 格式
             donation_info_list = [
@@ -88,4 +87,21 @@ class DonationRepository(BaseRepository[Donations]):
 
     async def delete_donation(self, donation_id: int) -> bool:
         """刪除一筆捐款"""
-        return await self.delete_instance(donation_id, Donations)
+        return await self.delete_instance(donation_id, Donation)
+
+    async def export_excel(
+        self,
+        skip: int,
+        limit: int,
+    ):
+        """從資料庫中獲取捐款記錄、捐款目的及受捐單位資料"""
+
+        load_options = [
+            selectinload(Donation.purpose).selectinload(DonationPurpose.unit)
+        ]
+        return await self.model_relations(
+            Donation,
+            skip,
+            limit,
+            load_options=load_options
+        )
