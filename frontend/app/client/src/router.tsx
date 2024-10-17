@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/Layout/Layout';
-import DonateHomePage from './pages/donate.Homepage';
+import { Layout } from './components/layout/layout';
+import DonateHomePage from './pages/donate.home';
 
 export const router = createBrowserRouter([
   {

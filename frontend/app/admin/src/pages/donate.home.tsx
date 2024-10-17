@@ -1,5 +1,5 @@
 import React from 'react';
-import GenericPage from '../components/Common/PageLayout/GenericPage';
+import GenericPage from '../components/common/pageLayout/genericPage';
 
 interface DonationPurpose {
   id: number;

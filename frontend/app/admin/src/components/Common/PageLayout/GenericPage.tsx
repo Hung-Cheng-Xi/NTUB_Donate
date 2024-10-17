@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import Pagination from '../Pagination';
-import FormModal from '../Modal/Modal';
-import ListItem from './ListItem';
-import TableItem from './TableItem';
+import Pagination from '../pagination';
+import FormModal from '../modal/modal';
+import ListItem from './listItem';
+import TableItem from './tableItem';
 import { formatListItemType, formatTableItemType } from '../../../utils/format';
 import { ListItemType, TableItemType } from '../../../types/ItemType';
 

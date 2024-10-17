@@ -1,5 +1,5 @@
 import React from 'react';
-import GenericPage from '../components/Common/PageLayout/GenericPage';
+import GenericPage from '../components/common/pageLayout/genericPage';
 
 interface RegulationPurpose {
   id: number;
@@ -55,7 +55,19 @@ const DocumentPage: React.FC = () => {
       itemTitle="Donate Regulation"
       formFields={[
         { name: 'title', label: 'Title', type: 'text' },
-        { name: 'category', label: 'Category', type: 'select', options: ['ALL', 'Education', 'Health', 'Community Development', 'Animal Welfare', 'Environmental Conservation'] },
+        {
+          name: 'category',
+          label: 'Category',
+          type: 'select',
+          options: [
+            'ALL',
+            'Education',
+            'Health',
+            'Community Development',
+            'Animal Welfare',
+            'Environmental Conservation',
+          ],
+        },
         { name: 'description_link', label: 'Description Link', type: 'text' },
         { name: 'is_show', label: 'Show', type: 'checkbox' },
       ]}
