@@ -1,8 +1,7 @@
 from datetime import date
 from typing import TYPE_CHECKING, Optional
 
-from sqlmodel import SQLModel, Field, Relationship
-
+from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from app.domain.models.unit import Unit

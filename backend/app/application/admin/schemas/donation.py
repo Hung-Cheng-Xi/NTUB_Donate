@@ -1,13 +1,10 @@
 from datetime import date
 from typing import Optional
+
 from sqlmodel import SQLModel
 
-from app.domain.models.donation import (
-    DonationType,
-    DonorType,
-    PubicStatus
-)
 from app.application.admin.schemas.donation_purpose import DonationPurposeInfo
+from app.domain.models.donation import DonationType, DonorType, PubicStatus
 
 
 class DonationInfo(SQLModel):
@@ -15,6 +12,7 @@ class DonationInfo(SQLModel):
     用於返回 Donations 的基本信息，
     適用於讀取操作。
     """
+
     username: str
     user_birthday: date
     id_card: str
@@ -43,6 +41,7 @@ class DonationUpdate(SQLModel):
     用於更新 Donation 的 schema，
     允許捐款更新。
     """
+
     username: str
     user_birthday: date
     id_card: str
@@ -69,6 +68,7 @@ class ExcelExportInfo(SQLModel):
     用於返回 ExcelExport 的基本信息，
     適用於讀取操作。
     """
+
     username: str
     user_birthday: date
     id_card: str

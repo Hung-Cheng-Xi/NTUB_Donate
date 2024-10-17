@@ -1,14 +1,17 @@
-from app.application.admin.schemas.donation import \
-    DonationInfo as DonationInfoAdmin
+from sqlalchemy.orm import joinedload, selectinload
+from sqlmodel import select
+
+from app.application.admin.schemas.donation import (
+    DonationInfo as DonationInfoAdmin,
+)
 from app.application.admin.schemas.donation import DonationUpdate
-from app.application.client.schemas.donation import \
-    DonationInfo as DonationInfoClient
+from app.application.client.schemas.donation import (
+    DonationInfo as DonationInfoClient,
+)
 from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donation
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
-from sqlalchemy.orm import joinedload, selectinload
-from sqlmodel import select
 
 
 class DonationRepository(BaseRepository[Donation]):
@@ -35,8 +38,7 @@ class DonationRepository(BaseRepository[Donation]):
         """取得所有捐款分頁資料"""
         donations = await self.get_paginated_all(Donation, skip, limit)
         return [
-            DonationInfoAdmin.model_dump(donation)
-            for donation in donations
+            DonationInfoAdmin.model_dump(donation) for donation in donations
         ]
 
     async def client_get_donations(
@@ -46,10 +48,7 @@ class DonationRepository(BaseRepository[Donation]):
     ) -> list[DonationInfoClient]:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
         donations = await self.model_relations(
-            Donation,
-            skip,
-            limit,
-            [joinedload(Donation.purpose)]
+            Donation, skip, limit, [joinedload(Donation.purpose)]
         )
 
         # 將結果轉換為 DonationInfoClient 格式
@@ -83,8 +82,16 @@ class DonationRepository(BaseRepository[Donation]):
         limit: int,
     ):
         """從資料庫中獲取捐款記錄、捐款目的及受捐單位資料"""
-        statement = select(Donation).offset(skip).limit(limit).options(
-            selectinload(Donation.purpose).selectinload(DonationPurpose.unit))
+        statement = (
+            select(Donation)
+            .offset(skip)
+            .limit(limit)
+            .options(
+                selectinload(Donation.purpose).selectinload(
+                    DonationPurpose.unit
+                )
+            )
+        )
 
         results = await self.session.execute(statement)
         return results.scalars().all()

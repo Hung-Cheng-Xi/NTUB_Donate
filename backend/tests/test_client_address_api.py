@@ -7,9 +7,7 @@ async def test_admin_get_zipcode(base_url):
     async with httpx.AsyncClient() as client:
         response = await client.post(
             f"{base_url}/client/address/get_zipcode/",
-            json={
-                "address": "臺中市西屯區臺灣大道三段99號"
-            }
+            json={"address": "臺中市西屯區臺灣大道三段99號"},
         )
         assert response.status_code == 200
         json_data = response.json()

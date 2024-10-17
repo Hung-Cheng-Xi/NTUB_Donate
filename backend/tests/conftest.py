@@ -3,8 +3,7 @@ import pytest
 
 def pytest_generate_tests(metafunc):
     if "environment" in metafunc.fixturenames:
-        metafunc.parametrize(
-            "environment", ["development", "production"])
+        metafunc.parametrize("environment", ["development", "production"])
 
 
 @pytest.fixture

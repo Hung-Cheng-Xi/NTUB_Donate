@@ -1,20 +1,17 @@
-import httpx
-
 from typing import Dict
+
+import httpx
 from fastapi import HTTPException
 
-from app.core.settings import settings
 from app.application.client.schemas.address import AddressData
+from app.core.settings import settings
 
 
 class AddressService:
     def __init__(self):
         self.API_URL = settings.zipcode_api_url
 
-    async def get_zipcode(
-        self,
-        address_data: AddressData
-    ) -> Dict:
+    async def get_zipcode(self, address_data: AddressData) -> Dict:
         url = f"{self.API_URL}?adrs={address_data.address}"
 
         async with httpx.AsyncClient() as client:
@@ -26,12 +23,10 @@ class AddressService:
 
             except httpx.RequestError as exc:
                 raise HTTPException(
-                    status_code=500,
-                    detail=f"HTTP error occurred: {str(exc)}"
+                    status_code=500, detail=f"HTTP error occurred: {str(exc)}"
                 )
 
             except Exception as exc:
                 raise HTTPException(
-                    status_code=500,
-                    detail=f"An error occurred: {str(exc)}"
+                    status_code=500, detail=f"An error occurred: {str(exc)}"
                 )

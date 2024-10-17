@@ -1,28 +1,26 @@
+import configparser
 import logging
 import logging.config
-import configparser
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
-from fastapi.routing import APIRoute
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
+from fastapi import FastAPI
+from fastapi.routing import APIRoute
 
-from app.core.settings import settings
-from app.application.client.endpoints import client_router
 from app.application.admin.endpoints import admin_router
-
 from app.application.admin.endpoints.ftp import refresh_ftp_data
+from app.application.client.endpoints import client_router
+from app.core.settings import settings
 from app.domain.services.ftp_service import FTPService
-
 
 scheduler = AsyncIOScheduler()
 
 
 def configure_logging():
     config = configparser.ConfigParser()
-    config.read('log.ini')
-    logging.config.fileConfig('log.ini')
+    config.read("log.ini")
+    logging.config.fileConfig("log.ini")
     logging.info(f"Logging configured for {settings.env} environment")
 
 
@@ -30,12 +28,7 @@ def configure_logging():
 async def lifespan(app: FastAPI):
     logging.info("Starting the app")
     scheduler.add_job(
-        refresh_ftp_data,
-        CronTrigger(
-            hour=0,
-            minute=0
-        ),
-        args=[FTPService()]
+        refresh_ftp_data, CronTrigger(hour=0, minute=0), args=[FTPService()]
     )
     scheduler.start()
     yield
@@ -65,6 +58,7 @@ app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "main:app",
         host="0.0.0.0",

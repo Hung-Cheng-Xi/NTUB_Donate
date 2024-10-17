@@ -1,11 +1,14 @@
 import logging
-from typing import List, Annotated
+from typing import Annotated, List
+
 from fastapi import APIRouter, Depends
 
+from app.application.client.schemas.donation import (
+    DonationInfo,
+    DonationsCreate,
+)
 from app.domain.models.donation import Donation
-from app.application.client.schemas.donation import DonationsCreate
 from app.infrastructure.repositories.donation import DonationRepository
-from app.application.client.schemas.donation import DonationInfo
 
 router = APIRouter()
 
@@ -23,7 +26,7 @@ async def get_donations(
 @router.post("/", response_model=Donation)
 async def create_donation(
     new_donation: DonationsCreate,
-    repository: Annotated[DonationRepository, Depends()]
+    repository: Annotated[DonationRepository, Depends()],
 ):
     logging.info("新增 Donation 資料到資料庫")
     return await repository.create_donation(new_donation)

@@ -1,13 +1,13 @@
+from sqlalchemy.orm import joinedload
+from sqlmodel import select
+
+from app.application.admin.schemas.announcement import (
+    AnnouncementCreate,
+    AnnouncementInfo,
+    AnnouncementUpdate,
+)
 from app.domain.models.announcement import Announcement
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.admin.schemas.announcement import (
-    AnnouncementInfo,
-    AnnouncementCreate,
-    AnnouncementUpdate
-)
-
-from sqlmodel import select
-from sqlalchemy.orm import joinedload
 
 
 class AnnouncementRepository(BaseRepository[Announcement]):
@@ -33,8 +33,12 @@ class AnnouncementRepository(BaseRepository[Announcement]):
     ) -> list[AnnouncementInfo]:
         """取得分頁的最新消息"""
         # 查詢 Announcement 並加載與 unit 的關聯
-        statement = select(Announcement).offset(skip).limit(
-            limit).options(joinedload(Announcement.unit))
+        statement = (
+            select(Announcement)
+            .offset(skip)
+            .limit(limit)
+            .options(joinedload(Announcement.unit))
+        )
         results = await self.session.execute(statement)
         announcements = results.scalars().all()
 
@@ -51,9 +55,7 @@ class AnnouncementRepository(BaseRepository[Announcement]):
         """更新一筆最新消息"""
         announcement = updated_announcement.model_dump()
         return await self.update_instance(
-            announcement_id,
-            announcement,
-            Announcement
+            announcement_id, announcement, Announcement
         )
 
     async def patch_announcement(
@@ -64,9 +66,7 @@ class AnnouncementRepository(BaseRepository[Announcement]):
         """部分更新一筆最新消息"""
         announcement = updated_announcement.model_dump()
         return await self.patch_instance(
-            announcement_id,
-            announcement,
-            Announcement
+            announcement_id, announcement, Announcement
         )
 
     async def delete_announcement(

@@ -26,7 +26,7 @@ class FTPService:
         except Exception as e:
             raise HTTPException(
                 status_code=500,
-                detail=f"Failed to connect to FTP server: {str(e)}"
+                detail=f"Failed to connect to FTP server: {str(e)}",
             )
 
     def list_files(self, remote_path: str):
@@ -34,8 +34,7 @@ class FTPService:
             return self.session.listdir(remote_path)
         except Exception as e:
             raise HTTPException(
-                status_code=500,
-                detail=f"Failed to list files: {str(e)}"
+                status_code=500, detail=f"Failed to list files: {str(e)}"
             )
 
     def refresh_data(self):

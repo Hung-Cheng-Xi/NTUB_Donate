@@ -1,10 +1,10 @@
 import logging
+from typing import Annotated, List
 
-from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
-from app.domain.models.announcement import Announcement
 from app.application.admin.schemas.announcement import AnnouncementInfo
+from app.domain.models.announcement import Announcement
 from app.infrastructure.repositories.announcement import AnnouncementRepository
 
 router = APIRouter()
@@ -23,7 +23,7 @@ async def get_announcements(
 @router.get("/{announcement_id}", response_model=Announcement)
 async def get_announcement(
     announcement_id: int,
-    repository: Annotated[AnnouncementRepository, Depends()]
+    repository: Annotated[AnnouncementRepository, Depends()],
 ):
     logging.info("取得 Announcement 資料")
     return await repository.get_announcement(announcement_id)

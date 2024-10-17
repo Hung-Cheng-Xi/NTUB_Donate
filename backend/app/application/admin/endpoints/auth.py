@@ -1,19 +1,18 @@
 import logging
-
 from typing import Annotated
-from fastapi.responses import JSONResponse
-from fastapi import APIRouter, Depends, Request
 
-from app.domain.services.auth import AuthService
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
+
 from app.application.admin.schemas.auth import AuthRequest, AuthResponse
+from app.domain.services.auth import AuthService
 
 router = APIRouter()
 
 
 @router.post("/login/")
 async def login(
-    auth_request: AuthRequest,
-    auth_service: Annotated[AuthService, Depends()]
+    auth_request: AuthRequest, auth_service: Annotated[AuthService, Depends()]
 ) -> JSONResponse:
     logging.info("Call login API")
     return await auth_service.login(auth_request)
@@ -21,8 +20,7 @@ async def login(
 
 @router.post("/refresh/")
 async def refresh(
-    auth_service: Annotated[AuthService, Depends()],
-    request: Request
+    auth_service: Annotated[AuthService, Depends()], request: Request
 ) -> AuthResponse:
     logging.info("Call refresh API")
     cookie_value = request.cookies.get("refresh_token")
