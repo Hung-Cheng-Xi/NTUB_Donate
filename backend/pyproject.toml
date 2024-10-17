@@ -1,0 +1,117 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["Walle 何國瑋 <135415607+walle45611@users.noreply.github.com>"]
+readme = "README.md"
+
+
+[tool.black]
+line-length = 79
+target-version = ['py38']
+
+
+[tool.isort]
+profile = "black"
+line_length = 79
+known_third_party = ["requests", "sqlalchemy"]
+known_first_party = ["app"]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+black = "^24.10.0"
+pytest = "^8.3.3"
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+alembic = "1.13.2"
+annotated-types = "0.7.0"
+anyio = "4.4.0"
+apscheduler = "3.10.4"
+bcrypt = "4.2.0"
+certifi = "2024.8.30"
+cffi = "1.17.1"
+charset-normalizer = "3.3.2"
+click = "8.1.7"
+cryptography = "43.0.1"
+dnspython = "2.6.1"
+email-validator = "2.2.0"
+et-xmlfile = "1.1.0"
+fastapi = "0.114.0"
+greenlet = "3.1.0"
+h11 = "0.14.0"
+httpcore = "1.0.5"
+httpx = "0.27.2"
+idna = "3.8"
+iniconfig = "2.0.0"
+jinja2 = "3.1.4"
+mako = "1.3.5"
+markdown-it-py = "3.0.0"
+markupsafe = "2.1.5"
+mdurl = "0.1.2"
+mpmath = "1.3.0"
+mypy-extensions = "1.0.0"
+packaging = "24.1"
+pandas = "2.2.3"
+paramiko = "3.5.0"
+pathspec = "0.12.1"
+platformdirs = "4.3.6"
+pluggy = "1.5.0"
+pycparser = "2.22"
+pydantic = "2.9.0"
+pydantic-settings = "2.5.2"
+pydantic-core = "2.23.2"
+pygments = "2.18.0"
+pyjwt = "2.9.0"
+pytest-asyncio = "0.24.0"
+python-dateutil = "2.9.0.post0"
+python-dotenv = "1.0.1"
+python-multipart = "0.0.9"
+pytz = "2024.2"
+pyyaml = "6.0.2"
+regex = "2024.9.11"
+requests = "2.32.3"
+rich = "13.8.0"
+setuptools = "72.1.0"
+shellingham = "1.5.4"
+six = "1.16.0"
+sniffio = "1.3.1"
+soupsieve = "2.5"
+sqlalchemy = "2.0.29"
+sqlmodel = "0.0.22"
+sqlparse = "0.4.4"
+starlette = "0.38.5"
+sympy = "1.12"
+tablib = "3.6.1"
+text-unidecode = "1.3"
+tqdm = "4.66.2"
+typer = "0.12.5"
+typing-extensions = "4.12.2"
+tzdata = "2023.3"
+tzlocal = "5.2"
+uritemplate = "4.1.1"
+urllib3 = "2.2.3"
+uvicorn = "0.30.6"
+watchfiles = "0.24.0"
+websockets = "13.0.1"
+wheel = "0.43.0"
+xlrd = "2.0.1"
+xlsxwriter = "3.2.0"
+xlwt = "1.3.0"
+asyncpg = "0.29.0"
+httptools = "0.6.1"
+psycopg2-binary = "2.9.9"
+tiktoken = "0.6.0"
+uvloop = "0.20.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
