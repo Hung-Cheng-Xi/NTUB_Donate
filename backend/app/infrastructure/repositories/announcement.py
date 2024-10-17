@@ -33,7 +33,8 @@ class AnnouncementRepository(BaseRepository[Announcement]):
     ) -> list[AnnouncementInfo]:
         """取得分頁的最新消息"""
         # 查詢 Announcement 並加載與 unit 的關聯
-        statement = select(Announcement).offset(skip).limit(limit).options(joinedload(Announcement.unit))
+        statement = select(Announcement).offset(skip).limit(
+            limit).options(joinedload(Announcement.unit))
         results = await self.session.execute(statement)
         announcements = results.scalars().all()
 
@@ -49,7 +50,11 @@ class AnnouncementRepository(BaseRepository[Announcement]):
     ) -> AnnouncementUpdate:
         """更新一筆最新消息"""
         announcement = updated_announcement.model_dump()
-        return await self.update_instance(announcement_id, announcement, Announcement)
+        return await self.update_instance(
+            announcement_id,
+            announcement,
+            Announcement
+        )
 
     async def patch_announcement(
         self,
@@ -58,7 +63,11 @@ class AnnouncementRepository(BaseRepository[Announcement]):
     ) -> Announcement:
         """部分更新一筆最新消息"""
         announcement = updated_announcement.model_dump()
-        return await self.patch_instance(announcement_id, announcement, Announcement)
+        return await self.patch_instance(
+            announcement_id,
+            announcement,
+            Announcement
+        )
 
     async def delete_announcement(
         self,

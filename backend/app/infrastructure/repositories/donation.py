@@ -1,19 +1,14 @@
-from sqlmodel import select
-from sqlalchemy.orm import joinedload, selectinload
-
+from app.application.admin.schemas.donation import \
+    DonationInfo as DonationInfoAdmin
+from app.application.admin.schemas.donation import DonationUpdate
+from app.application.client.schemas.donation import \
+    DonationInfo as DonationInfoClient
+from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donation
 from app.domain.models.donation_purpose import DonationPurpose
-
-from app.application.admin.schemas.donation import (
-    DonationInfo as DonationInfoAdmin,
-    DonationUpdate
-)
-from app.application.client.schemas.donation import (
-    DonationInfo as DonationInfoClient,
-    DonationsCreate
-)
-
 from app.infrastructure.repositories.base import BaseRepository
+from sqlalchemy.orm import joinedload, selectinload
+from sqlmodel import select
 
 
 class DonationRepository(BaseRepository[Donation]):
@@ -39,7 +34,10 @@ class DonationRepository(BaseRepository[Donation]):
     ) -> list[DonationInfoAdmin]:
         """取得所有捐款分頁資料"""
         donations = await self.get_paginated_all(Donation, skip, limit)
-        return [DonationInfoAdmin.model_dump(donation) for donation in donations]
+        return [
+            DonationInfoAdmin.model_dump(donation)
+            for donation in donations
+        ]
 
     async def client_get_donations(
         self,
@@ -47,21 +45,19 @@ class DonationRepository(BaseRepository[Donation]):
         limit,
     ) -> list[DonationInfoClient]:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
-        async with self.session as session:
-            # 使用 select 加載 Donations，並同時載入相關的 DonationPurpose 資料
-            donations = await self.model_relations(
-                Donation,
-                skip,
-                limit,
-                [joinedload(Donation.purpose)]
-            )
+        donations = await self.model_relations(
+            Donation,
+            skip,
+            limit,
+            [joinedload(Donation.purpose)]
+        )
 
-            # 將結果轉換為 DonationInfoClient 格式
-            donation_info_list = [
-                DonationInfoClient.model_validate(donation)
-                for donation in donations
-                if donation.input_date is not None
-            ]
+        # 將結果轉換為 DonationInfoClient 格式
+        donation_info_list = [
+            DonationInfoClient.model_validate(donation)
+            for donation in donations
+            if donation.input_date is not None
+        ]
 
         return donation_info_list
 

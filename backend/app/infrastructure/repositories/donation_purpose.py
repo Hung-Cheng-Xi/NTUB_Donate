@@ -1,15 +1,11 @@
 from typing import List
 
-from sqlmodel import select
-from sqlalchemy.orm import selectinload
-
 from app.application.admin.schemas.donation_purpose import (
-    AdminDonationPurposeItem,
-    DonationPurposeCreate
-)
-
-from app.infrastructure.repositories.base import BaseRepository
+    AdminDonationPurposeItem, DonationPurposeCreate)
 from app.domain.models.donation_purpose import DonationPurpose
+from app.infrastructure.repositories.base import BaseRepository
+from sqlalchemy.orm import selectinload
+from sqlmodel import select
 
 
 class DonationPurposeRepository(BaseRepository[DonationPurpose]):
@@ -54,6 +50,7 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
     ) -> List[AdminDonationPurposeItem]:
         """取得分頁的捐款目的，按達到金額上限百分比排序"""
 
-        statement = select(DonationPurpose).offset(skip).limit(limit).options(selectinload(DonationPurpose.donations))
+        statement = select(DonationPurpose).offset(skip).limit(
+            limit).options(selectinload(DonationPurpose.donations))
         results = await self.session.execute(statement)
         return results.scalars().all()
