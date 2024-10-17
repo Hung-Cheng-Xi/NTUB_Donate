@@ -87,13 +87,8 @@ class DonationRepository(BaseRepository[Donation]):
         limit: int,
     ):
         """從資料庫中獲取捐款記錄、捐款目的及受捐單位資料"""
+        statement = select(Donation).offset(skip).limit(limit).options(
+            selectinload(Donation.purpose).selectinload(DonationPurpose.unit))
 
-        load_options = [
-            selectinload(Donation.purpose).selectinload(DonationPurpose.unit)
-        ]
-        return await self.model_relations(
-            Donation,
-            skip,
-            limit,
-            load_options=load_options
-        )
+        results = await self.session.execute(statement)
+        return results.scalars().all()

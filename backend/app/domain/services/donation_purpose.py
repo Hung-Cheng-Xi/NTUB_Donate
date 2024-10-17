@@ -17,7 +17,7 @@ class DonationPurposeService:
         skip: int,
         limit: int,
     ) -> List[DonationPurposeItem]:
-        purposes = await self.donation_repository.get_donation_purposes()
+        purposes = await self.donation_repository.get_donation_purposes(skip, limit)
         donation_purposes = []
         for purpose in purposes:
             total_donation: Any = sum(

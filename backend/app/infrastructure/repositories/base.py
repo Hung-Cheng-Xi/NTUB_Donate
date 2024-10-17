@@ -117,29 +117,3 @@ class BaseRepository(Generic[T]):
         statement = select(model).offset(skip).limit(limit)
         results = await self.session.execute(statement)
         return results.scalars().all()
-
-    async def model_relations(
-        self,
-        model: Type[T],
-        skip: int = 0,
-        limit: int = 10,
-        load_options: Optional[list] = None
-    ) -> List[T]:
-        """
-        通用的查詢函數，用於加載不同模型及其關聯資料
-
-        :param model: 要查詢的 SQLModel 模型
-        :param skip: 查詢時的偏移量
-        :param limit: 查詢時的限制量
-        :param load_options: 可選的查詢選項列表，用於加載關聯的資料
-        :return: 模型的列表
-        """
-        statement = select(model).offset(skip).limit(limit)
-
-        # 如果提供了關聯加載選項，則添加到查詢中
-        if load_options:
-            for option in load_options:
-                statement = statement.options(option)
-
-        results = await self.session.execute(statement)
-        return results.scalars().all()

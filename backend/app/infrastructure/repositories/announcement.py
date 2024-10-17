@@ -6,6 +6,7 @@ from app.application.admin.schemas.announcement import (
     AnnouncementUpdate
 )
 
+from sqlmodel import select
 from sqlalchemy.orm import joinedload
 
 
@@ -32,12 +33,9 @@ class AnnouncementRepository(BaseRepository[Announcement]):
     ) -> list[AnnouncementInfo]:
         """取得分頁的最新消息"""
         # 查詢 Announcement 並加載與 unit 的關聯
-        announcements = await self.model_relations(
-            Announcement,
-            skip,
-            limit,
-            [joinedload(Announcement.unit)]
-        )
+        statement = select(Announcement).offset(skip).limit(limit).options(joinedload(Announcement.unit))
+        results = await self.session.execute(statement)
+        announcements = results.scalars().all()
 
         return [
             AnnouncementInfo.model_validate(announcement)
