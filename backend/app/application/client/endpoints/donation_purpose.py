@@ -3,7 +3,7 @@ from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation_purpose import DonationPurpose
-from app.application.utils.schemas.donation_purpose import (
+from app.application.client.schemas.donation_purpose import (
     DonationPurposeItem
 )
 from app.infrastructure.repositories.donation_purpose import (

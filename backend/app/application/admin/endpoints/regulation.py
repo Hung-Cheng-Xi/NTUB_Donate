@@ -4,8 +4,8 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.regulation import Regulation
-from app.application.utils.schemas.regulation import RegulationInfo
 from app.application.admin.schemas.regulation import (
+    RegulationInfo,
     RegulationCreate,
     RegulationtUpdate
 )

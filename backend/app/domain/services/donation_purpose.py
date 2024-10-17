@@ -1,8 +1,7 @@
 from fastapi import Depends
 from typing import Any, List, Annotated
 
-from app.domain.models.donation_purpose import DonationPurpose
-from app.application.utils.schemas.donation_purpose import DonationPurposeItem
+from app.application.client.schemas.donation_purpose import DonationPurposeItem
 from app.infrastructure.repositories.donation_purpose import DonationPurposeRepository
 
 

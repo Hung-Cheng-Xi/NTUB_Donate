@@ -1,8 +1,7 @@
 from app.domain.models.announcement import Announcement
-from app.domain.models.unit import Unit
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.utils.schemas.announcement import AnnouncementInfo
 from app.application.admin.schemas.announcement import (
+    AnnouncementInfo,
     AnnouncementCreate,
     AnnouncementUpdate
 )

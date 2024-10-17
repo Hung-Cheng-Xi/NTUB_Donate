@@ -4,10 +4,8 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.donation_purpose import DonationPurpose
-from app.application.utils.schemas.donation_purpose import (
-    AdminDonationPurposeItem
-)
 from app.application.admin.schemas.donation_purpose import (
+    AdminDonationPurposeItem,
     DonationPurposeCreate,
     DonationPurposeUpdate,
 )

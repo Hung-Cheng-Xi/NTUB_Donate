@@ -7,7 +7,7 @@ from app.domain.models.donation import (
     DonorType,
     PubicStatus
 )
-from app.application.utils.schemas.donation_purpose import DonationPurposeInfo
+from app.application.admin.schemas.donation_purpose import DonationPurposeInfo
 
 
 class DonationInfo(SQLModel):

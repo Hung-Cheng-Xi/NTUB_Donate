@@ -3,7 +3,7 @@ from typing import List, Annotated
 from fastapi import APIRouter, Depends
 
 from app.domain.models.regulation import Regulation
-from app.application.utils.schemas.regulation import RegulationInfo
+from app.application.admin.schemas.regulation import RegulationInfo
 from app.infrastructure.repositories.regulation import RegulationRepository
 
 router = APIRouter()

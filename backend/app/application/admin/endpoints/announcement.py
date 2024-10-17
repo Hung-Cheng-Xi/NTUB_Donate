@@ -4,8 +4,8 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from app.domain.models.announcement import Announcement
-from app.application.utils.schemas.announcement import AnnouncementInfo
 from app.application.admin.schemas.announcement import (
+    AnnouncementInfo,
     AnnouncementCreate,
     AnnouncementUpdate
 )

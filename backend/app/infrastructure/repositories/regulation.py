@@ -1,7 +1,9 @@
 from app.domain.models.regulation import Regulation
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.utils.schemas.regulation import RegulationInfo
-from app.application.admin.schemas.regulation import RegulationCreate
+from app.application.admin.schemas.regulation import (
+    RegulationInfo,
+    RegulationCreate
+)
 from app.application.admin.schemas.donation_purpose import DonationPurposeUpdate
 
 

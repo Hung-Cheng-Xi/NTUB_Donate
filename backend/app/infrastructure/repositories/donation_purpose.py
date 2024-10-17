@@ -2,10 +2,8 @@ from typing import List
 
 from sqlalchemy.orm import selectinload
 
-from app.application.utils.schemas.donation_purpose import (
-    AdminDonationPurposeItem
-)
 from app.application.admin.schemas.donation_purpose import (
+    AdminDonationPurposeItem,
     DonationPurposeCreate
 )
 
