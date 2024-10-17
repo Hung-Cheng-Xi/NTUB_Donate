@@ -1,7 +1,7 @@
 import React from 'react';
 import GenericPage from '../components/Common/PageLayout/GenericPage';
 
-interface DocumentPurpose {
+interface RegulationPurpose {
   id: number;
   title: string;
   category: string;
@@ -9,7 +9,7 @@ interface DocumentPurpose {
   is_show: boolean;
 }
 
-const documentData: DocumentPurpose[] = [
+const RegulationData: RegulationPurpose[] = [
   {
     id: 1,
     category: 'ALL',
@@ -50,9 +50,9 @@ const documentData: DocumentPurpose[] = [
 // Usage example
 const DocumentPage: React.FC = () => {
   return (
-    <GenericPage<DocumentPurpose>
-      data={documentData}
-      itemTitle="Donate Document"
+    <GenericPage<RegulationPurpose>
+      data={RegulationData}
+      itemTitle="Donate Regulation"
       formFields={[
         { name: 'title', label: 'Title', type: 'text' },
         { name: 'category', label: 'Category', type: 'select', options: ['ALL', 'Education', 'Health', 'Community Development', 'Animal Welfare', 'Environmental Conservation'] },

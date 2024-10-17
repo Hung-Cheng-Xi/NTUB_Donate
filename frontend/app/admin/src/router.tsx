@@ -2,9 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './components/Layout/Layout';
 import DonateLoginPage from './pages/donate.LoginPage';
 import DonateHomePage from './pages/donate.HomePage';
-import DonateNewsPage from './pages/donate.NewsPage';
+import AnnouncementPage from './pages/donate.announcement';
 import PurposePage from './pages/donate.PurposePage';
-import DocumentPage from './pages/donate.DocumentPage';
+import RegulationPage from './pages/donate.regulation';
 
 export const router = createBrowserRouter([
   {
@@ -24,9 +24,9 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/admin/news/',
+        path: '/admin/announcement/',
         async lazy() {
-          return { Component: DonateNewsPage };
+          return { Component: AnnouncementPage };
         },
       },
       {
@@ -36,9 +36,9 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/admin/document/',
+        path: '/admin/regulation/',
         async lazy() {
-          return { Component: DocumentPage };
+          return { Component: RegulationPage };
         },
       },
     ],

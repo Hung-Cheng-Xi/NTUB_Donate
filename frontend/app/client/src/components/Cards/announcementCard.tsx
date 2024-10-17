@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewsSection from '../News/NewsSection';
+import AnnouncementSection from '../announcement/announcementSection';
 
 interface DonationItem {
   date: string;
@@ -59,7 +59,7 @@ const DateLabel = styled.div`
   justify-content: center;
 `;
 
-export const NewsCard: React.FC = () => {
+export const AnnouncementCard: React.FC = () => {
   const donationItems: DonationItem[] = [
     {
       date: '10/20',
@@ -92,7 +92,7 @@ export const NewsCard: React.FC = () => {
           </ImageContainer>
 
           {/* 內容區域 */}
-          <NewsSection item={item} />
+          <AnnouncementSection item={item} />
         </Card>
       ))}
     </GridContainer>
