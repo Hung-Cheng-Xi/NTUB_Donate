@@ -11,16 +11,8 @@ class DonationType(str, Enum):
     STORE: 使用實體店支付。
     BANK: 使用銀行支付。
     """
-    STORE = "STORE"
-    BANK = "BANK"
-
-    def to_chinese(self) -> str:
-        if self == DonationType.STORE:
-            return "實體店支付"
-        elif self == DonationType.BANK:
-            return "銀行支付"
-
-        return "未知"
+    STORE = "實體店支付"
+    BANK = "銀行支付"
 
 
 class DonorType(Enum):
@@ -33,28 +25,12 @@ class DonorType(Enum):
     CORPORATION: 公司
     OTHER: 其他
     """
-    ALUMNI = "ALUMNI"
-    STAFF = "STAFF"
-    PARENT = "PARENT"
-    COMMUNITY = "COMMUNITY"
-    CORPORATION = "CORPORATION"
-    OTHER = "OTHER"
-
-    def to_chinese(self) -> str:
-        if self == DonorType.ALUMNI:
-            return "校友"
-        elif self == DonorType.STAFF:
-            return "教職員"
-        elif self == DonorType.PARENT:
-            return "家長"
-        elif self == DonorType.COMMUNITY:
-            return "社區成員"
-        elif self == DonorType.CORPORATION:
-            return "公司"
-        elif self == DonorType.OTHER:
-            return "其他"
-
-        return "未知"
+    ALUMNI = "校友"
+    STAFF = "教職員"
+    PARENT = "家長"
+    COMMUNITY = "社區成員"
+    CORPORATION = "公司"
+    OTHER = "其他"
 
 
 class PubicStatus(str, Enum):
@@ -64,19 +40,9 @@ class PubicStatus(str, Enum):
     ANONYMOUS: 匿名
     PARTIALLY: 匿名但受捐單位知曉
     """
-    PUBLIC = "PUBLIC"
-    ANONYMOUS = "ANONYMOUS"
-    PARTIALLY = "PARTIALLY"
-
-    def to_chinese(self) -> str:
-        if self == PubicStatus.PUBLIC:
-            return "公開"
-        elif self == PubicStatus.ANONYMOUS:
-            return "匿名"
-        elif self == PubicStatus.PARTIALLY:
-            return "匿名但受捐單位知曉"
-
-        return "未知"
+    PUBLIC = "公開"
+    ANONYMOUS = "匿名"
+    PARTIALLY = "匿名但受捐單位知曉"
 
 
 if TYPE_CHECKING:

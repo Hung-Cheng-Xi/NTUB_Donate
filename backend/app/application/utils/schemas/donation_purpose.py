@@ -40,8 +40,8 @@ class DonationPurposeInfo(SQLModel):
     lump_sum: int
     description: str
     memo: Optional[str] = None
-    total_donation: float
-    achieved_percentage: float
+    total_donation: Optional[float] = None
+    achieved_percentage: Optional[float] = None
 
     id: int
     unit: UnitInfo
