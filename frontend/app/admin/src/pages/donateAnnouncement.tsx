@@ -1,5 +1,5 @@
 import React from 'react';
-import GenericPage from '../components/common/pageLayout/genericPage';
+import Generic from '../components/common/page/generic';
 
 interface AnnouncementProps {
   id: number;
@@ -49,7 +49,7 @@ const newsPropsData: AnnouncementProps[] = [
 
 const AnnouncementPage: React.FC = () => {
   return (
-    <GenericPage<AnnouncementProps>
+    <Generic<AnnouncementProps>
       data={newsPropsData}
       itemTitle="Donate Announcement"
       formFields={[

@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import Pagination from '../Pagination';
-import FormModal from '../Modal/Modal';
-import ListItem from './ListItem';
-import TableItem from './TableItem';
+import Pagination from '../pagination';
+import FormModal from '../modal/modal';
+import ListItem from './listItem';
+import TableItem from './tableItem';
 import { formatListItemType, formatTableItemType } from '../../../utils/format';
-import { ListItemType, TableItemType } from '../../../types/ItemType';
+import { ListItemType, TableItemType } from '../../../types/item';
 
 const Container = styled.div`
   margin: 97.5px 97.5px 10.5px 97.5px;
   width: 1245px;
 `;
 
-interface GenericPageProps<T> {
+interface GenericProps<T> {
   data: T[];
   itemTitle: string;
   formFields: {
@@ -27,12 +27,12 @@ interface GenericPageProps<T> {
 
 type GenericItemType = ListItemType | TableItemType;
 
-const GenericPage = <T extends GenericItemType>({
+const Generic = <T extends GenericItemType>({
   data,
   itemTitle,
   formFields,
   viewMode,
-}: GenericPageProps<T>) => {
+}: GenericProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
 
@@ -93,4 +93,4 @@ const GenericPage = <T extends GenericItemType>({
   );
 };
 
-export default GenericPage;
+export default Generic;

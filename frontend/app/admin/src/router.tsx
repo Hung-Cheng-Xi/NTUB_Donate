@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/Layout/Layout';
-import DonateLoginPage from './pages/donate.LoginPage';
-import DonateHomePage from './pages/donate.HomePage';
-import AnnouncementPage from './pages/donate.announcement';
-import PurposePage from './pages/donate.PurposePage';
-import RegulationPage from './pages/donate.regulation';
+import { Layout } from './components/layout/layout';
+import DonateLoginPage from './pages/donateLogin';
+import DonateHomePage from './pages/donateHome';
+import AnnouncementPage from './pages/donateAnnouncement';
+import PurposePage from './pages/donatePurpose';
+import RegulationPage from './pages/donateRegulation';
 
 export const router = createBrowserRouter([
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBarItem from './NavBarItem';
+import NavBarItem from './navBarItem';
 import { NavBarProps } from '../../../types/nav';
 
 const HomeNavBar: React.FC<NavBarProps> = ({ links }) => {

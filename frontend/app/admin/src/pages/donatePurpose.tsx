@@ -1,5 +1,5 @@
 import React from 'react';
-import GenericPage from '../components/Common/PageLayout/GenericPage';
+import Generic from '../components/common/page/generic';
 
 interface DonationPurpose {
   id: number;
@@ -56,7 +56,7 @@ const donationPurposeData: DonationPurpose[] = [
 // Usage example
 const PurposePage: React.FC = () => {
   return (
-    <GenericPage<DonationPurpose>
+    <Generic<DonationPurpose>
       data={donationPurposeData}
       itemTitle="Donate Purpose"
       formFields={[

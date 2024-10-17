@@ -1,5 +1,5 @@
 import React from 'react';
-import type { TableItemType } from '../../../types/ItemType';
+import type { TableItemType } from '../../../types/item';
 
 // TableItem Component
 interface TableItemProps {
