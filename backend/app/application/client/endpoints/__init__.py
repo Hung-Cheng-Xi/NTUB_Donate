@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 
-from app.application.client.endpoints.donation import router as donation_router
-from app.application.client.endpoints.barcode import router as barcode_router
-from app.application.client.endpoints.donation_purpose import (
+from .barcode import router as barcode_router
+from .donation import router as donation_router
+from .donation_purpose import (
     router as donation_purpose_router
 )
-from app.application.client.endpoints.news import router as news_purpose_router
-from app.application.client.endpoints.address import router as address_router
-from app.application.client.endpoints.document import router as document_router
+from .address import router as address_router
+from .regulation import router as document_router
+from .announcement import router as announcement_router
 
 client_router = APIRouter(prefix="/client")
 
@@ -24,15 +24,15 @@ client_router.include_router(
 )
 
 client_router.include_router(
-    news_purpose_router,
-    prefix="/news",
-    tags=["Client - News"]
+    announcement_router,
+    prefix="/announcement",
+    tags=["Client - Announcement"]
 )
 
 client_router.include_router(
     document_router,
-    prefix="/document",
-    tags=["Client - Document"]
+    prefix="/regulation",
+    tags=["Client - Regulation"]
 )
 
 client_router.include_router(

@@ -1,22 +1,27 @@
 import logging
-from typing import Annotated, List
 
-from app.application.admin.schemas.donation_purpose import (
-    DonationPurposeCreate, DonationPurposeItem)
-from app.domain.models.donation_purpose import DonationPurpose
-from app.infrastructure.repositories.donation_purpose import \
-    DonationPurposeRepository
+from typing import Annotated, List
 from fastapi import APIRouter, Depends
+
+from app.domain.models.donation_purpose import DonationPurpose
+from app.application.admin.schemas.donation_purpose import (
+    AdminDonationPurposeItem,
+    DonationPurposeCreate,
+    DonationPurposeUpdate,
+)
+from app.infrastructure.repositories.donation_purpose import (
+    DonationPurposeRepository
+)
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[DonationPurposeItem])
+@router.get("/", response_model=List[AdminDonationPurposeItem])
 async def get_donation_purposes(
     repository: Annotated[DonationPurposeRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[DonationPurposeItem]:
+) -> List[AdminDonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
     return await repository.get_donation_purposes(skip, limit)
 
@@ -42,24 +47,11 @@ async def get_donation_purpose(
 @router.put("/{donation_purpose_id}", response_model=DonationPurpose)
 async def update_donation_purpose(
     donation_purpose_id: int,
-    new_donation_purpose: DonationPurposeCreate,
+    new_donation_purpose: DonationPurposeUpdate,
     repository: Annotated[DonationPurposeRepository, Depends()]
 ):
     logging.info("更新 Donation Purpose 資料")
     return await repository.update_donation_purpose(
-        donation_purpose_id,
-        new_donation_purpose
-    )
-
-
-@router.patch("/{donation_purpose_id}", response_model=DonationPurpose)
-async def patch_donation_purpose(
-    donation_purpose_id: int,
-    new_donation_purpose: DonationPurposeCreate,
-    repository: Annotated[DonationPurposeRepository, Depends()]
-):
-    logging.info("部分更新 Donation Purpose 資料")
-    return await repository.patch_donation_purpose(
         donation_purpose_id,
         new_donation_purpose
     )

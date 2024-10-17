@@ -1,10 +1,14 @@
 import logging
-from typing import Annotated, List
 
-from app.application.admin.schemas.unit import UnitCreate
-from app.domain.models.unit import Unit
-from app.infrastructure.repositories.unit import UnitRepository
+from typing import Annotated, List
 from fastapi import APIRouter, Depends
+
+from app.domain.models.unit import Unit
+from app.application.admin.schemas.unit import (
+    UnitCreate,
+    UnitUpdate
+    )
+from app.infrastructure.repositories.unit import UnitRepository
 
 router = APIRouter()
 
@@ -38,7 +42,7 @@ async def get_unit(
 @router.put("/{unit_id}", response_model=Unit)
 async def update_unit(
     unit_id: int,
-    new_unit: UnitCreate,
+    new_unit: UnitUpdate,
     repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("更新 Unit 資料")

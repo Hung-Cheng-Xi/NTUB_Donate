@@ -1,15 +1,18 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 from sqlmodel import SQLModel
 
-from app.domain.models.donation import DonorType, DonationType, PubicStatus
-from .donation_purpose import DonationPurposeInfo
+from app.domain.models.donation import (
+    DonorType,
+    DonationType,
+    PubicStatus
+)
 
 
-class DonationsBase(SQLModel):
-    """Donations 的基本 schema，
-    包含基本的字段定義，用於創建或更新捐款記錄。
-    不包含自動生成的字段如 id、created_at 和 updated_at。
+class DonationsCreate(SQLModel):
+    """
+    用於創建 Donations 記錄的 schema，
+    包含用戶需要提交的所有字段。
     """
     username: str
     user_birthday: date
@@ -26,34 +29,30 @@ class DonationsBase(SQLModel):
     amount: int
     account: str
     type: DonationType = DonationType.STORE
-    status: Optional[int] = None
     transaction_id: Optional[str] = None
-    input_date: Optional[str] = None
+    input_date: Optional[date] = None
+
     purpose_id: int
 
 
-class DonationsCreate(DonationsBase):
-    """用於創建 Donations 記錄的 schema，繼承 DonationsBase。
-    包含用戶需要提交的所有字段。
+class DonationPurposeInfo(SQLModel):
     """
-    pass
-
-
-class DonationsInDBBase(DonationsBase):
-    """表示數據庫中 Donations 記錄的基礎結構。
-    包含自動生成的 id、created_at 和 updated_at，並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
+    用於返回 Donation 的子模型，
+    適用於讀取操作。
     """
-    id: Optional[int]
+    title: str
+    description: str
 
     class Config:
         from_attributes = True
 
 
 class DonationInfo(SQLModel):
-    """用於返回 Donations 的基本信息。
-    繼承 DonationsInDBBase，適用於讀取操作。
+    """
+    用於返回 Donations 的基本信息，
+    適用於讀取操作。
     """
     username: str
     amount: int
-    input_date: Optional[str] = None
-    purpose: DonationPurposeInfo # 嵌入 DonationPurposeInfo 子模型
+    input_date: Optional[date] = None
+    purpose: DonationPurposeInfo  # 嵌入 DonationPurposeInfo 子模型

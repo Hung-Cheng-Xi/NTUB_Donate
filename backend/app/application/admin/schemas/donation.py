@@ -1,18 +1,19 @@
 from datetime import date
-from typing import TYPE_CHECKING, Optional
-
-from app.domain.models.donation import DonationType, DonorType, PubicStatus
+from typing import Optional
 from sqlmodel import SQLModel
 
-if TYPE_CHECKING:
-    from app.application.admin.schemas.donation_purpose import \
-        DonationPurposeInfo
+from app.domain.models.donation import (
+    DonationType,
+    DonorType,
+    PubicStatus
+)
+from app.application.admin.schemas.donation_purpose import DonationPurposeInfo
 
 
-class DonationsBase(SQLModel):
-    """Donations 的基本 schema，
-    包含基本的字段定義，用於創建或更新捐款記錄。
-    不包含自動生成的字段如 id、created_at 和 updated_at。
+class DonationInfo(SQLModel):
+    """
+    用於返回 Donations 的基本信息，
+    適用於讀取操作。
     """
     username: str
     user_birthday: date
@@ -32,44 +33,60 @@ class DonationsBase(SQLModel):
     status: Optional[int] = None
     transaction_id: Optional[str] = None
     input_date: Optional[str] = None
+
+    id: int
     purpose_id: int
 
 
-class DonationsCreate(DonationsBase):
-    """用於創建 Donations 記錄的 schema，繼承 DonationsBase。
-    包含用戶需要提交的所有字段。
+class DonationUpdate(SQLModel):
     """
-    pass
-
-
-class DonationsUpdate(DonationsBase):
-    """用於更新 Donations 記錄的 schema，允許部分字段更新。"""
-    pass
-
-
-class DonationsInDBBase(DonationsBase):
-    """表示數據庫中 Donations 記錄的基礎結構。
-    包含自動生成的 id、created_at 和 updated_at，並啟用 from_attributes 以允許將 ORM 模型轉換為 Pydantic 模型。
+    用於更新 Donation 的 schema，
+    允許捐款更新。
     """
-    id: Optional[int]
-    # created_at: datetime
-    # updated_at: datetime
+    username: str
+    user_birthday: date
+    id_card: str
+    phone_number: str
+    email: str
+    identity: DonorType = DonorType.ALUMNI
+    year: Optional[str] = None
+    gept: Optional[str] = None
+    res_address: str
+    registered_address: str
+    public_status: PubicStatus = PubicStatus.PUBLIC
+    memo: Optional[str] = None
+    amount: int
+    account: str
+    type: DonationType = DonationType.STORE
+    transaction_id: Optional[str] = None
+    input_date: Optional[date] = None
 
-    class Config:
-        from_attributes = True
+    purpose_id: int
 
 
-class DonationInfo(DonationsInDBBase):
-    """用於返回 Donations 的基本信息。
-    繼承 DonationsInDBBase，適用於讀取操作。
+class ExcelExportInfo(SQLModel):
     """
-    pass
-
-
-class DonationsDetail(DonationsInDBBase):
-    """用於返回 Donations 的詳細信息，包含與 DonationPurposeInfo 的關聯。
+    用於返回 ExcelExport 的基本信息，
+    適用於讀取操作。
     """
-    purpose: Optional["DonationPurposeInfo"]
+    username: str
+    user_birthday: date
+    id_card: str
+    phone_number: str
+    email: str
+    identity: DonorType = DonorType.ALUMNI
+    year: Optional[str] = None
+    gept: Optional[str] = None
+    res_address: str
+    registered_address: str
+    public_status: PubicStatus = PubicStatus.PUBLIC
+    memo: Optional[str] = None
+    amount: int
+    account: str
+    type: DonationType = DonationType.STORE
+    status: Optional[int] = None
+    transaction_id: Optional[str] = None
+    input_date: Optional[date] = None
 
-    class Config:
-        from_attributes = True
+    id: int
+    purpose: DonationPurposeInfo

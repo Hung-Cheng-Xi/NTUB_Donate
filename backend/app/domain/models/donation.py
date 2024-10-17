@@ -1,6 +1,6 @@
 from enum import Enum
-from typing import TYPE_CHECKING, Optional
 from datetime import date
+from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import SQLModel, Field, Relationship
 
@@ -11,8 +11,8 @@ class DonationType(str, Enum):
     STORE: 使用實體店支付。
     BANK: 使用銀行支付。
     """
-    STORE = "STORE"
-    BANK = "BANK"
+    STORE = "實體店支付"
+    BANK = "銀行支付"
 
 
 class DonorType(Enum):
@@ -25,12 +25,12 @@ class DonorType(Enum):
     CORPORATION: 公司
     OTHER: 其他
     """
-    ALUMNI = "ALUMNI"
-    STAFF = "STAFF"
-    PARENT = "PARENT"
-    COMMUNITY = "COMMUNITY"
-    CORPORATION = "CORPORATION"
-    OTHER = "OTHER"
+    ALUMNI = "校友"
+    STAFF = "教職員"
+    PARENT = "家長"
+    COMMUNITY = "社區成員"
+    CORPORATION = "公司"
+    OTHER = "其他"
 
 
 class PubicStatus(str, Enum):
@@ -40,16 +40,16 @@ class PubicStatus(str, Enum):
     ANONYMOUS: 匿名
     PARTIALLY: 匿名但受捐單位知曉
     """
-    PUBLIC = "PUBLIC"
-    ANONYMOUS = "ANONYMOUS"
-    PARTIALLY = "PARTIALLY"
+    PUBLIC = "公開"
+    ANONYMOUS = "匿名"
+    PARTIALLY = "匿名但受捐單位知曉"
 
 
 if TYPE_CHECKING:
     from app.domain.models.donation_purpose import DonationPurpose
 
 
-class Donations(SQLModel, table=True):
+class Donation(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     username: str
     user_birthday: date
@@ -75,14 +75,13 @@ class Donations(SQLModel, table=True):
         default=DonationType.STORE,
         description="捐款方式"
     )
-    status: Optional[int] = None
     transaction_id: Optional[str] = None
-    input_date: Optional[str] = None
+    input_date: Optional[date] = None
 
-    purpose_id: Optional[int] = Field(
+    purpose_id: int = Field(
         default=None,
         foreign_key="donationpurpose.id"
     )
-    purpose: Optional["DonationPurpose"] = Relationship(
+    purpose: 'DonationPurpose' = Relationship(
         back_populates="donations"
     )
