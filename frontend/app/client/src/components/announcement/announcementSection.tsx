@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface NewsItem {
+interface AnnouncementItem {
   date: string;
   title: string;
   description: string;
   imageUrl: string;
 }
 
-interface NewsSectionProps {
-  item: NewsItem;
+interface AnnouncementSectionProps {
+  item: AnnouncementItem;
 }
 
-const NewsContainer = styled.div`
+const AnnouncementContainer = styled.div`
   margin-top: 24px;
   margin-left: 10px;
 `;
 
-const NewsTitle = styled.h3`
+const AnnouncementTitle = styled.h3`
   font-size: 24px;
   font-weight: bold;
   margin-left: 8px;
@@ -49,10 +49,10 @@ const DetailsButton = styled.button`
   }
 `;
 
-const NewsSection: React.FC<NewsSectionProps> = ({ item }) => {
+const AnnouncementSection: React.FC<AnnouncementSectionProps> = ({ item }) => {
   return (
-    <NewsContainer>
-      <NewsTitle>{item.title}</NewsTitle>
+    <AnnouncementContainer>
+      <AnnouncementTitle>{item.title}</AnnouncementTitle>
       <DetailsButton>
         更多詳情
         <svg
@@ -69,8 +69,8 @@ const NewsSection: React.FC<NewsSectionProps> = ({ item }) => {
           />
         </svg>
       </DetailsButton>
-    </NewsContainer>
+    </AnnouncementContainer>
   );
 };
 
-export default NewsSection;
+export default AnnouncementSection;
