@@ -1,37 +1,83 @@
 import React from 'react';
-import styled from 'styled-components';
 
-interface PaginationButtonProps {
-  onClick?: () => void;
+// types.ts
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
+// Pagination.tsx
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
+  const handlePageClick = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      onPageChange(page);
+    }
+  };
 
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-`;
-
-const PaginationButton = styled.button<PaginationButtonProps>`
-  font-size: 42px;
-  width: 45px;
-  height: 45px;
-  border-radius: 100px;
-  border: 1px solid #000; /* You can customize the border color */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Pagination: React.FC = () => {
   return (
-    <PaginationContainer>
-      <PaginationButton>
-        <span>&#8592;</span> {/* 左箭頭 */}
-      </PaginationButton>
-      <PaginationButton>
-        <span>&#8594;</span> {/* 右箭頭 */}
-      </PaginationButton>
-    </PaginationContainer>
+    <nav aria-label="Page navigation example" className="flex justify-end">
+      <ul className="list-style-none flex">
+        <li>
+          <button
+            className="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface
+            transition duration-300 hover:bg-neutral-100
+            focus:bg-neutral-100 focus:text-primary-700 focus:outline-none
+            active:bg-neutral-100 active:text-primary-700
+            dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
+            dark:focus:text-primary-500 dark:active:bg-neutral-700
+            dark:active:text-primary-500"
+            onClick={() => handlePageClick(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label="Previous"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+
+        {Array.from({ length: totalPages }, (_, index) => (
+          <li
+            key={index}
+            aria-current={currentPage === index + 1 ? 'page' : undefined}
+          >
+            <button
+              className={`relative block rounded bg-transparent px-3 py-1.5
+                text-sm text-surface transition duration-300 hover:bg-neutral-100
+                focus:bg-neutral-100 focus:text-primary-700 focus:outline-none
+                active:bg-neutral-100 active:text-primary-700 dark:text-white
+                dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
+                dark:focus:text-primary-500 dark:active:bg-neutral-700
+                dark:active:text-primary-500 ${
+                  currentPage === index + 1 ? 'font-bold underline' : ''
+                }`}
+              onClick={() => handlePageClick(index + 1)}
+            >
+              {index + 1}
+            </button>
+          </li>
+        ))}
+
+        <li>
+          <button
+            className="relative block rounded bg-transparent px-3 py-1.5
+            text-sm text-surface transition duration-300 hover:bg-neutral-100
+            focus:bg-neutral-100 focus:text-primary-700 focus:outline-none
+            active:bg-neutral-100 active:text-primary-700 dark:text-white
+            dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
+            dark:focus:text-primary-500 dark:active:bg-neutral-700
+            dark:active:text-primary-500"
+            onClick={() => handlePageClick(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label="Next"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

@@ -15,7 +15,7 @@ export const Layout: React.FC = () => {
     <div className="relative w-full">
       <Header links={links} />
       <div className="flex flex-col min-h-screen items-center">
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <Outlet />
         </main>
       </div>

@@ -19,7 +19,9 @@ const ListItem: React.FC<ListItemProps> = ({ item, openModal }) => (
             {'category' in item ? item.category : item.title}
           </h3>
           <button
-            className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 text-sm font-semibold
+            text-white bg-blue-600 rounded-md hover:bg-blue-500
+            focus:outline-none focus:ring-2 focus:ring-blue-400"
             onClick={() => openModal(item)}
           >
             Edit
