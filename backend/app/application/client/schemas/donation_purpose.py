@@ -1,4 +1,5 @@
 from typing import Optional
+
 from sqlmodel import SQLModel
 
 
@@ -6,6 +7,7 @@ class DonationPurposeItem(SQLModel):
     """
     用於返回 DonationPurpose 的基本信息，適用於讀取操作。
     """
+
     title: str
     lump_sum: int
     description: str

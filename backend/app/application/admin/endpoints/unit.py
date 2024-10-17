@@ -1,13 +1,10 @@
 import logging
-
 from typing import Annotated, List
+
 from fastapi import APIRouter, Depends
 
+from app.application.admin.schemas.unit import UnitCreate, UnitUpdate
 from app.domain.models.unit import Unit
-from app.application.admin.schemas.unit import (
-    UnitCreate,
-    UnitUpdate
-    )
 from app.infrastructure.repositories.unit import UnitRepository
 
 router = APIRouter()
@@ -23,8 +20,7 @@ async def get_units(
 
 @router.post("/", response_model=Unit)
 async def create_unit(
-    new_unit: UnitCreate,
-    repository: Annotated[UnitRepository, Depends()]
+    new_unit: UnitCreate, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("新增 Unit 資料到資料庫")
     return await repository.create_unit(new_unit)
@@ -32,8 +28,7 @@ async def create_unit(
 
 @router.get("/{unit_id}", response_model=Unit)
 async def get_unit(
-    unit_id: int,
-    repository: Annotated[UnitRepository, Depends()]
+    unit_id: int, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("取得 Unit 資料")
     return await repository.get_unit(unit_id)
@@ -43,7 +38,7 @@ async def get_unit(
 async def update_unit(
     unit_id: int,
     new_unit: UnitUpdate,
-    repository: Annotated[UnitRepository, Depends()]
+    repository: Annotated[UnitRepository, Depends()],
 ):
     logging.info("更新 Unit 資料")
     return await repository.update_unit(unit_id, new_unit)
@@ -51,8 +46,7 @@ async def update_unit(
 
 @router.delete("/{unit_id}", response_model=Unit)
 async def delete_unit(
-    unit_id: int,
-    repository: Annotated[UnitRepository, Depends()]
+    unit_id: int, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("刪除 Unit 資料")
     return await repository.delete_unit(unit_id)

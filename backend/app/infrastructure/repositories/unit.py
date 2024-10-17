@@ -1,8 +1,5 @@
+from app.application.admin.schemas.unit import UnitCreate, UnitUpdate
 from app.domain.models.unit import Unit
-from app.application.admin.schemas.unit import (
-    UnitCreate,
-    UnitUpdate
-)
 from app.infrastructure.repositories.base import BaseRepository
 
 
@@ -27,9 +24,9 @@ class UnitRepository(BaseRepository[Unit]):
         return await self.get_all(Unit)
 
     async def update_unit(
-            self,
-            unit_id: int,
-            updated_unit: UnitUpdate,
+        self,
+        unit_id: int,
+        updated_unit: UnitUpdate,
     ) -> UnitUpdate:
         """更新一筆單位"""
         unit = updated_unit.model_dump()

@@ -1,12 +1,9 @@
 from datetime import date
 from typing import Optional
+
 from sqlmodel import SQLModel
 
-from app.domain.models.donation import (
-    DonorType,
-    DonationType,
-    PubicStatus
-)
+from app.domain.models.donation import DonationType, DonorType, PubicStatus
 
 
 class DonationsCreate(SQLModel):
@@ -14,6 +11,7 @@ class DonationsCreate(SQLModel):
     用於創建 Donations 記錄的 schema，
     包含用戶需要提交的所有字段。
     """
+
     username: str
     user_birthday: date
     id_card: str
@@ -40,6 +38,7 @@ class DonationPurposeInfo(SQLModel):
     用於返回 Donation 的子模型，
     適用於讀取操作。
     """
+
     title: str
     description: str
 
@@ -52,6 +51,7 @@ class DonationInfo(SQLModel):
     用於返回 Donations 的基本信息，
     適用於讀取操作。
     """
+
     username: str
     amount: int
     input_date: Optional[date] = None

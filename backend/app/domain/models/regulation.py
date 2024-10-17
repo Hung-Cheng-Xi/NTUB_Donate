@@ -1,5 +1,6 @@
 from enum import Enum
-from sqlmodel import SQLModel, Field
+
+from sqlmodel import Field, SQLModel
 
 
 class RegulationCategory(str, Enum):
@@ -11,6 +12,7 @@ class RegulationCategory(str, Enum):
     TAX_RELATED_LAWS: 相關稅法
     DONATION_FORMS_DOWNLOAD: 捐款相關表單下載
     """
+
     ALL = "ALL"
     DEPARTMENT_LAWS = "DEPARTMENT_LAWS"
     COMMERCIAL_LAW = "COMMERCIAL_LAW"
@@ -22,8 +24,7 @@ class Regulation(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     title: str
     category: RegulationCategory = Field(
-        default=RegulationCategory.ALL,
-        description="相關法規類別"
+        default=RegulationCategory.ALL, description="相關法規類別"
     )
     description_link: str
     is_show: bool
