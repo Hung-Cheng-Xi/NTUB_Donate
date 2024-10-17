@@ -32,7 +32,6 @@ class DonationPurposeInfo(SQLModel):
     unit: UnitInfo
 
 
-
 class DonationPurposeCreate(SQLModel):
     """
     用於創建 DonationPurpose 紀錄的 schema。

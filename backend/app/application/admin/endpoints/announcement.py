@@ -49,7 +49,10 @@ async def update_announcement(
     repository: Annotated[AnnouncementRepository, Depends()]
 ):
     logging.info("更新 Announcement 資料")
-    return await repository.update_announcement(announcement_id, new_announcement)
+    return await repository.update_announcement(
+        announcement_id,
+        new_announcement
+    )
 
 
 @router.delete("/{announcement_id}", response_model=Announcement)
