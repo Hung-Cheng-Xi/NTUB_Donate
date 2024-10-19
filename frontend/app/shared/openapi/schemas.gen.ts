@@ -11,7 +11,188 @@ export const AddressDataSchema = {
     type: 'object',
     required: ['address'],
     title: 'AddressData',
-    description: '用於創建 Address 記錄的 schema，'
+    description: `用於創建 Address 記錄的 schema，
+包含地址需要提交的所有字段。`
+} as const;
+
+export const AdminDonationPurposeItemSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        lump_sum: {
+            type: 'integer',
+            title: 'Lump Sum'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'lump_sum', 'description', 'is_show', 'id'],
+    title: 'AdminDonationPurposeItem',
+    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
+} as const;
+
+export const AnnouncementSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        date: {
+            type: 'string',
+            format: 'date',
+            title: 'Date'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        unit_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Unit Id'
+        }
+    },
+    type: 'object',
+    required: ['date', 'title', 'description', 'is_show'],
+    title: 'Announcement'
+} as const;
+
+export const AnnouncementCreateSchema = {
+    properties: {
+        date: {
+            type: 'string',
+            format: 'date',
+            title: 'Date'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        unit_id: {
+            type: 'integer',
+            title: 'Unit Id'
+        }
+    },
+    type: 'object',
+    required: ['date', 'title', 'description', 'is_show', 'unit_id'],
+    title: 'AnnouncementCreate',
+    description: `用於創建 Announcement 記錄的 schema，
+包含公告需要提交的所有字段。`
+} as const;
+
+export const AnnouncementInfoSchema = {
+    properties: {
+        date: {
+            type: 'string',
+            format: 'date',
+            title: 'Date'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        unit: {
+            '$ref': '#/components/schemas/UnitInfo'
+        }
+    },
+    type: 'object',
+    required: ['date', 'title', 'description', 'is_show', 'id', 'unit'],
+    title: 'AnnouncementInfo',
+    description: `用於返回 New 的基本信息，
+適用於讀取操作。`
+} as const;
+
+export const AnnouncementUpdateSchema = {
+    properties: {
+        date: {
+            type: 'string',
+            format: 'date',
+            title: 'Date'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        unit_id: {
+            type: 'integer',
+            title: 'Unit Id'
+        }
+    },
+    type: 'object',
+    required: ['date', 'title', 'description', 'is_show', 'id', 'unit_id'],
+    title: 'AnnouncementUpdate',
+    description: `用於更新 Announcement 記錄的 schema，
+允許公告更新。`
 } as const;
 
 export const AuthRequestSchema = {
@@ -64,75 +245,165 @@ export const BarCodeDataSchema = {
     type: 'object',
     required: ['Group', 'SerialNumber', 'Time', 'Money'],
     title: 'BarCodeData',
-    description: '用於創建 BarCode 記錄的 schema，'
+    description: `用於創建 BarCode 記錄的 schema，
+包含 BarCode 需要提交的所有字段。`
 } as const;
 
-export const DocumentSchema = {
+export const DonationSchema = {
     properties: {
         id: {
             type: 'integer',
             title: 'Id'
         },
-        title: {
+        username: {
             type: 'string',
-            title: 'Title'
+            title: 'Username'
         },
-        category: {
-            '$ref': '#/components/schemas/DocumentCategory',
-            description: '相關法規類別',
-            default: 'ALL'
-        },
-        description_link: {
+        user_birthday: {
             type: 'string',
-            title: 'Description Link'
+            format: 'date',
+            title: 'User Birthday'
         },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
+        id_card: {
+            type: 'string',
+            title: 'Id Card'
+        },
+        phone_number: {
+            type: 'string',
+            title: 'Phone Number'
+        },
+        email: {
+            type: 'string',
+            title: 'Email'
+        },
+        identity: {
+            '$ref': '#/components/schemas/DonorType',
+            description: '捐款者身分',
+            default: '校友'
+        },
+        year: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Year'
+        },
+        gept: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Gept'
+        },
+        res_address: {
+            type: 'string',
+            title: 'Res Address'
+        },
+        registered_address: {
+            type: 'string',
+            title: 'Registered Address'
+        },
+        public_status: {
+            '$ref': '#/components/schemas/PubicStatus',
+            description: '公開狀態',
+            default: '公開'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        amount: {
+            type: 'integer',
+            title: 'Amount'
+        },
+        account: {
+            type: 'string',
+            title: 'Account'
+        },
+        type: {
+            '$ref': '#/components/schemas/DonationType',
+            description: '捐款方式',
+            default: '實體店支付'
+        },
+        transaction_id: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Transaction Id'
+        },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
+        purpose_id: {
+            type: 'integer',
+            title: 'Purpose Id'
         }
     },
     type: 'object',
-    required: ['title', 'description_link', 'is_show'],
-    title: 'Document'
+    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account'],
+    title: 'Donation'
 } as const;
 
-export const DocumentCategorySchema = {
-    type: 'string',
-    enum: ['ALL', 'DEPARTMENT_LAWS', 'COMMERCIAL_LAW', 'TAX_RELATED_LAWS', 'DONATION_FORMS_DOWNLOAD'],
-    title: 'DocumentCategory',
-    description: `表示相關法規方式的 Enum。
-
-ALL: 全部
-DEPARTMENT_LAWS: 各部法規
-COMMERCIAL_LAW: 北商大法規
-TAX_RELATED_LAWS: 相關稅法
-DONATION_FORMS_DOWNLOAD: 捐款相關表單下載`
-} as const;
-
-export const DocumentCreateSchema = {
+export const DonationInfoSchema = {
     properties: {
-        title: {
+        username: {
             type: 'string',
-            title: 'Title'
+            title: 'Username'
         },
-        category: {
-            '$ref': '#/components/schemas/DocumentCategory',
-            default: 'ALL'
+        amount: {
+            type: 'integer',
+            title: 'Amount'
         },
-        description_link: {
-            type: 'string',
-            title: 'Description Link'
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
         },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
+        purpose: {
+            '$ref': '#/components/schemas/DonationPurposeInfo'
         }
     },
     type: 'object',
-    required: ['title', 'description_link', 'is_show'],
-    title: 'DocumentCreate',
-    description: `用於創建 Document 記錄的 schema，
-繼承了 DocumentBase，包含相關法規提交的所有必要字段。`
+    required: ['username', 'amount', 'purpose'],
+    title: 'DonationInfo',
+    description: `用於返回 Donations 的基本信息，
+適用於讀取操作。`
 } as const;
 
 export const DonationPurposeSchema = {
@@ -169,14 +440,7 @@ export const DonationPurposeSchema = {
             title: 'Is Show'
         },
         unit_id: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
+            type: 'integer',
             title: 'Unit Id'
         }
     },
@@ -187,17 +451,17 @@ export const DonationPurposeSchema = {
 
 export const DonationPurposeCreateSchema = {
     properties: {
-        name: {
+        title: {
             type: 'string',
-            title: 'Name'
+            title: 'Title'
         },
         lump_sum: {
             type: 'integer',
             title: 'Lump Sum'
         },
-        summary: {
+        description: {
             type: 'string',
-            title: 'Summary'
+            title: 'Description'
         },
         memo: {
             anyOf: [
@@ -220,15 +484,122 @@ export const DonationPurposeCreateSchema = {
         }
     },
     type: 'object',
-    required: ['name', 'lump_sum', 'summary', 'is_show', 'unit_id'],
+    required: ['title', 'lump_sum', 'description', 'is_show', 'unit_id'],
     title: 'DonationPurposeCreate',
-    description: `用於創建 DonationPurpose 時的 schema。
-繼承了 DonationPurposeBase，並且增加了 unit_id，因為創建時需要指定一個單位。`
+    description: `用於創建 DonationPurpose 紀錄的 schema。
+包含捐款目的提交的所有必要字段。`
+} as const;
+
+export const DonationPurposeInfoSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description'],
+    title: 'DonationPurposeInfo',
+    description: `用於返回 Donation 的子模型，
+適用於讀取操作。`
+} as const;
+
+export const DonationPurposeItemSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        lump_sum: {
+            type: 'integer',
+            title: 'Lump Sum'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        total_donation: {
+            type: 'number',
+            title: 'Total Donation'
+        },
+        achieved_percentage: {
+            type: 'number',
+            title: 'Achieved Percentage'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'lump_sum', 'description', 'is_show', 'total_donation', 'achieved_percentage', 'id'],
+    title: 'DonationPurposeItem',
+    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
+} as const;
+
+export const DonationPurposeUpdateSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        lump_sum: {
+            type: 'integer',
+            title: 'Lump Sum'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        unit_id: {
+            type: 'integer',
+            title: 'Unit Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'lump_sum', 'description', 'is_show', 'unit_id'],
+    title: 'DonationPurposeUpdate',
+    description: `用於更新 DonationPurpose 的 schema，
+允許捐款目的更新。`
 } as const;
 
 export const DonationTypeSchema = {
     type: 'string',
-    enum: ['STORE', 'BANK'],
+    enum: ['實體店支付', '銀行支付'],
     title: 'DonationType',
     description: `表示捐款方式的 Enum。
 
@@ -236,12 +607,8 @@ STORE: 使用實體店支付。
 BANK: 使用銀行支付。`
 } as const;
 
-export const DonationsSchema = {
+export const DonationUpdateSchema = {
     properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
         username: {
             type: 'string',
             title: 'Username'
@@ -265,8 +632,7 @@ export const DonationsSchema = {
         },
         identity: {
             '$ref': '#/components/schemas/DonorType',
-            description: '捐款者身分',
-            default: 'ALUMNI'
+            default: '校友'
         },
         year: {
             anyOf: [
@@ -300,8 +666,7 @@ export const DonationsSchema = {
         },
         public_status: {
             '$ref': '#/components/schemas/PubicStatus',
-            description: '公開狀態',
-            default: 'PUBLIC'
+            default: '公開'
         },
         memo: {
             anyOf: [
@@ -324,19 +689,7 @@ export const DonationsSchema = {
         },
         type: {
             '$ref': '#/components/schemas/DonationType',
-            description: '捐款方式',
-            default: 'STORE'
-        },
-        status: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Status'
+            default: '實體店支付'
         },
         transaction_id: {
             anyOf: [
@@ -352,7 +705,8 @@ export const DonationsSchema = {
         input_date: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    format: 'date'
                 },
                 {
                     type: 'null'
@@ -361,20 +715,15 @@ export const DonationsSchema = {
             title: 'Input Date'
         },
         purpose_id: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
+            type: 'integer',
             title: 'Purpose Id'
         }
     },
     type: 'object',
-    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account'],
-    title: 'Donations'
+    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account', 'purpose_id'],
+    title: 'DonationUpdate',
+    description: `用於更新 Donation 的 schema，
+允許捐款更新。`
 } as const;
 
 export const DonationsCreateSchema = {
@@ -402,7 +751,7 @@ export const DonationsCreateSchema = {
         },
         identity: {
             '$ref': '#/components/schemas/DonorType',
-            default: 'ALUMNI'
+            default: '校友'
         },
         year: {
             anyOf: [
@@ -436,7 +785,7 @@ export const DonationsCreateSchema = {
         },
         public_status: {
             '$ref': '#/components/schemas/PubicStatus',
-            default: 'PUBLIC'
+            default: '公開'
         },
         memo: {
             anyOf: [
@@ -459,18 +808,7 @@ export const DonationsCreateSchema = {
         },
         type: {
             '$ref': '#/components/schemas/DonationType',
-            default: 'STORE'
-        },
-        status: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Status'
+            default: '實體店支付'
         },
         transaction_id: {
             anyOf: [
@@ -486,7 +824,8 @@ export const DonationsCreateSchema = {
         input_date: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    format: 'date'
                 },
                 {
                     type: 'null'
@@ -502,13 +841,13 @@ export const DonationsCreateSchema = {
     type: 'object',
     required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account', 'purpose_id'],
     title: 'DonationsCreate',
-    description: `用於創建 Donations 記錄的 schema，繼承 DonationsBase。
+    description: `用於創建 Donations 記錄的 schema，
 包含用戶需要提交的所有字段。`
 } as const;
 
 export const DonorTypeSchema = {
     type: 'string',
-    enum: ['ALUMNI', 'STAFF', 'PARENT', 'COMMUNITY', 'CORPORATION', 'OTHER'],
+    enum: ['校友', '教職員', '家長', '社區成員', '公司', '其他'],
     title: 'DonorType',
     description: `表示捐款者身份的 Enum。
 
@@ -534,86 +873,139 @@ export const HTTPValidationErrorSchema = {
     title: 'HTTPValidationError'
 } as const;
 
-export const NewsSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        date: {
-            type: 'string',
-            format: 'date',
-            title: 'Date'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
-        },
-        unit_id: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Unit Id'
-        }
-    },
-    type: 'object',
-    required: ['date', 'title', 'description', 'is_show'],
-    title: 'News'
-} as const;
-
-export const NewsCreateSchema = {
-    properties: {
-        date: {
-            type: 'string',
-            format: 'date',
-            title: 'Date'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
-        },
-        unit_id: {
-            type: 'integer',
-            title: 'Unit Id'
-        }
-    },
-    type: 'object',
-    required: ['date', 'title', 'description', 'is_show', 'unit_id'],
-    title: 'NewsCreate',
-    description: `用於創建 News 記錄的 schema，
-繼承了 NewsBase，包含用戶提交的所有必要字段。`
-} as const;
-
 export const PubicStatusSchema = {
     type: 'string',
-    enum: ['PUBLIC', 'ANONYMOUS', 'PARTIALLY'],
+    enum: ['公開', '匿名', '匿名但受捐單位知曉'],
     title: 'PubicStatus',
     description: `表示公開狀態的 Enum。
 
 PUBLIC: 公開
 ANONYMOUS: 匿名
 PARTIALLY: 匿名但受捐單位知曉`
+} as const;
+
+export const RegulationSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/RegulationCategory',
+            description: '相關法規類別',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show'],
+    title: 'Regulation'
+} as const;
+
+export const RegulationCategorySchema = {
+    type: 'string',
+    enum: ['ALL', 'DEPARTMENT_LAWS', 'COMMERCIAL_LAW', 'TAX_RELATED_LAWS', 'DONATION_FORMS_DOWNLOAD'],
+    title: 'RegulationCategory',
+    description: `表示相關法規方式的 Enum。
+
+ALL: 全部
+DEPARTMENT_LAWS: 各部法規
+COMMERCIAL_LAW: 北商大法規
+TAX_RELATED_LAWS: 相關稅法
+DONATION_FORMS_DOWNLOAD: 捐款相關表單下載`
+} as const;
+
+export const RegulationCreateSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/RegulationCategory',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show'],
+    title: 'RegulationCreate',
+    description: `用於創建 Regulationt 記錄的 schema，
+包含用戶提交的所有必要字段。`
+} as const;
+
+export const RegulationInfoSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/RegulationCategory',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show', 'id'],
+    title: 'RegulationInfo',
+    description: `用於返回 Regulation 的基本信息，
+適用於讀取操作。`
+} as const;
+
+export const RegulationtUpdateSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        category: {
+            '$ref': '#/components/schemas/RegulationCategory',
+            default: 'ALL'
+        },
+        description_link: {
+            type: 'string',
+            title: 'Description Link'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        }
+    },
+    type: 'object',
+    required: ['title', 'description_link', 'is_show'],
+    title: 'RegulationtUpdate',
+    description: `用於更新 Regulationt 記錄的 schema，
+允許法規更新。`
 } as const;
 
 export const UnitSchema = {
@@ -642,7 +1034,39 @@ export const UnitCreateSchema = {
     type: 'object',
     required: ['name'],
     title: 'UnitCreate',
-    description: '用於創建 Unit 記錄的 schema，繼承了 UnitBase，包含用戶提交的所有必要字段。'
+    description: `用於創建 Unit 記錄的 schema，
+包含單位提交的所有必要字段。`
+} as const;
+
+export const UnitInfoSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'id'],
+    title: 'UnitInfo',
+    description: '用於返回 Unit 的基本信息，適用於讀取操作。'
+} as const;
+
+export const UnitUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'UnitUpdate',
+    description: `用於更新 Unit 記錄的 schema，
+允許單位更新。`
 } as const;
 
 export const UserSchema = {
@@ -671,7 +1095,7 @@ export const UserCreateSchema = {
     type: 'object',
     required: ['account'],
     title: 'UserCreate',
-    description: `用於創建 User 記錄的 schema，繼承 UserBase。
+    description: `用於創建 User 記錄的 schema，
 包含用戶提交的所有必要字段。`
 } as const;
 
