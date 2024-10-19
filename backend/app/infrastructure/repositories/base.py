@@ -1,8 +1,8 @@
 from typing import Annotated, Generic, List, Optional, Type, TypeVar
 
 from fastapi import Depends, HTTPException
-from sqlmodel import SQLModel, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import SQLModel, select
 
 from app.core.database import get_db_session
 
@@ -11,8 +11,7 @@ T = TypeVar("T", bound=SQLModel)
 
 class BaseRepository(Generic[T]):
     def __init__(
-        self,
-        session: Annotated[AsyncSession, Depends(get_db_session)]
+        self, session: Annotated[AsyncSession, Depends(get_db_session)]
     ):
         self.session = session
 
@@ -41,17 +40,14 @@ class BaseRepository(Generic[T]):
         return results.scalars().all()
 
     async def update_instance(
-        self,
-        id: int,
-        new_data: dict,
-        model: Type[T]
+        self, id: int, new_data: dict, model: Type[T]
     ) -> T:
         """更新實例的方法"""
         instance = await self.get_by_id(id, model)
         if not instance:
             raise HTTPException(
                 status_code=404,
-                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料"
+                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料",
             )
 
         for key, value in new_data.items():
@@ -62,17 +58,14 @@ class BaseRepository(Generic[T]):
         return instance
 
     async def patch_instance(
-        self,
-        id: int,
-        new_data: dict,
-        model: Type[T]
+        self, id: int, new_data: dict, model: Type[T]
     ) -> T:
         """部分更新實例的方法"""
         instance = await self.get_by_id(id, model)
         if not instance:
             raise HTTPException(
                 status_code=404,
-                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料"
+                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料",
             )
 
         for key, value in new_data.items():
@@ -89,7 +82,7 @@ class BaseRepository(Generic[T]):
         if not instance:
             raise HTTPException(
                 status_code=404,
-                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料"
+                detail=f"找不到 ID 為 {id} 的 {model.__name__} 資料",
             )
 
         await self.session.delete(instance)
@@ -97,10 +90,7 @@ class BaseRepository(Generic[T]):
         return instance
 
     async def check_exists(
-        self,
-        field_name: str,
-        value: str,
-        model: Type[T]
+        self, field_name: str, value: str, model: Type[T]
     ) -> bool:
         """通用的檢查某個欄位值是否已存在的方法"""
         statement = select(model).where(getattr(model, field_name) == value)

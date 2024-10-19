@@ -1,11 +1,10 @@
 import logging
-
 from typing import Annotated, Dict
+
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 
 from app.domain.services.excel_export import ExcelService
-
 
 router = APIRouter()
 
@@ -25,7 +24,7 @@ async def excel_export(
         output,
         media_type=(
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+        ),
     )
     response.headers["Content-Disposition"] = (
         "attachment; filename=donations.xlsx"

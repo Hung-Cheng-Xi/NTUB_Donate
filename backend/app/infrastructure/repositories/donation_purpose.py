@@ -1,11 +1,14 @@
 from typing import List
 
-from app.application.admin.schemas.donation_purpose import (
-    AdminDonationPurposeItem, DonationPurposeCreate)
-from app.domain.models.donation_purpose import DonationPurpose
-from app.infrastructure.repositories.base import BaseRepository
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
+
+from app.application.admin.schemas.donation_purpose import (
+    AdminDonationPurposeItem,
+    DonationPurposeCreate,
+)
+from app.domain.models.donation_purpose import DonationPurpose
+from app.infrastructure.repositories.base import BaseRepository
 
 
 class DonationPurposeRepository(BaseRepository[DonationPurpose]):
@@ -25,15 +28,14 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         return await self.get_by_id(donation_purpose_id, DonationPurpose)
 
     async def update_donation_purpose(
-        self, donation_purpose_id: int,
+        self,
+        donation_purpose_id: int,
         updated_donation_purpose: DonationPurpose,
     ) -> DonationPurpose:
         """更新一筆捐款目的"""
         purpose = updated_donation_purpose.model_dump()
         return await self.update_instance(
-            donation_purpose_id,
-            purpose,
-            DonationPurpose
+            donation_purpose_id, purpose, DonationPurpose
         )
 
     async def delete_donation_purpose(
@@ -50,7 +52,11 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
     ) -> List[AdminDonationPurposeItem]:
         """取得分頁的捐款目的，按達到金額上限百分比排序"""
 
-        statement = select(DonationPurpose).offset(skip).limit(
-            limit).options(selectinload(DonationPurpose.donations))
+        statement = (
+            select(DonationPurpose)
+            .offset(skip)
+            .limit(limit)
+            .options(selectinload(DonationPurpose.donations))
+        )
         results = await self.session.execute(statement)
         return results.scalars().all()

@@ -1,6 +1,6 @@
 import logging
-
 from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.domain.services.ftp_service import FTPService
