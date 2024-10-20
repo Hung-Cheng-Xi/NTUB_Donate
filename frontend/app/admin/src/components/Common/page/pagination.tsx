@@ -2,18 +2,20 @@ import React from 'react';
 
 // types.ts
 export interface PaginationProps {
+  totalItems: number;
   currentPage: number;
   onPageChange: (page: number) => void;
 }
 // Pagination.tsx
 const Pagination: React.FC<PaginationProps> = ({
+  totalItems,
   currentPage,
   onPageChange,
 }) => {
-  const totalPages = 5;
+  
 
   const handlePageClick = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
+    if (page >= 1 && page <= totalItems) {
       onPageChange(page);
     }
   };
@@ -38,7 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </button>
         </li>
 
-        {Array.from({ length: totalPages }, (_, index) => (
+        {Array.from({ length: totalItems }, (_, index) => (
           <li
             key={index}
             aria-current={currentPage === index + 1 ? 'page' : undefined}
@@ -70,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
             dark:focus:text-primary-500 dark:active:bg-neutral-700
             dark:active:text-primary-500"
             onClick={() => handlePageClick(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalItems}
             aria-label="Next"
           >
             <span aria-hidden="true">&raquo;</span>

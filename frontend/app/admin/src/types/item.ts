@@ -1,5 +1,11 @@
 import { UnitInfo } from "../../../shared/openapi/types.gen";
 
+// 接收 API 返回的 Pagination 資料
+export interface PaginatedResponse<T> {
+  total_count: number;
+  items: T[];
+}
+
 export interface ListItemType {
   id: number;
   date?: string;

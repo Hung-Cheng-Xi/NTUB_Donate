@@ -49,13 +49,13 @@ const AnnouncementPage: React.FC = () => {
       isError={isUnitsError || isAnnouncementsError}
     >
       <ListGeneric
-        data={isAnnouncementsData ?? []}
+        data={isAnnouncementsData ?? { total_count: 0, items: [] }}
         itemTitle="Donate Announcement"
         formFields={[
           { name: 'date', label: 'Date', type: 'date' },
           { name: 'title', label: 'Title', type: 'text' },
           {
-            name: 'unit',
+            name: 'unit_id',
             label: 'Unit',
             type: 'select',
             options: isUnitsData?.map(unit => ({ ...unit, id: unit.id ?? '' })),

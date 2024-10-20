@@ -3,9 +3,10 @@ import { SubmitHandler } from 'react-hook-form';
 import Pagination from '../page/pagination';
 import BaseFormModal from '../modal/baseModal';
 import ItemsPerPage from '../page/itemsPer';
+import { PaginatedResponse } from '../../../types/item';
 
 export interface BaseGenericProps<T> {
-  data: T[];
+  data: PaginatedResponse<T>;
   itemTitle: string;
   formFields: {
     name: string;
@@ -34,6 +35,7 @@ const BaseGeneric = <T,>({
 }: BaseGenericProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
+  const totalPages = Math.ceil(data.total_count / itemsPerPage);
 
   const openModal = (item: T) => {
     setIsOpen(true);
@@ -103,10 +105,11 @@ const BaseGeneric = <T,>({
               </div>
             </div>
 
-            <ItemComponent data={data} openModal={openModal} />
+            <ItemComponent data={data.items} openModal={openModal} />
 
             <div className="p-8">
               <Pagination
+                totalItems={totalPages}
                 currentPage={currentPage}
                 onPageChange={onPageChange}
               />
