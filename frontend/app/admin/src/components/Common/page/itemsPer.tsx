@@ -75,7 +75,7 @@ const ItemsPerPage: React.FC<ItemsPerPageProps> = ({
             className="py-1 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownActionButton"
           >
-            {[5, 10, 25, 50, 100].map((value) => (
+            {[2, 5, 10, 25, 50, 100].map((value) => (
               <li key={value}>
                 <button
                   onClick={() => handleSelect(value)}

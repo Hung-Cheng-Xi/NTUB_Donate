@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import Pagination from '../pagination';
+import Pagination from './pagination';
 import FormModal from '../modal/modal';
 import ListItem from './listItem';
 import TableItem from './tableItem';
@@ -18,6 +18,10 @@ interface GenericProps<T> {
     options?: string[];
   }[];
   viewMode: 'list' | 'table';
+  itemsPerPage: number;
+  currentPage: number;
+  onSelect: (value: number) => void;
+  onPageChange: (value: number) => void;
 }
 
 type GenericItemType = ListItemType | TableItemType;
@@ -27,6 +31,10 @@ const Generic = <T extends GenericItemType>({
   itemTitle,
   formFields,
   viewMode,
+  itemsPerPage,
+  currentPage,
+  onSelect,
+  onPageChange,
 }: GenericProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
@@ -46,21 +54,6 @@ const Generic = <T extends GenericItemType>({
     closeModal();
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-
-  const handleSelect = (value: number) => {
-    setItemsPerPage(value);
-    console.log(`Selected ${value} items per page`);
-    // 這裡可以根據選擇的數量更新資料顯示邏輯
-  };
-
   return (
     <>
       <div className="flex flex-col items-center min-h-screen w-full p-8 rounded">
@@ -76,7 +69,7 @@ const Generic = <T extends GenericItemType>({
                   <div className="absolute inset-y-0 start-0">
                     <ItemsPerPage
                       selectedValue={itemsPerPage}
-                      onSelect={handleSelect}
+                      onSelect={onSelect}
                     />
                   </div>
                 </div>
@@ -116,7 +109,7 @@ const Generic = <T extends GenericItemType>({
             {viewMode === 'list' ? (
               <ul className="space-y-4">
                 <ListItem
-                  item={data as ListItemType[]}
+                  data={data as ListItemType[]}
                   openModal={(item) => openModal(item as T)}
                 />
               </ul>
@@ -130,8 +123,7 @@ const Generic = <T extends GenericItemType>({
             <div className="p-8">
               <Pagination
                 currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
+                onPageChange={onPageChange}
               />
             </div>
           </div>

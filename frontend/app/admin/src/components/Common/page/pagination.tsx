@@ -3,15 +3,15 @@ import React from 'react';
 // types.ts
 export interface PaginationProps {
   currentPage: number;
-  totalPages: number;
   onPageChange: (page: number) => void;
 }
 // Pagination.tsx
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
-  totalPages,
   onPageChange,
 }) => {
+  const totalPages = 5;
+
   const handlePageClick = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       onPageChange(page);

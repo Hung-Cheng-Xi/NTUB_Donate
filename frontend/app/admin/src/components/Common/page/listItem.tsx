@@ -3,13 +3,13 @@ import type { ListItemType } from '../../../types/item';
 
 // ListItem Component
 interface ListItemProps {
-  item: ListItemType[];
+  data: ListItemType[];
   openModal: (item: ListItemType) => void;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ item, openModal }) => (
+const ListItem: React.FC<ListItemProps> = ({ data, openModal }) => (
   <ul>
-    {item.map((item) => (
+    {data.map((item) => (
       <li
         key={item.id}
         className="p-4 mb-3 border rounded-md shadow-sm bg-gray-50"
