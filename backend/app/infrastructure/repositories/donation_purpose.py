@@ -1,5 +1,6 @@
 from typing import List
 
+from sqlalchemy import func
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
@@ -9,6 +10,7 @@ from app.application.admin.schemas.donation_purpose import (
 )
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
+from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class DonationPurposeRepository(BaseRepository[DonationPurpose]):
@@ -49,7 +51,7 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
         self,
         skip: int,
         limit: int,
-    ) -> List[AdminDonationPurposeItem]:
+    ) -> PaginatedResponse[AdminDonationPurposeItem]:
         """取得分頁的捐款目的，按達到金額上限百分比排序"""
 
         statement = (
@@ -59,4 +61,14 @@ class DonationPurposeRepository(BaseRepository[DonationPurpose]):
             .options(selectinload(DonationPurpose.donations))
         )
         results = await self.session.execute(statement)
-        return results.scalars().all()
+
+        items = results.scalars().all()
+        
+        # 查詢總筆數
+        total_count_stmt = select((func.count(DonationPurpose.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
+        return PaginatedResponse[AdminDonationPurposeItem](
+            total_count=total_count,
+            items=items,
+        )

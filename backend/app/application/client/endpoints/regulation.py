@@ -4,18 +4,19 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from app.application.admin.schemas.regulation import RegulationInfo
+from app.application.client.schemas.paginated import PaginatedResponse
 from app.domain.models.regulation import Regulation
 from app.infrastructure.repositories.regulation import RegulationRepository
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[RegulationInfo])
+@router.get("/", response_model=PaginatedResponse[RegulationInfo])
 async def get_regulations(
     repository: Annotated[RegulationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[RegulationInfo]:
+) -> PaginatedResponse[RegulationInfo]:
     logging.info("取得分頁的 Regulations 資料")
     return await repository.get_regulations(skip, limit)
 

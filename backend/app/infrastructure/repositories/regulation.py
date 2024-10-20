@@ -1,3 +1,5 @@
+from sqlalchemy import func
+from sqlmodel import select
 from app.application.admin.schemas.donation_purpose import (
     DonationPurposeUpdate,
 )
@@ -7,6 +9,7 @@ from app.application.admin.schemas.regulation import (
 )
 from app.domain.models.regulation import Regulation
 from app.infrastructure.repositories.base import BaseRepository
+from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class RegulationRepository(BaseRepository[Regulation]):
@@ -29,12 +32,24 @@ class RegulationRepository(BaseRepository[Regulation]):
         self,
         skip: int,
         limit: int,
-    ) -> list[RegulationInfo]:
+    ) -> PaginatedResponse[RegulationInfo]:
         """取得分頁的相關法規"""
-        regulations = await self.get_paginated_all(Regulation, skip, limit)
-        return [
+        statement = select(Regulation).offset(skip).limit(limit)
+        results = await self.session.execute(statement)
+        regulations =  results.scalars().all()
+
+        # 查詢總筆數
+        total_count_stmt = select((func.count(Regulation.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
+        items = [
             RegulationInfo.model_dump(regulation) for regulation in regulations
         ]
+
+        return PaginatedResponse[RegulationInfo](
+            total_count=total_count,
+            items=items
+        )
 
     async def update_regulation(
         self,

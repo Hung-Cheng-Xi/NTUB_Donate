@@ -1,5 +1,5 @@
 import logging
-from typing import Annotated, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
@@ -8,18 +8,19 @@ from app.application.admin.schemas.announcement import (
     AnnouncementInfo,
     AnnouncementUpdate,
 )
+from app.application.admin.schemas.paginated import PaginatedResponse
 from app.domain.models.announcement import Announcement
 from app.infrastructure.repositories.announcement import AnnouncementRepository
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[AnnouncementInfo])
+@router.get("/", response_model=PaginatedResponse[AnnouncementInfo])
 async def get_announcements(
     repository: Annotated[AnnouncementRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[AnnouncementInfo]:
+) -> PaginatedResponse[AnnouncementInfo]:
     logging.info("取得分頁的 Announcement 資料")
     return await repository.get_announcements(skip, limit)
 

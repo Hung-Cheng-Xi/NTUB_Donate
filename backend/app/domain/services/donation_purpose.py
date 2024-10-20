@@ -1,4 +1,4 @@
-from typing import Annotated, Any, List
+from typing import Annotated, Any
 
 from fastapi import Depends
 
@@ -6,6 +6,7 @@ from app.application.client.schemas.donation_purpose import DonationPurposeItem
 from app.infrastructure.repositories.donation_purpose import (
     DonationPurposeRepository,
 )
+from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class DonationPurposeService:
@@ -19,12 +20,12 @@ class DonationPurposeService:
         self,
         skip: int,
         limit: int,
-    ) -> List[DonationPurposeItem]:
+    ) -> PaginatedResponse[DonationPurposeItem]:
         purposes = await self.donation_repository.get_donation_purposes(
             skip, limit
         )
         donation_purposes = []
-        for purpose in purposes:
+        for purpose in purposes.items:
             total_donation: Any = sum(
                 donation.amount for donation in purpose.donations
             )
@@ -49,4 +50,7 @@ class DonationPurposeService:
             reverse=True,
         )
 
-        return sorted_donation_purposes[skip : skip + limit]
+        return PaginatedResponse(
+            total_count=purposes.total_count,
+            items=sorted_donation_purposes,
+        )

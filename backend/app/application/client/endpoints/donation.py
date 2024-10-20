@@ -9,16 +9,17 @@ from app.application.client.schemas.donation import (
 )
 from app.domain.models.donation import Donation
 from app.infrastructure.repositories.donation import DonationRepository
+from app.application.client.schemas.paginated import PaginatedResponse
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[DonationInfo])
+@router.get("/", response_model=PaginatedResponse[DonationInfo])
 async def get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[DonationInfo]:
+) -> PaginatedResponse[DonationInfo]:
     logging.info("取得 Donation 資料")
     return await repository.client_get_donations(skip, limit)
 

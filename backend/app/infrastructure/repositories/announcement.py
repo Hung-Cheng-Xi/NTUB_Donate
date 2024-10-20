@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from sqlmodel import select
 
@@ -8,6 +9,7 @@ from app.application.admin.schemas.announcement import (
 )
 from app.domain.models.announcement import Announcement
 from app.infrastructure.repositories.base import BaseRepository
+from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class AnnouncementRepository(BaseRepository[Announcement]):
@@ -30,7 +32,7 @@ class AnnouncementRepository(BaseRepository[Announcement]):
         self,
         skip: int,
         limit: int,
-    ) -> list[AnnouncementInfo]:
+    ) -> PaginatedResponse[AnnouncementInfo]:
         """取得分頁的最新消息"""
         # 查詢 Announcement 並加載與 unit 的關聯
         statement = (
@@ -42,10 +44,14 @@ class AnnouncementRepository(BaseRepository[Announcement]):
         results = await self.session.execute(statement)
         announcements = results.scalars().all()
 
-        return [
-            AnnouncementInfo.model_validate(announcement)
-            for announcement in announcements
-        ]
+        # 查詢總筆數
+        total_count_stmt = select((func.count(Announcement.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
+        return PaginatedResponse[AnnouncementInfo](
+            total_count=total_count,
+            items=[AnnouncementInfo.model_dump(announcement) for announcement in announcements],
+        )
 
     async def update_announcement(
         self,

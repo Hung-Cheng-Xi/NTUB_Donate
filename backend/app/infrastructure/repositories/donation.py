@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import joinedload, selectinload
 from sqlmodel import select
 
@@ -12,6 +13,7 @@ from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donation
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
+from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class DonationRepository(BaseRepository[Donation]):
@@ -34,31 +36,56 @@ class DonationRepository(BaseRepository[Donation]):
         self,
         skip,
         limit,
-    ) -> list[DonationInfoAdmin]:
-        """取得所有捐款分頁資料"""
-        donations = await self.get_paginated_all(Donation, skip, limit)
-        return [
+    ) -> PaginatedResponse[DonationInfoAdmin]:
+        """取得捐款分頁資料"""
+        statement = select(Donation).offset(skip).limit(limit)
+        results = await self.session.execute(statement)
+        donations =  results.scalars().all()
+
+        # 查詢總筆數
+        total_count_stmt = select((func.count(Donation.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
+        items = [
             DonationInfoAdmin.model_dump(donation) for donation in donations
         ]
+
+        return PaginatedResponse[DonationInfoAdmin](
+            total_count=total_count,
+            items=items
+        )
 
     async def client_get_donations(
         self,
         skip,
         limit,
-    ) -> list[DonationInfoClient]:
+    ) -> PaginatedResponse[DonationInfoClient]:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
-        donations = await self.model_relations(
-            Donation, skip, limit, [joinedload(Donation.purpose)]
+        statement = (
+            select(Donation)
+            .offset(skip)
+            .limit(limit)
+            .options(selectinload(Donation.purpose))
         )
+        results = await self.session.execute(statement)
+        donations = results.scalars().all()
+
+        # 查詢總筆數
+        total_count_stmt = select((func.count(DonationPurpose.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
 
         # 將結果轉換為 DonationInfoClient 格式
-        donation_info_list = [
+        items = [
             DonationInfoClient.model_validate(donation)
             for donation in donations
             if donation.input_date is not None
         ]
 
-        return donation_info_list
+        return PaginatedResponse[DonationInfoClient](
+            total_count=total_count,
+            items=items
+        )
 
     async def update_donation(
         self,

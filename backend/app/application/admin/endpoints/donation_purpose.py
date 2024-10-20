@@ -1,5 +1,5 @@
 import logging
-from typing import Annotated, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
@@ -8,6 +8,7 @@ from app.application.admin.schemas.donation_purpose import (
     DonationPurposeCreate,
     DonationPurposeUpdate,
 )
+from app.application.admin.schemas.paginated import PaginatedResponse
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.donation_purpose import (
     DonationPurposeRepository,
@@ -16,12 +17,12 @@ from app.infrastructure.repositories.donation_purpose import (
 router = APIRouter()
 
 
-@router.get("/", response_model=List[AdminDonationPurposeItem])
+@router.get("/", response_model=PaginatedResponse[AdminDonationPurposeItem])
 async def get_donation_purposes(
     repository: Annotated[DonationPurposeRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[AdminDonationPurposeItem]:
+) -> PaginatedResponse[AdminDonationPurposeItem]:
     logging.info("取得分頁的 Donation Purpose 資料")
     return await repository.get_donation_purposes(skip, limit)
 
