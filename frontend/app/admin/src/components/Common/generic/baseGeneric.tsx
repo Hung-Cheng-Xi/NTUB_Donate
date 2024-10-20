@@ -1,47 +1,44 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import Pagination from './pagination';
-import FormModal from '../modal/modal';
-import ListItem from './listItem';
-import TableItem from './tableItem';
-import { formatListItemType, formatTableItemType } from '../../../utils/format';
-import { ListItemType, TableItemType } from '../../../types/item';
-import ItemsPerPage from './itemsPer';
+import Pagination from '../page/pagination';
+import BaseFormModal from '../modal/baseModal';
+import ItemsPerPage from '../page/itemsPer';
 
-interface GenericProps<T> {
+export interface BaseGenericProps<T> {
   data: T[];
   itemTitle: string;
   formFields: {
     name: string;
     label: string;
     type: string;
-    options?: string[];
+    options?: { id: string | number; name: string }[];
   }[];
-  viewMode: 'list' | 'table';
+  isReadOnly?: boolean;
   itemsPerPage: number;
   currentPage: number;
   onSelect: (value: number) => void;
   onPageChange: (value: number) => void;
+  ItemComponent: React.ComponentType<{ data: T[]; openModal: (item: T) => void }>;
 }
 
-type GenericItemType = ListItemType | TableItemType;
-
-const Generic = <T extends GenericItemType>({
+const BaseGeneric = <T,>({
   data,
   itemTitle,
   formFields,
-  viewMode,
   itemsPerPage,
   currentPage,
+  isReadOnly,
   onSelect,
   onPageChange,
-}: GenericProps<T>) => {
+  ItemComponent,
+}: BaseGenericProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
 
   const openModal = (item: T) => {
     setIsOpen(true);
     setSelectedItem(item);
+    console.log(item);
   };
 
   const closeModal = () => {
@@ -49,7 +46,7 @@ const Generic = <T extends GenericItemType>({
     setSelectedItem(null);
   };
 
-  const onSubmit: SubmitHandler<Record<string, string>> = (data) => {
+  const onSubmit: SubmitHandler<{ [key: string]: string | number | boolean | { id: string | number } }> = (data) => {
     console.log(data);
     closeModal();
   };
@@ -106,19 +103,7 @@ const Generic = <T extends GenericItemType>({
               </div>
             </div>
 
-            {viewMode === 'list' ? (
-              <ul className="space-y-4">
-                <ListItem
-                  data={data as ListItemType[]}
-                  openModal={(item) => openModal(item as T)}
-                />
-              </ul>
-            ) : (
-              <TableItem
-                data={data as TableItemType[]}
-                openModal={(item) => openModal(item as T)}
-              />
-            )}
+            <ItemComponent data={data} openModal={openModal} />
 
             <div className="p-8">
               <Pagination
@@ -130,22 +115,16 @@ const Generic = <T extends GenericItemType>({
         </div>
       </div>
 
-      <FormModal
+      <BaseFormModal
         isOpen={isOpen}
         onClose={closeModal}
         onSubmit={onSubmit}
-        fields={selectedItem ? formFields : []}
-        viewMode={viewMode}
-        defaultValues={
-          selectedItem
-            ? viewMode === 'list'
-              ? formatListItemType(selectedItem as ListItemType)
-              : formatTableItemType(selectedItem as TableItemType)
-            : undefined
-        }
+        fields={formFields ? formFields : []}
+        defaultValues={selectedItem ? (selectedItem as { [key: string]: string | number | boolean }) : undefined}
+        isReadOnly={isReadOnly ? isReadOnly : false}
       />
     </>
   );
 };
 
-export default Generic;
+export default BaseGeneric;

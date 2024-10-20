@@ -1,37 +1,40 @@
+// BaseFormModal Component
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import renderInputField from './renderInputField';
 
-interface FormModalProps {
+interface BaseFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: SubmitHandler<{ [key: string]: string }>;
-  fields: { name: string; label: string; type: string; options?: string[]; }[];
-  viewMode: 'list' | 'table';
-  defaultValues?: { [key: string]: string };
+  onSubmit: SubmitHandler<{ [key: string]: string | number | boolean | { id: string | number } }>;
+  fields: { name: string; label: string; type: string; options?: { id: string | number; name: string }[]}[];
+  defaultValues?: { [key: string]: string | number | boolean | { id: string | number } };
+  isReadOnly?: boolean;
 }
 
-const FormModal: React.FC<FormModalProps> = ({
+const BaseFormModal: React.FC<BaseFormModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
   fields,
-  viewMode,
   defaultValues,
+  isReadOnly = false,
 }) => {
-  const { register, handleSubmit, setValue } = useForm({ defaultValues });
+  const { register, handleSubmit, reset } = useForm({ defaultValues });
 
-  // 如果是 table 模式，則所有字段都是只讀的
-  const isReadOnly = viewMode === 'table';
-
-  // 當表單打開時，設置默認值
   React.useEffect(() => {
     if (defaultValues) {
-      Object.entries(defaultValues).forEach(([key, value]) => {
-        setValue(key, value);
-      });
+      // Extract `unit` ID from `defaultValues` if it's an object
+      const processedDefaultValues = { ...defaultValues };
+      if (defaultValues.unit && typeof defaultValues.unit === 'object') {
+        processedDefaultValues.unit = defaultValues.unit.id;
+      }
+      if (defaultValues.category && typeof defaultValues.category === 'object') {
+        processedDefaultValues.category = defaultValues.category.id;
+      }
+      reset(processedDefaultValues);
     }
-  }, [defaultValues, setValue]);
+  }, [defaultValues, reset]);
 
   return (
     <div
@@ -99,4 +102,4 @@ const FormModal: React.FC<FormModalProps> = ({
   );
 };
 
-export default FormModal;
+export default BaseFormModal;

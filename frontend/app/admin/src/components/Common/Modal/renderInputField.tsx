@@ -5,7 +5,7 @@ const renderInputField = (
     name: string;
     label: string;
     type: string;
-    options?: string[];
+    options?: { id: string | number; name: string }[];
   },
   register: ReturnType<typeof useForm>['register'],
   disabled: boolean = false,
@@ -29,9 +29,10 @@ const renderInputField = (
           disabled={disabled}
           className="mt-1 block w-full rounded-md p-3 border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
         >
+          <option value="">請選擇</option> {/* 預設選項 */}
           {field.options?.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={option.id} value={option.id}>
+              {option.name}
             </option>
           ))}
         </select>
