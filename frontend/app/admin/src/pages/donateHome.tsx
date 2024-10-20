@@ -1,22 +1,10 @@
 import React from 'react';
-import Generic from '../components/common/page/generic';
+import TableGeneric from '../components/common/generic/tableGeneric';
+import { TableItemType } from '../types/item';
+import { usePagination } from '../hooks/usePagination';
 
-interface DonationPurpose {
-  id: number;
-  createDate: string;
-  donateDate: string;
-  idCard: string;
-  name: string;
-  category: string;
-  type: string;
-  amount: number;
-  paymentCode: string;
-  phoneNumber: string;
-  email: string;
-  memo: string;
-}
 
-const donatePurposeData: DonationPurpose[] = [
+const donatePurposeData: TableItemType[] = [
   {
     id: 1,
     createDate: '1061013',
@@ -90,8 +78,19 @@ const donatePurposeData: DonationPurpose[] = [
 ];
 
 const DonationTable: React.FC = () => {
+  const {
+    itemsPerPage,
+    currentPage,
+    skip,
+    limit,
+    handlePageChange,
+    handleSelect,
+  } = usePagination();
+
+  console.log(skip, limit);
+
   return (
-    <Generic<DonationPurpose>
+    <TableGeneric
       data={donatePurposeData}
       itemTitle="Donate List"
       formFields={[
@@ -104,11 +103,11 @@ const DonationTable: React.FC = () => {
           label: 'Category',
           type: 'select',
           options: [
-            'Education',
-            'Health',
-            'Community Development',
-            'Animal Welfare',
-            'Environmental Conservation',
+            {id: 1, name: 'Education'},
+            {id: 2, name: 'Health'},
+            {id: 3, name: 'Community Development'},
+            {id: 4, name: 'Animal Welfare'},
+            {id: 5, name: 'Environmental Conservation'},
           ],
         },
         { name: 'type', label: 'Type', type: 'text' },
@@ -118,7 +117,10 @@ const DonationTable: React.FC = () => {
         { name: 'email', label: 'Email', type: 'text' },
         { name: 'memo', label: 'Memo', type: 'textarea' },
       ]}
-      viewMode="table"
+      itemsPerPage={itemsPerPage}
+      currentPage={currentPage}
+      onSelect={handlePageChange}
+      onPageChange={handleSelect}
     />
   );
 };

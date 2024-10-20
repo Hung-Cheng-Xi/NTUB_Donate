@@ -1,5 +1,6 @@
 import React from 'react';
-import Generic from '../components/common/page/generic';
+import { usePagination } from '../hooks/usePagination';
+import ListGeneric from '../components/common/generic/listGeneric';
 
 interface RegulationPurpose {
   id: number;
@@ -49,8 +50,19 @@ const RegulationData: RegulationPurpose[] = [
 
 // Usage example
 const DocumentPage: React.FC = () => {
+  const {
+    itemsPerPage,
+    currentPage,
+    skip,
+    limit,
+    handlePageChange,
+    handleSelect,
+  } = usePagination();
+
+  console.log(skip, limit);
+
   return (
-    <Generic<RegulationPurpose>
+    <ListGeneric
       data={RegulationData}
       itemTitle="Donate Regulation"
       formFields={[
@@ -60,18 +72,21 @@ const DocumentPage: React.FC = () => {
           label: 'Category',
           type: 'select',
           options: [
-            'ALL',
-            'Education',
-            'Health',
-            'Community Development',
-            'Animal Welfare',
-            'Environmental Conservation',
+            { id: 1, name: 'ALL' },
+            { id: 2, name: 'Education' },
+            { id: 3, name: 'Health' },
+            { id: 4, name: 'Community Development' },
+            { id: 5, name: 'Animal Welfare' },
+            { id: 6, name: 'Environmental Conservation' },
           ],
         },
         { name: 'description_link', label: 'Description Link', type: 'text' },
         { name: 'is_show', label: 'Show', type: 'checkbox' },
       ]}
-      viewMode="list" // Add viewMode property to determine if list or table should be used
+      itemsPerPage={itemsPerPage}
+      currentPage={currentPage}
+      onSelect={handlePageChange}
+      onPageChange={handleSelect}
     />
   );
 };

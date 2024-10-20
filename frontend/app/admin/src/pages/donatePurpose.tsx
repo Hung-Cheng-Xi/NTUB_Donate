@@ -1,5 +1,6 @@
 import React from 'react';
-import Generic from '../components/common/page/generic';
+import ListGeneric from '../components/common/generic/listGeneric';
+import { usePagination } from '../hooks/usePagination';
 
 interface DonationPurpose {
   id: number;
@@ -55,8 +56,19 @@ const donationPurposeData: DonationPurpose[] = [
 
 // Usage example
 const PurposePage: React.FC = () => {
+  const {
+    itemsPerPage,
+    currentPage,
+    skip,
+    limit,
+    handlePageChange,
+    handleSelect,
+  } = usePagination();
+
+  console.log(skip, limit);
+
   return (
-    <Generic<DonationPurpose>
+    <ListGeneric
       data={donationPurposeData}
       itemTitle="Donate Purpose"
       formFields={[
@@ -66,7 +78,10 @@ const PurposePage: React.FC = () => {
         { name: 'memo', label: 'Memo', type: 'textarea' },
         { name: 'is_show', label: 'Show', type: 'checkbox' },
       ]}
-      viewMode="list" // Add viewMode property to determine if list or table should be used
+      itemsPerPage={itemsPerPage}
+      currentPage={currentPage}
+      onSelect={handlePageChange}
+      onPageChange={handleSelect}
     />
   );
 };
