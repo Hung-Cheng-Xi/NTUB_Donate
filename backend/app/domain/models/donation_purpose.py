@@ -15,6 +15,10 @@ class DonationPurpose(SQLModel, table=True):
     description: str
     memo: Optional[str] = None
     is_show: bool
+    image_url: Optional[str] = Field(
+        default=None,
+        description="S3 圖片的 URL 或相對路徑"
+    )
 
     unit_id: int = Field(default=None, foreign_key="unit.id")
     unit: "Unit" = Relationship(back_populates="donation_purposes")

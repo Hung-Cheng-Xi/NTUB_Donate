@@ -15,6 +15,7 @@ class AdminDonationPurposeItem(SQLModel):
     description: str
     memo: Optional[str] = None
     is_show: bool
+    image_url: Optional[str] = None
 
     id: int
 
@@ -30,6 +31,7 @@ class DonationPurposeInfo(SQLModel):
     memo: Optional[str] = None
     total_donation: Optional[float] = None
     achieved_percentage: Optional[float] = None
+    image_url: Optional[str] = None
 
     id: int
     unit: UnitInfo
@@ -46,6 +48,7 @@ class DonationPurposeCreate(SQLModel):
     description: str
     memo: Optional[str] = None
     is_show: bool
+    image_url: Optional[str] = None
 
     unit_id: int
 
@@ -61,5 +64,6 @@ class DonationPurposeUpdate(SQLModel):
     description: str
     memo: Optional[str] = None
     is_show: bool
+    image_url: Optional[str] = None
 
     unit_id: int

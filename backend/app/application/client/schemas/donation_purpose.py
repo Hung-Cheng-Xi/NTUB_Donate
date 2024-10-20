@@ -13,6 +13,7 @@ class DonationPurposeItem(SQLModel):
     description: str
     memo: Optional[str] = None
     is_show: bool
+    image_url: Optional[str] = None
     total_donation: float
     achieved_percentage: float
 

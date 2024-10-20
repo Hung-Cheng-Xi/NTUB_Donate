@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from sqlmodel import SQLModel
 
@@ -15,6 +16,7 @@ class AnnouncementInfo(SQLModel):
     title: str
     description: str
     is_show: bool
+    image_url: Optional[str] = None
 
     id: int
     unit: UnitInfo
@@ -30,6 +32,7 @@ class AnnouncementCreate(SQLModel):
     title: str
     description: str
     is_show: bool
+    image_url: Optional[str] = None
 
     unit_id: int
 
@@ -44,6 +47,7 @@ class AnnouncementUpdate(SQLModel):
     title: str
     description: str
     is_show: bool
+    image_url: Optional[str] = None
 
     id: int
     unit_id: int
