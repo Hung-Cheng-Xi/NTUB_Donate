@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 
 from sqlmodel import SQLModel
 
@@ -20,6 +20,15 @@ class AnnouncementInfo(SQLModel):
 
     id: int
     unit: UnitInfo
+
+
+class PaginatedAnnouncementInfoResponse(SQLModel):
+    """
+    用於返回分頁的 New 的基本信息，
+    適用於讀取操作，可返回總筆數。
+    """
+    total_count: int
+    items: List[AnnouncementInfo]
 
 
 class AnnouncementCreate(SQLModel):

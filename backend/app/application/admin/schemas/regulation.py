@@ -17,6 +17,16 @@ class RegulationInfo(SQLModel):
     id: int
 
 
+class PaginatedRegulationInfoResponse(SQLModel):
+    """
+    用於返回分頁的 Regulation 的基本信息，
+    適用於讀取操作，可返回總筆數。
+    """
+
+    total_count: int
+    items: list[RegulationInfo]
+
+
 class RegulationCreate(SQLModel):
     """
     用於創建 Regulationt 記錄的 schema，

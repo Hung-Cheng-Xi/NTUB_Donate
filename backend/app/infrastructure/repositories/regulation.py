@@ -4,12 +4,12 @@ from app.application.admin.schemas.donation_purpose import (
     DonationPurposeUpdate,
 )
 from app.application.admin.schemas.regulation import (
+    PaginatedRegulationInfoResponse,
     RegulationCreate,
     RegulationInfo,
 )
 from app.domain.models.regulation import Regulation
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class RegulationRepository(BaseRepository[Regulation]):
@@ -32,7 +32,7 @@ class RegulationRepository(BaseRepository[Regulation]):
         self,
         skip: int,
         limit: int,
-    ) -> PaginatedResponse[RegulationInfo]:
+    ) -> PaginatedRegulationInfoResponse:
         """取得分頁的相關法規"""
         statement = select(Regulation).offset(skip).limit(limit)
         results = await self.session.execute(statement)
@@ -46,7 +46,7 @@ class RegulationRepository(BaseRepository[Regulation]):
             RegulationInfo.model_dump(regulation) for regulation in regulations
         ]
 
-        return PaginatedResponse[RegulationInfo](
+        return PaginatedRegulationInfoResponse(
             total_count=total_count,
             items=items
         )

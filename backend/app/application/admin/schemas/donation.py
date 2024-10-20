@@ -30,10 +30,20 @@ class DonationInfo(SQLModel):
     type: DonationType = DonationType.STORE
     status: Optional[int] = None
     transaction_id: Optional[str] = None
-    input_date: Optional[str] = None
+    input_date: Optional[date] = None
 
     id: int
     purpose_id: int
+
+
+class PaginatedDonationInfoResponse(SQLModel):
+    """
+    用於返回分頁的 Donation 的基本信息，
+    適用於讀取操作，可返回總筆數。
+    """
+
+    total_count: int
+    items: list[DonationInfo]
 
 
 class DonationUpdate(SQLModel):

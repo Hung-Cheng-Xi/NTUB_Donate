@@ -1,11 +1,11 @@
-from typing import Optional
+from typing import Optional, List
 
 from sqlmodel import SQLModel
 
 from app.application.admin.schemas.unit import UnitInfo
 
 
-class AdminDonationPurposeItem(SQLModel):
+class DonationPurposeItem(SQLModel):
     """
     用於返回 DonationPurpose 的基本信息，適用於讀取操作。
     """
@@ -18,6 +18,16 @@ class AdminDonationPurposeItem(SQLModel):
     image_url: Optional[str] = None
 
     id: int
+
+
+class PaginatedDonationPurposeInfoResponse(SQLModel):
+    """
+    用於返回分頁的 DonationPurpose 的基本信息，
+    適用於讀取操作，可返回總筆數。
+    """
+
+    total_count: int
+    items: List[DonationPurposeItem]
 
 
 class DonationPurposeInfo(SQLModel):

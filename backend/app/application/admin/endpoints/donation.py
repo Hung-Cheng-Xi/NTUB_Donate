@@ -3,8 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.application.admin.schemas.donation import DonationInfo, DonationUpdate
-from app.application.admin.schemas.paginated import PaginatedResponse
+from app.application.admin.schemas.donation import PaginatedDonationInfoResponse, DonationUpdate
 from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donation
 from app.infrastructure.repositories.donation import DonationRepository
@@ -12,12 +11,12 @@ from app.infrastructure.repositories.donation import DonationRepository
 router = APIRouter()
 
 
-@router.get("/", response_model=PaginatedResponse[Donation])
+@router.get("/", response_model=PaginatedDonationInfoResponse)
 async def get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> PaginatedResponse[DonationInfo]:
+) -> PaginatedDonationInfoResponse:
     logging.info("取得分頁的 Donation 資料")
     return await repository.admin_get_donations(skip, limit)
 

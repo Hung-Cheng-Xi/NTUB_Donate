@@ -5,22 +5,21 @@ from fastapi import APIRouter, Depends
 
 from app.application.admin.schemas.regulation import (
     RegulationCreate,
-    RegulationInfo,
     RegulationtUpdate,
+    PaginatedRegulationInfoResponse,
 )
-from app.application.admin.schemas.paginated import PaginatedResponse
 from app.domain.models.regulation import Regulation
 from app.infrastructure.repositories.regulation import RegulationRepository
 
 router = APIRouter()
 
 
-@router.get("/", response_model=PaginatedResponse[RegulationInfo])
+@router.get("/", response_model=PaginatedRegulationInfoResponse)
 async def get_regulations(
     repository: Annotated[RegulationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> PaginatedResponse[RegulationInfo]:
+) -> PaginatedRegulationInfoResponse:
     logging.info("取得分頁的 Regulations 資料")
     return await repository.get_regulations(skip, limit)
 

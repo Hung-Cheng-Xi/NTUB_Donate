@@ -3,8 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.application.client.schemas.donation_purpose import DonationPurposeItem
-from app.application.client.schemas.paginated import PaginatedResponse
+from app.application.client.schemas.donation_purpose import PaginatedDonationPurposeInfoResponse
 from app.domain.models.donation_purpose import DonationPurpose
 from app.domain.services.donation_purpose import DonationPurposeService
 from app.infrastructure.repositories.donation_purpose import (
@@ -14,12 +13,12 @@ from app.infrastructure.repositories.donation_purpose import (
 router = APIRouter()
 
 
-@router.get("/", response_model=PaginatedResponse[DonationPurposeItem])
+@router.get("/", response_model=PaginatedDonationPurposeInfoResponse)
 async def get_donation_purposes(
     service: Annotated[DonationPurposeService, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> PaginatedResponse[DonationPurposeItem]:
+) -> PaginatedDonationPurposeInfoResponse:
     logging.info("取得分頁的 Donation Purpose 資料")
     return await service.get_sorted_donation_purpose(skip, limit)
 

@@ -1,19 +1,21 @@
 from sqlalchemy import func
-from sqlalchemy.orm import joinedload, selectinload
+from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
 from app.application.admin.schemas.donation import (
-    DonationInfo as DonationInfoAdmin,
+    DonationUpdate,
+    DonationInfo as AdminDonationInfo,
+    PaginatedDonationInfoResponse as AdminPaginatedDonationInfoResponse,
 )
-from app.application.admin.schemas.donation import DonationUpdate
 from app.application.client.schemas.donation import (
-    DonationInfo as DonationInfoClient,
+    DonationsCreate,
+    DonationInfo as ClientDonationInfo,
+    PaginatedDonationInfoResponse as ClientPaginatedDonationInfoResponse,
 )
-from app.application.client.schemas.donation import DonationsCreate
+
 from app.domain.models.donation import Donation
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
-from app.application.admin.schemas.paginated import PaginatedResponse
 
 
 class DonationRepository(BaseRepository[Donation]):
@@ -36,7 +38,7 @@ class DonationRepository(BaseRepository[Donation]):
         self,
         skip,
         limit,
-    ) -> PaginatedResponse[DonationInfoAdmin]:
+    ) -> AdminPaginatedDonationInfoResponse:
         """取得捐款分頁資料"""
         statement = select(Donation).offset(skip).limit(limit)
         results = await self.session.execute(statement)
@@ -47,10 +49,10 @@ class DonationRepository(BaseRepository[Donation]):
         total_count = (await self.session.execute(total_count_stmt)).scalar()
 
         items = [
-            DonationInfoAdmin.model_dump(donation) for donation in donations
+            AdminDonationInfo.model_dump(donation) for donation in donations
         ]
 
-        return PaginatedResponse[DonationInfoAdmin](
+        return AdminPaginatedDonationInfoResponse(
             total_count=total_count,
             items=items
         )
@@ -59,7 +61,7 @@ class DonationRepository(BaseRepository[Donation]):
         self,
         skip,
         limit,
-    ) -> PaginatedResponse[DonationInfoClient]:
+    ) -> ClientPaginatedDonationInfoResponse:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
         statement = (
             select(Donation)
@@ -75,14 +77,14 @@ class DonationRepository(BaseRepository[Donation]):
         total_count = (await self.session.execute(total_count_stmt)).scalar()
 
 
-        # 將結果轉換為 DonationInfoClient 格式
+        # 將結果轉換為 ClientDonationInfo 格式
         items = [
-            DonationInfoClient.model_validate(donation)
+            ClientDonationInfo.model_validate(donation)
             for donation in donations
             if donation.input_date is not None
         ]
 
-        return PaginatedResponse[DonationInfoClient](
+        return ClientPaginatedDonationInfoResponse(
             total_count=total_count,
             items=items
         )
