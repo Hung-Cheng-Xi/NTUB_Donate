@@ -15,46 +15,6 @@ export const AddressDataSchema = {
 包含地址需要提交的所有字段。`
 } as const;
 
-export const AdminDonationPurposeItemSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        lump_sum: {
-            type: 'integer',
-            title: 'Lump Sum'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        memo: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Memo'
-        },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
-        },
-        id: {
-            type: 'integer',
-            title: 'Id'
-        }
-    },
-    type: 'object',
-    required: ['title', 'lump_sum', 'description', 'is_show', 'id'],
-    title: 'AdminDonationPurposeItem',
-    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
-} as const;
-
 export const AnnouncementSchema = {
     properties: {
         id: {
@@ -77,6 +37,18 @@ export const AnnouncementSchema = {
         is_show: {
             type: 'boolean',
             title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url',
+            description: 'S3 圖片的 URL 或相對路徑'
         },
         unit_id: {
             anyOf: [
@@ -114,6 +86,17 @@ export const AnnouncementCreateSchema = {
             type: 'boolean',
             title: 'Is Show'
         },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
+        },
         unit_id: {
             type: 'integer',
             title: 'Unit Id'
@@ -144,6 +127,17 @@ export const AnnouncementInfoSchema = {
         is_show: {
             type: 'boolean',
             title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
         },
         id: {
             type: 'integer',
@@ -178,6 +172,17 @@ export const AnnouncementUpdateSchema = {
         is_show: {
             type: 'boolean',
             title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
         },
         id: {
             type: 'integer',
@@ -373,39 +378,6 @@ export const DonationSchema = {
     title: 'Donation'
 } as const;
 
-export const DonationInfoSchema = {
-    properties: {
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        amount: {
-            type: 'integer',
-            title: 'Amount'
-        },
-        input_date: {
-            anyOf: [
-                {
-                    type: 'string',
-                    format: 'date'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Input Date'
-        },
-        purpose: {
-            '$ref': '#/components/schemas/DonationPurposeInfo'
-        }
-    },
-    type: 'object',
-    required: ['username', 'amount', 'purpose'],
-    title: 'DonationInfo',
-    description: `用於返回 Donations 的基本信息，
-適用於讀取操作。`
-} as const;
-
 export const DonationPurposeSchema = {
     properties: {
         id: {
@@ -438,6 +410,18 @@ export const DonationPurposeSchema = {
         is_show: {
             type: 'boolean',
             title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url',
+            description: 'S3 圖片的 URL 或相對路徑'
         },
         unit_id: {
             type: 'integer',
@@ -478,6 +462,17 @@ export const DonationPurposeCreateSchema = {
             type: 'boolean',
             title: 'Is Show'
         },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
+        },
         unit_id: {
             type: 'integer',
             title: 'Unit Id'
@@ -508,54 +503,6 @@ export const DonationPurposeInfoSchema = {
 適用於讀取操作。`
 } as const;
 
-export const DonationPurposeItemSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        lump_sum: {
-            type: 'integer',
-            title: 'Lump Sum'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        memo: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Memo'
-        },
-        is_show: {
-            type: 'boolean',
-            title: 'Is Show'
-        },
-        total_donation: {
-            type: 'number',
-            title: 'Total Donation'
-        },
-        achieved_percentage: {
-            type: 'number',
-            title: 'Achieved Percentage'
-        },
-        id: {
-            type: 'integer',
-            title: 'Id'
-        }
-    },
-    type: 'object',
-    required: ['title', 'lump_sum', 'description', 'is_show', 'total_donation', 'achieved_percentage', 'id'],
-    title: 'DonationPurposeItem',
-    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
-} as const;
-
 export const DonationPurposeUpdateSchema = {
     properties: {
         title: {
@@ -584,6 +531,17 @@ export const DonationPurposeUpdateSchema = {
         is_show: {
             type: 'boolean',
             title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
         },
         unit_id: {
             type: 'integer',
@@ -873,6 +831,48 @@ export const HTTPValidationErrorSchema = {
     title: 'HTTPValidationError'
 } as const;
 
+export const PaginatedAnnouncementInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/AnnouncementInfo'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedAnnouncementInfoResponse',
+    description: `用於返回分頁的 New 的基本信息，
+適用於讀取操作，可返回總筆數。`
+} as const;
+
+export const PaginatedRegulationInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/RegulationInfo'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedRegulationInfoResponse',
+    description: `用於返回分頁的 Regulation 的基本信息，
+適用於讀取操作，可返回總筆數。`
+} as const;
+
 export const PubicStatusSchema = {
     type: 'string',
     enum: ['公開', '匿名', '匿名但受捐單位知曉'],
@@ -1127,4 +1127,365 @@ export const ValidationErrorSchema = {
     type: 'object',
     required: ['loc', 'msg', 'type'],
     title: 'ValidationError'
+} as const;
+
+export const app__application__admin__schemas__donation__DonationInfoSchema = {
+    properties: {
+        username: {
+            type: 'string',
+            title: 'Username'
+        },
+        user_birthday: {
+            type: 'string',
+            format: 'date',
+            title: 'User Birthday'
+        },
+        id_card: {
+            type: 'string',
+            title: 'Id Card'
+        },
+        phone_number: {
+            type: 'string',
+            title: 'Phone Number'
+        },
+        email: {
+            type: 'string',
+            title: 'Email'
+        },
+        identity: {
+            '$ref': '#/components/schemas/DonorType',
+            default: '校友'
+        },
+        year: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Year'
+        },
+        gept: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Gept'
+        },
+        res_address: {
+            type: 'string',
+            title: 'Res Address'
+        },
+        registered_address: {
+            type: 'string',
+            title: 'Registered Address'
+        },
+        public_status: {
+            '$ref': '#/components/schemas/PubicStatus',
+            default: '公開'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        amount: {
+            type: 'integer',
+            title: 'Amount'
+        },
+        account: {
+            type: 'string',
+            title: 'Account'
+        },
+        type: {
+            '$ref': '#/components/schemas/DonationType',
+            default: '實體店支付'
+        },
+        status: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Status'
+        },
+        transaction_id: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Transaction Id'
+        },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        purpose_id: {
+            type: 'integer',
+            title: 'Purpose Id'
+        }
+    },
+    type: 'object',
+    required: ['username', 'user_birthday', 'id_card', 'phone_number', 'email', 'res_address', 'registered_address', 'amount', 'account', 'id', 'purpose_id'],
+    title: 'DonationInfo',
+    description: `用於返回 Donations 的基本信息，
+適用於讀取操作。`
+} as const;
+
+export const app__application__admin__schemas__donation__PaginatedDonationInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/app__application__admin__schemas__donation__DonationInfo'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedDonationInfoResponse',
+    description: `用於返回分頁的 Donation 的基本信息，
+適用於讀取操作，可返回總筆數。`
+} as const;
+
+export const app__application__admin__schemas__donation_purpose__DonationPurposeItemSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        lump_sum: {
+            type: 'integer',
+            title: 'Lump Sum'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'lump_sum', 'description', 'is_show', 'id'],
+    title: 'DonationPurposeItem',
+    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
+} as const;
+
+export const app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/app__application__admin__schemas__donation_purpose__DonationPurposeItem'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedDonationPurposeInfoResponse',
+    description: `用於返回分頁的 DonationPurpose 的基本信息，
+適用於讀取操作，可返回總筆數。`
+} as const;
+
+export const app__application__client__schemas__donation__DonationInfoSchema = {
+    properties: {
+        username: {
+            type: 'string',
+            title: 'Username'
+        },
+        amount: {
+            type: 'integer',
+            title: 'Amount'
+        },
+        input_date: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Input Date'
+        },
+        purpose: {
+            '$ref': '#/components/schemas/DonationPurposeInfo'
+        }
+    },
+    type: 'object',
+    required: ['username', 'amount', 'purpose'],
+    title: 'DonationInfo',
+    description: `用於返回 Donations 的基本信息，
+適用於讀取操作。`
+} as const;
+
+export const app__application__client__schemas__donation__PaginatedDonationInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/app__application__client__schemas__donation__DonationInfo'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedDonationInfoResponse',
+    description: `用於返回分頁的 Donation 的基本信息，
+適用於讀取操作，可返回總筆數。`
+} as const;
+
+export const app__application__client__schemas__donation_purpose__DonationPurposeItemSchema = {
+    properties: {
+        title: {
+            type: 'string',
+            title: 'Title'
+        },
+        lump_sum: {
+            type: 'integer',
+            title: 'Lump Sum'
+        },
+        description: {
+            type: 'string',
+            title: 'Description'
+        },
+        memo: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Memo'
+        },
+        is_show: {
+            type: 'boolean',
+            title: 'Is Show'
+        },
+        image_url: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Image Url'
+        },
+        total_donation: {
+            type: 'number',
+            title: 'Total Donation'
+        },
+        achieved_percentage: {
+            type: 'number',
+            title: 'Achieved Percentage'
+        },
+        id: {
+            type: 'integer',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['title', 'lump_sum', 'description', 'is_show', 'total_donation', 'achieved_percentage', 'id'],
+    title: 'DonationPurposeItem',
+    description: '用於返回 DonationPurpose 的基本信息，適用於讀取操作。'
+} as const;
+
+export const app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponseSchema = {
+    properties: {
+        total_count: {
+            type: 'integer',
+            title: 'Total Count'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/app__application__client__schemas__donation_purpose__DonationPurposeItem'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['total_count', 'items'],
+    title: 'PaginatedDonationPurposeInfoResponse',
+    description: `用於返回分頁的 DonationPurpose 的基本信息，
+適用於讀取操作，可返回總筆數。`
 } as const;

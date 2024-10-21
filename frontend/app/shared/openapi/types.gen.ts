@@ -8,24 +8,16 @@ export type AddressData = {
     address: string;
 };
 
-/**
- * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
- */
-export type AdminDonationPurposeItem = {
-    title: string;
-    lump_sum: number;
-    description: string;
-    memo?: (string | null);
-    is_show: boolean;
-    id: number;
-};
-
 export type Announcement = {
     id?: number;
     date: string;
     title: string;
     description: string;
     is_show: boolean;
+    /**
+     * S3 圖片的 URL 或相對路徑
+     */
+    image_url?: (string | null);
     unit_id?: (number | null);
 };
 
@@ -38,6 +30,7 @@ export type AnnouncementCreate = {
     title: string;
     description: string;
     is_show: boolean;
+    image_url?: (string | null);
     unit_id: number;
 };
 
@@ -50,6 +43,7 @@ export type AnnouncementInfo = {
     title: string;
     description: string;
     is_show: boolean;
+    image_url?: (string | null);
     id: number;
     unit: UnitInfo;
 };
@@ -63,6 +57,7 @@ export type AnnouncementUpdate = {
     title: string;
     description: string;
     is_show: boolean;
+    image_url?: (string | null);
     id: number;
     unit_id: number;
 };
@@ -117,17 +112,6 @@ export type Donation = {
     purpose_id?: number;
 };
 
-/**
- * 用於返回 Donations 的基本信息，
- * 適用於讀取操作。
- */
-export type DonationInfo = {
-    username: string;
-    amount: number;
-    input_date?: (string | null);
-    purpose: DonationPurposeInfo;
-};
-
 export type DonationPurpose = {
     id?: number;
     title: string;
@@ -135,6 +119,10 @@ export type DonationPurpose = {
     description: string;
     memo?: (string | null);
     is_show: boolean;
+    /**
+     * S3 圖片的 URL 或相對路徑
+     */
+    image_url?: (string | null);
     unit_id?: number;
 };
 
@@ -148,6 +136,7 @@ export type DonationPurposeCreate = {
     description: string;
     memo?: (string | null);
     is_show: boolean;
+    image_url?: (string | null);
     unit_id: number;
 };
 
@@ -161,20 +150,6 @@ export type DonationPurposeInfo = {
 };
 
 /**
- * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
- */
-export type DonationPurposeItem = {
-    title: string;
-    lump_sum: number;
-    description: string;
-    memo?: (string | null);
-    is_show: boolean;
-    total_donation: number;
-    achieved_percentage: number;
-    id: number;
-};
-
-/**
  * 用於更新 DonationPurpose 的 schema，
  * 允許捐款目的更新。
  */
@@ -184,6 +159,7 @@ export type DonationPurposeUpdate = {
     description: string;
     memo?: (string | null);
     is_show: boolean;
+    image_url?: (string | null);
     unit_id: number;
 };
 
@@ -259,6 +235,24 @@ export type DonorType = '校友' | '教職員' | '家長' | '社區成員' | '�
 
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
+};
+
+/**
+ * 用於返回分頁的 New 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type PaginatedAnnouncementInfoResponse = {
+    total_count: number;
+    items: Array<AnnouncementInfo>;
+};
+
+/**
+ * 用於返回分頁的 Regulation 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type PaginatedRegulationInfoResponse = {
+    total_count: number;
+    items: Array<RegulationInfo>;
 };
 
 /**
@@ -374,6 +368,108 @@ export type ValidationError = {
     type: string;
 };
 
+/**
+ * 用於返回 Donations 的基本信息，
+ * 適用於讀取操作。
+ */
+export type app__application__admin__schemas__donation__DonationInfo = {
+    username: string;
+    user_birthday: string;
+    id_card: string;
+    phone_number: string;
+    email: string;
+    identity?: DonorType;
+    year?: (string | null);
+    gept?: (string | null);
+    res_address: string;
+    registered_address: string;
+    public_status?: PubicStatus;
+    memo?: (string | null);
+    amount: number;
+    account: string;
+    type?: DonationType;
+    status?: (number | null);
+    transaction_id?: (string | null);
+    input_date?: (string | null);
+    id: number;
+    purpose_id: number;
+};
+
+/**
+ * 用於返回分頁的 Donation 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type app__application__admin__schemas__donation__PaginatedDonationInfoResponse = {
+    total_count: number;
+    items: Array<app__application__admin__schemas__donation__DonationInfo>;
+};
+
+/**
+ * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
+ */
+export type app__application__admin__schemas__donation_purpose__DonationPurposeItem = {
+    title: string;
+    lump_sum: number;
+    description: string;
+    memo?: (string | null);
+    is_show: boolean;
+    image_url?: (string | null);
+    id: number;
+};
+
+/**
+ * 用於返回分頁的 DonationPurpose 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse = {
+    total_count: number;
+    items: Array<app__application__admin__schemas__donation_purpose__DonationPurposeItem>;
+};
+
+/**
+ * 用於返回 Donations 的基本信息，
+ * 適用於讀取操作。
+ */
+export type app__application__client__schemas__donation__DonationInfo = {
+    username: string;
+    amount: number;
+    input_date?: (string | null);
+    purpose: DonationPurposeInfo;
+};
+
+/**
+ * 用於返回分頁的 Donation 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type app__application__client__schemas__donation__PaginatedDonationInfoResponse = {
+    total_count: number;
+    items: Array<app__application__client__schemas__donation__DonationInfo>;
+};
+
+/**
+ * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
+ */
+export type app__application__client__schemas__donation_purpose__DonationPurposeItem = {
+    title: string;
+    lump_sum: number;
+    description: string;
+    memo?: (string | null);
+    is_show: boolean;
+    image_url?: (string | null);
+    total_donation: number;
+    achieved_percentage: number;
+    id: number;
+};
+
+/**
+ * 用於返回分頁的 DonationPurpose 的基本信息，
+ * 適用於讀取操作，可返回總筆數。
+ */
+export type app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse = {
+    total_count: number;
+    items: Array<app__application__client__schemas__donation_purpose__DonationPurposeItem>;
+};
+
 export type GetDonationsApiClientDonationGetData = {
     query?: {
         limit?: number;
@@ -381,7 +477,7 @@ export type GetDonationsApiClientDonationGetData = {
     };
 };
 
-export type GetDonationsApiClientDonationGetResponse = (Array<DonationInfo>);
+export type GetDonationsApiClientDonationGetResponse = (app__application__client__schemas__donation__PaginatedDonationInfoResponse);
 
 export type GetDonationsApiClientDonationGetError = (HTTPValidationError);
 
@@ -400,7 +496,7 @@ export type GetDonationPurposesApiClientDonationPurposeGetData = {
     };
 };
 
-export type GetDonationPurposesApiClientDonationPurposeGetResponse = (Array<DonationPurposeItem>);
+export type GetDonationPurposesApiClientDonationPurposeGetResponse = (app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse);
 
 export type GetDonationPurposesApiClientDonationPurposeGetError = (HTTPValidationError);
 
@@ -442,7 +538,7 @@ export type GetRegulationsApiClientRegulationGetData = {
     };
 };
 
-export type GetRegulationsApiClientRegulationGetResponse = (Array<RegulationInfo>);
+export type GetRegulationsApiClientRegulationGetResponse = (PaginatedRegulationInfoResponse);
 
 export type GetRegulationsApiClientRegulationGetError = (HTTPValidationError);
 
@@ -514,7 +610,7 @@ export type GetRegulationsApiAdminRegulationGetData = {
     };
 };
 
-export type GetRegulationsApiAdminRegulationGetResponse = (Array<RegulationInfo>);
+export type GetRegulationsApiAdminRegulationGetResponse = (PaginatedRegulationInfoResponse);
 
 export type GetRegulationsApiAdminRegulationGetError = (HTTPValidationError);
 
@@ -564,7 +660,7 @@ export type GetDonationPurposesApiAdminDonationPurposeGetData = {
     };
 };
 
-export type GetDonationPurposesApiAdminDonationPurposeGetResponse = (Array<AdminDonationPurposeItem>);
+export type GetDonationPurposesApiAdminDonationPurposeGetResponse = (app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse);
 
 export type GetDonationPurposesApiAdminDonationPurposeGetError = (HTTPValidationError);
 
@@ -614,7 +710,7 @@ export type GetDonationsApiAdminDonationGetData = {
     };
 };
 
-export type GetDonationsApiAdminDonationGetResponse = (Array<Donation>);
+export type GetDonationsApiAdminDonationGetResponse = (app__application__admin__schemas__donation__PaginatedDonationInfoResponse);
 
 export type GetDonationsApiAdminDonationGetError = (HTTPValidationError);
 
@@ -664,7 +760,7 @@ export type GetAnnouncementsApiAdminAnnouncementGetData = {
     };
 };
 
-export type GetAnnouncementsApiAdminAnnouncementGetResponse = (Array<AnnouncementInfo>);
+export type GetAnnouncementsApiAdminAnnouncementGetResponse = (PaginatedAnnouncementInfoResponse);
 
 export type GetAnnouncementsApiAdminAnnouncementGetError = (HTTPValidationError);
 
