@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CategorySelect from './categorySelect';
+import CategorySelect from './CategorySelect';
 import { DonationCards } from '../cards/donationCards';
 
 const SectionTitle = styled.h1`

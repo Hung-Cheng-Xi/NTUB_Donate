@@ -3,7 +3,7 @@ import { AnnouncementCard } from '../components/cards/announcementCard';
 import FAQList from '../components/FQA/FQAList';
 import InfoCard from '../components/cards/infoCard';
 import DonateInfoBanner from '../components/donate/donateInfoBanner';
-import DonateSection from '../components/donate/donateSection';
+import DonateSection from '../components/donate/DonateSection';
 import styled from 'styled-components';
 
 const Container = styled.div`

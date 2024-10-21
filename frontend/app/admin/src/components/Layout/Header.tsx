@@ -1,4 +1,4 @@
-import NavBar from './navbar/navBar';
+import NavBar from './navbar/NavBar';
 import { NavBarProps } from '../../types/nav';
 
 const Header: React.FC<NavBarProps> = ({ links }) => {

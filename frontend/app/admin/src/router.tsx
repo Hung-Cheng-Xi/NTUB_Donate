@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/layout/layout';
+import { Layout } from './components/layout/Layout';
 import DonateLoginPage from './pages/donateLogin';
 import DonateHomePage from './pages/donateHome';
 import AnnouncementPage from './pages/donateAnnouncement';

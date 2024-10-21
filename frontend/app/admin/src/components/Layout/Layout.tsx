@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Footer from './footer';
-import Header from './header';
+import Header from './Header';
 
 export const Layout: React.FC = () => {
   // 首頁的 NavBar 項目
+  
   const links = [
     { label: '捐款清單', href: '/admin/' },
     { label: '最新公告', href: '/admin/announcement/' },
