@@ -11,7 +11,7 @@
     "build-client": "tsc -b && vite build --config app/client/vite.config.ts",
     "dev-admin": "vite --config app/admin/vite.config.ts",
     "dev-client": "vite --config app/client/vite.config.ts",
-    "generate-client": "rm -rf ./app/shared/openapi && npx @hey-api/openapi-ts -i http://120.97.28.11:8081/openapi.json -o app/shared/openapi -c @hey-api/client-axios"
+    "generate-client": "rm -rf ./app/shared/openapi && npx @hey-api/openapi-ts -i http://127.0.0.1:8000/openapi.json -o app/shared/openapi -c @hey-api/client-axios"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.1.0",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@types/node": "^22.7.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.1",

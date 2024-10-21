@@ -14,6 +14,9 @@ from app.application.client.endpoints import client_router
 from app.core.settings import settings
 from app.domain.services.ftp_service import FTPService
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 scheduler = AsyncIOScheduler()
 
 
@@ -47,6 +50,15 @@ def create_app():
     for route in app.routes:
         if isinstance(route, APIRoute):
             route.operation_id = route.name
+
+    # 添加 CORS 中間件
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:5173", "http://120.97.28.11:8001"],  # 允許來自前端的請求
+        allow_credentials=True,
+        allow_methods=["*"],  # 允許所有的 HTTP 方法（GET, POST, PUT, DELETE 等）
+        allow_headers=["*"],  # 允許所有的 HTTP 標頭
+    )
 
     app.include_router(client_router, prefix="/api")
     app.include_router(admin_router, prefix="/api")
