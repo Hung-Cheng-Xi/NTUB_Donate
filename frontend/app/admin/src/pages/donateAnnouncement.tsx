@@ -55,7 +55,7 @@ const AnnouncementPage: React.FC = () => {
           { name: 'date', label: 'Date', type: 'date' },
           { name: 'title', label: 'Title', type: 'text' },
           {
-            name: 'unit_id',
+            name: 'unit',
             label: 'Unit',
             type: 'select',
             options: isUnitsData?.map(unit => ({ ...unit, id: unit.id ?? '' })),

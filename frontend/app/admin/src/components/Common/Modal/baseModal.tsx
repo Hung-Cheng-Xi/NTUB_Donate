@@ -26,6 +26,9 @@ const BaseFormModal: React.FC<BaseFormModalProps> = ({
     if (defaultValues) {
       // Extract `unit` ID from `defaultValues` if it's an object
       const processedDefaultValues = { ...defaultValues };
+      if (defaultValues.unit && typeof defaultValues.unit === 'object') {
+        processedDefaultValues.unit = defaultValues.unit.id;
+      }
       reset(processedDefaultValues);
     }
   }, [defaultValues, reset]);
