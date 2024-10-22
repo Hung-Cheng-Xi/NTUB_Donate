@@ -4,6 +4,7 @@ import Pagination from '../page/pagination';
 import BaseFormModal from '../modal/baseModal';
 import ItemsPerPage from '../page/itemsPer';
 import { PaginatedResponse } from '../../../types/item';
+import SearchInput from '../page/searchQuery';
 
 export interface BaseGenericProps<T> {
   data: PaginatedResponse<T>;
@@ -17,8 +18,10 @@ export interface BaseGenericProps<T> {
   isReadOnly?: boolean;
   itemsPerPage: number;
   currentPage: number;
+  search: string;
   onSelect: (value: number) => void;
   onPageChange: (value: number) => void;
+  onSearch: (value: string) => void;
   ItemComponent: React.ComponentType<{ data: T[]; openModal: (item: T) => void }>;
 }
 
@@ -28,9 +31,11 @@ const BaseGeneric = <T,>({
   formFields,
   itemsPerPage,
   currentPage,
+  search,
   isReadOnly,
   onSelect,
   onPageChange,
+  onSearch,
   ItemComponent,
 }: BaseGenericProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,35 +78,10 @@ const BaseGeneric = <T,>({
                   </div>
                 </div>
 
-                <div className="relative">
-                  <div
-                    className="absolute inset-y-0 start-0 flex items-center ps-3
-                  pointer-events-none"
-                  >
-                    <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    className="block py-2 ps-10 text-sm text-gray-900
-                    border border-gray-300 rounded-lg w-80 bg-gray-50
-                    focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
-                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Search for items"
-                  />
-                </div>
+                <SearchInput
+                  search={search}
+                  onSearch={onSearch}
+                />
               </div>
             </div>
 

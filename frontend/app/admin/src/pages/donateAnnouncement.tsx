@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LoadingErrorHandler from '../components/common/api/loadingErrorHandler';
 import { usePagination } from '../hooks/usePagination';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +11,9 @@ import ListGeneric from '../components/common/generic/listGeneric';
 
 // TODO: 添加上傳 image 功能
 const AnnouncementPage: React.FC = () => {
+  // 搜尋相關的 state
+  const [search, setSearch] = useState<string>('');
+
   const {
     itemsPerPage,
     currentPage,
@@ -32,15 +35,22 @@ const AnnouncementPage: React.FC = () => {
     data: isAnnouncementsData,
     isLoading: isAnnouncementsLoading,
     isError: isAnnouncementsError,
+    refetch,
   } = useQuery<GetAnnouncementsApiAdminAnnouncementGetResponse, Error>({
-    queryKey: ['announcements', skip, limit],
+    queryKey: ['announcements', skip, limit, search],
     queryFn: async () => {
       const response = await getAnnouncementsApiAdminAnnouncementGet({
-        query: { skip, limit },
+        query: { skip, limit, search },
       });
       return response.data as GetAnnouncementsApiAdminAnnouncementGetResponse;
     },
   });
+
+  // 搜尋按鈕點擊處理
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    refetch();
+  };
 
 
   return (
@@ -65,8 +75,10 @@ const AnnouncementPage: React.FC = () => {
         ]}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
+        search={search}
         onSelect={handleSelect}
         onPageChange={handlePageChange}
+        onSearch={handleSearch}
       />
     </LoadingErrorHandler>
   );

@@ -10,8 +10,10 @@ const ListGeneric = ({
   formFields,
   itemsPerPage,
   currentPage,
+  search,
   onSelect,
   onPageChange,
+  onSearch,
 }: Omit<BaseGenericProps<ListItemType>, 'ItemComponent'>) => {
   return (
     <BaseGeneric
@@ -20,8 +22,10 @@ const ListGeneric = ({
       formFields={formFields}
       itemsPerPage={itemsPerPage}
       currentPage={currentPage}
+      search={search}
       onSelect={onSelect}
       onPageChange={onPageChange}
+      onSearch={onSearch}
       ItemComponent={ListItem}
     />
   );
