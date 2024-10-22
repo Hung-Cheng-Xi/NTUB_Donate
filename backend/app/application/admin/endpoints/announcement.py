@@ -19,9 +19,10 @@ async def get_announcements(
     repository: Annotated[AnnouncementRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
+    search: str = None,
 ) -> PaginatedAnnouncementInfoResponse:
     logging.info("取得分頁的 Announcement 資料")
-    return await repository.get_announcements(skip, limit)
+    return await repository.get_announcements(skip, limit, search)
 
 
 @router.post("/", response_model=Announcement)

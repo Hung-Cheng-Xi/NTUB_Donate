@@ -21,9 +21,10 @@ async def get_donation_purposes(
     repository: Annotated[DonationPurposeRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
+    search: str = None,
 ) -> PaginatedDonationPurposeInfoResponse:
     logging.info("取得分頁的 Donation Purpose 資料")
-    return await repository.admin_get_donation_purposes(skip, limit)
+    return await repository.admin_get_donation_purposes(skip, limit, search)
 
 
 @router.post("/", response_model=DonationPurpose)

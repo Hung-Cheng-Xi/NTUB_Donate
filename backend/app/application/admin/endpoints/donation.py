@@ -16,9 +16,10 @@ async def get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
+    search: str = None,
 ) -> PaginatedDonationInfoResponse:
     logging.info("取得分頁的 Donation 資料")
-    return await repository.admin_get_donations(skip, limit)
+    return await repository.admin_get_donations(skip, limit, search)
 
 
 @router.post("/", response_model=Donation)

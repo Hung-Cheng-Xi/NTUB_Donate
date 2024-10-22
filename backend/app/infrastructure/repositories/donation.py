@@ -1,6 +1,6 @@
-from sqlalchemy import func
+from sqlalchemy import String, func
 from sqlalchemy.orm import selectinload
-from sqlmodel import select
+from sqlmodel import cast, or_, select
 
 from app.application.admin.schemas.donation import (
     DonationUpdate,
@@ -38,24 +38,59 @@ class DonationRepository(BaseRepository[Donation]):
         self,
         skip,
         limit,
+        search,
     ) -> AdminPaginatedDonationInfoResponse:
         """取得捐款分頁資料"""
-        statement = select(Donation).offset(skip).limit(limit)
-        results = await self.session.execute(statement)
-        donations =  results.scalars().all()
+        statement = self._build_donation_query(skip, limit, search)
+        donations = await self._execute_donation_query(statement)
+        total_count = await self._get_total_count(search)
 
-        # 查詢總筆數
-        total_count_stmt = select((func.count(Donation.id)))
-        total_count = (await self.session.execute(total_count_stmt)).scalar()
-
-        items = [
-            AdminDonationInfo.model_dump(donation) for donation in donations
-        ]
 
         return AdminPaginatedDonationInfoResponse(
             total_count=total_count,
-            items=items
+            items=[AdminDonationInfo.model_validate(donation) for donation in donations],
         )
+
+    def _build_donation_query(self, skip: int, limit: int, search: str = None):
+        """建構查詢 Donation 的 statement"""
+        statement = select(Donation).offset(skip).limit(limit)
+
+        if search:
+            statement = statement.where(
+                or_(
+                    Donation.username.ilike(f"%{search}%"),
+                    Donation.phone_number.ilike(f"%{search}%"),
+                    Donation.email.ilike(f"%{search}%"),
+                    Donation.account.ilike(f"%{search}%"),
+                    Donation.transaction_id.ilike(f"%{search}%"),
+                    cast(Donation.input_date, String).ilike(f"%{search}%")
+                )
+            )
+
+        return statement
+
+    async def _execute_donation_query(self, statement):
+        """執行查詢 Donation 的 statement"""
+        results = await self.session.execute(statement)
+        return results.scalars().all()
+
+    async def _get_total_count(self, search: str = None):
+        """查詢總筆數"""
+        total_count_stmt = select(func.count(Donation.id))
+
+        if search:
+            total_count_stmt = total_count_stmt.where(
+                or_(
+                    Donation.username.ilike(f"%{search}%"),
+                    Donation.phone_number.ilike(f"%{search}%"),
+                    Donation.email.ilike(f"%{search}%"),
+                    Donation.account.ilike(f"%{search}%"),
+                    Donation.transaction_id.ilike(f"%{search}%"),
+                    cast(Donation.input_date, String).ilike(f"%{search}%")
+                )
+            )
+
+        return (await self.session.execute(total_count_stmt)).scalar()
 
     async def client_get_donations(
         self,

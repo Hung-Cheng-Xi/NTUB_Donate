@@ -19,9 +19,10 @@ async def get_regulations(
     repository: Annotated[RegulationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
+    search: str = None,
 ) -> PaginatedRegulationInfoResponse:
     logging.info("取得分頁的 Regulations 資料")
-    return await repository.get_regulations(skip, limit)
+    return await repository.get_regulations(skip, limit, search)
 
 
 @router.post("/", response_model=Regulation)
