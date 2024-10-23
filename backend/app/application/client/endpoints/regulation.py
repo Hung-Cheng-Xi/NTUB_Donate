@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedRegulationInfoResponse)
-async def get_regulations(
+async def client_get_regulations(
     repository: Annotated[RegulationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -21,7 +21,7 @@ async def get_regulations(
 
 
 @router.get("/{regulation_id}", response_model=Regulation)
-async def get_regulation(
+async def client_get_regulation(
     regulation_id: int, repository: Annotated[RegulationRepository, Depends()]
 ):
     logging.info("取得 Regulation 資料")

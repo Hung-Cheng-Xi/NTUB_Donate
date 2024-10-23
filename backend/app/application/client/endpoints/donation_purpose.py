@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedDonationPurposeInfoResponse)
-async def get_donation_purposes(
+async def client_get_donation_purposes(
     service: Annotated[DonationPurposeService, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -24,7 +24,7 @@ async def get_donation_purposes(
 
 
 @router.get("/{donation_purpose_id}", response_model=DonationPurpose)
-async def get_donation_purpose(
+async def client_get_donation_purpose(
     donation_purpose_id: int,
     repository: Annotated[DonationPurposeRepository, Depends()],
 ):

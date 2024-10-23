@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/refresh-data")
-async def refresh_ftp_data(ftp_service: Annotated[FTPService, Depends()]):
+async def admin_refresh_ftp_data(ftp_service: Annotated[FTPService, Depends()]):
     logging.info("刷新 FTP 伺服器中的檔案")
     try:
         ftp_service.refresh_data()
@@ -21,7 +21,7 @@ async def refresh_ftp_data(ftp_service: Annotated[FTPService, Depends()]):
 
 
 @router.post("/list-files")
-async def list_files(ftp_service: Annotated[FTPService, Depends()]):
+async def admin_list_files(ftp_service: Annotated[FTPService, Depends()]):
     logging.info("列出遠端 FTP 伺服器中的檔案")
     try:
         remote_path = "/"

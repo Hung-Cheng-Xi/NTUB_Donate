@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/login/")
-async def login(
+async def admin_login(
     auth_request: AuthRequest, auth_service: Annotated[AuthService, Depends()]
 ) -> JSONResponse:
     logging.info("Call login API")
@@ -19,7 +19,7 @@ async def login(
 
 
 @router.post("/refresh/")
-async def refresh(
+async def admin_refresh(
     auth_service: Annotated[AuthService, Depends()], request: Request
 ) -> AuthResponse:
     logging.info("Call refresh API")

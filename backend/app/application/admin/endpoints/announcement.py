@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedAnnouncementInfoResponse)
-async def get_announcements(
+async def admin_get_announcements(
     repository: Annotated[AnnouncementRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -26,7 +26,7 @@ async def get_announcements(
 
 
 @router.post("/", response_model=Announcement)
-async def create_announcement(
+async def admin_create_announcement(
     new_announcement: AnnouncementCreate,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):
@@ -35,7 +35,7 @@ async def create_announcement(
 
 
 @router.get("/{announcement_id}", response_model=Announcement)
-async def get_announcement(
+async def admin_get_announcement(
     announcement_id: int,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):
@@ -44,7 +44,7 @@ async def get_announcement(
 
 
 @router.put("/{announcement_id}", response_model=Announcement)
-async def update_announcement(
+async def admin_update_announcement(
     announcement_id: int,
     new_announcement: AnnouncementUpdate,
     repository: Annotated[AnnouncementRepository, Depends()],
@@ -56,7 +56,7 @@ async def update_announcement(
 
 
 @router.delete("/{announcement_id}", response_model=Announcement)
-async def delete_announcement(
+async def admin_delete_announcement(
     announcement_id: int,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):

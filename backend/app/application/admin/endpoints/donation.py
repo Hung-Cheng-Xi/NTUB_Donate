@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedDonationInfoResponse)
-async def get_donations(
+async def admin_get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -23,7 +23,7 @@ async def get_donations(
 
 
 @router.post("/", response_model=Donation)
-async def create_donation(
+async def admin_create_donation(
     new_donation: DonationsCreate,
     repository: Annotated[DonationRepository, Depends()],
 ):
@@ -32,7 +32,7 @@ async def create_donation(
 
 
 @router.get("/{donation_id}", response_model=Donation)
-async def get_donation(
+async def admin_get_donation(
     donation_id: int, repository: Annotated[DonationRepository, Depends()]
 ):
     logging.info("取得 Donation 資料")
@@ -40,7 +40,7 @@ async def get_donation(
 
 
 @router.put("/{donation_id}", response_model=Donation)
-async def update_donation(
+async def admin_update_donation(
     donation_id: int,
     new_donation: DonationUpdate,
     repository: Annotated[DonationRepository, Depends()],
@@ -50,7 +50,7 @@ async def update_donation(
 
 
 @router.delete("/{donation_id}", response_model=Donation)
-async def delete_donation(
+async def admin_delete_donation(
     donation_id: int, repository: Annotated[DonationRepository, Depends()]
 ):
     logging.info("刪除 Donation 資料")

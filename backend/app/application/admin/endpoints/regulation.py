@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedRegulationInfoResponse)
-async def get_regulations(
+async def admin_get_regulations(
     repository: Annotated[RegulationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -26,7 +26,7 @@ async def get_regulations(
 
 
 @router.post("/", response_model=Regulation)
-async def create_regulation(
+async def admin_create_regulation(
     new_regulation: RegulationCreate,
     repository: Annotated[RegulationRepository, Depends()],
 ):
@@ -35,7 +35,7 @@ async def create_regulation(
 
 
 @router.get("/{regulation_id}", response_model=Regulation)
-async def get_regulation(
+async def admin_get_regulation(
     regulation_id: int, repository: Annotated[RegulationRepository, Depends()]
 ):
     logging.info("取得 Regulation 資料")
@@ -43,7 +43,7 @@ async def get_regulation(
 
 
 @router.put("/{regulation_id}", response_model=Regulation)
-async def update_regulation(
+async def admin_update_regulation(
     regulation_id: int,
     new_regulation: RegulationtUpdate,
     repository: Annotated[RegulationRepository, Depends()],
@@ -53,7 +53,7 @@ async def update_regulation(
 
 
 @router.delete("/{regulation_id}", response_model=Regulation)
-async def delete_regulation(
+async def admin_delete_regulation(
     regulation_id: int, repository: Annotated[RegulationRepository, Depends()]
 ):
     logging.info("刪除 Regulation 資料")

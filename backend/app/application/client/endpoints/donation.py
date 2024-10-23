@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedDonationInfoResponse)
-async def get_donations(
+async def client_get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -24,7 +24,7 @@ async def get_donations(
 
 
 @router.post("/", response_model=Donation)
-async def create_donation(
+async def client_create_donation(
     new_donation: DonationsCreate,
     repository: Annotated[DonationRepository, Depends()],
 ):

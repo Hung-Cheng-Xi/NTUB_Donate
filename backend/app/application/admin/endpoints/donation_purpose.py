@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=PaginatedDonationPurposeInfoResponse)
-async def get_donation_purposes(
+async def admin_get_donation_purposes(
     repository: Annotated[DonationPurposeRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -28,7 +28,7 @@ async def get_donation_purposes(
 
 
 @router.post("/", response_model=DonationPurpose)
-async def create_donation_purpose(
+async def admin_create_donation_purpose(
     new_donation_purpose: DonationPurposeCreate,
     repository: Annotated[DonationPurposeRepository, Depends()],
 ):
@@ -37,7 +37,7 @@ async def create_donation_purpose(
 
 
 @router.get("/{donation_purpose_id}", response_model=DonationPurpose)
-async def get_donation_purpose(
+async def admin_get_donation_purpose(
     donation_purpose_id: int,
     repository: Annotated[DonationPurposeRepository, Depends()],
 ):
@@ -46,7 +46,7 @@ async def get_donation_purpose(
 
 
 @router.put("/{donation_purpose_id}", response_model=DonationPurpose)
-async def update_donation_purpose(
+async def admin_update_donation_purpose(
     donation_purpose_id: int,
     new_donation_purpose: DonationPurposeUpdate,
     repository: Annotated[DonationPurposeRepository, Depends()],
@@ -58,7 +58,7 @@ async def update_donation_purpose(
 
 
 @router.delete("/{donation_purpose_id}", response_model=DonationPurpose)
-async def delete_donation_purpose(
+async def admin_delete_donation_purpose(
     donation_purpose_id: int,
     repository: Annotated[DonationPurposeRepository, Depends()],
 ):

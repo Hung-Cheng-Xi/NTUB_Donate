@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/export/")
-async def excel_export(
+async def admin_excel_export(
     excel_service: Annotated[ExcelService, Depends()],
     skip: int = 0,
     limit: int = 10,

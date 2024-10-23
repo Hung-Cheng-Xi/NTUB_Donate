@@ -11,7 +11,7 @@ router = APIRouter()
 
 # 呼叫 getBarCode 的端點
 @router.post("/generate-barcode/")
-async def generate_barcode(
+async def client_generate_barcode(
     barcode_data: BarCodeData,
     barcode_service: Annotated[BarCodeService, Depends()],
 ) -> List[str]:
