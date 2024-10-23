@@ -15,6 +15,12 @@ const DocumentPage: React.FC = () => {
 
   console.log(skip, limit);
 
+  const search = ''; // Define the search variable
+  // 搜尋按鈕點擊處理
+  const handleSearch = (value: string) => {
+    console.log(value);
+  };
+
   return (
     <ListGeneric
       data={{ total_count: 0, items: [] }}
@@ -39,8 +45,10 @@ const DocumentPage: React.FC = () => {
       ]}
       itemsPerPage={itemsPerPage}
       currentPage={currentPage}
-      onSelect={handlePageChange}
-      onPageChange={handleSelect}
+      search={search}
+      onSelect={handleSelect}
+      onPageChange={handlePageChange}
+      onSearch={handleSearch}
     />
   );
 };
