@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import LoadingErrorHandler from '../components/common/api/loadingErrorHandler';
 import { usePagination } from '../hooks/usePagination';
 import { useQuery } from '@tanstack/react-query';
-import { getAnnouncementsApiAdminAnnouncementGet } from '../../../shared/openapi/services.gen';
-import {
-  GetAnnouncementsApiAdminAnnouncementGetResponse,
-} from '../../../shared/openapi/types.gen';
+import { adminGetAnnouncements } from '../../../shared/openapi/services.gen';
+import { AdminGetAnnouncementsResponse } from '../../../shared/openapi/types.gen';
 import { useUnitsQuery } from '../hooks/useUnits';
 import ListGeneric from '../components/common/generic/listGeneric';
 
@@ -36,13 +34,13 @@ const AnnouncementPage: React.FC = () => {
     isLoading: isAnnouncementsLoading,
     isError: isAnnouncementsError,
     refetch,
-  } = useQuery<GetAnnouncementsApiAdminAnnouncementGetResponse, Error>({
+  } = useQuery<AdminGetAnnouncementsResponse, Error>({
     queryKey: ['announcements', skip, limit, search],
     queryFn: async () => {
-      const response = await getAnnouncementsApiAdminAnnouncementGet({
+      const response = await adminGetAnnouncements({
         query: { skip, limit, search },
       });
-      return response.data as GetAnnouncementsApiAdminAnnouncementGetResponse;
+      return response.data as AdminGetAnnouncementsResponse;
     },
   });
 
@@ -51,7 +49,6 @@ const AnnouncementPage: React.FC = () => {
     setSearch(value);
     refetch();
   };
-
 
   return (
     <LoadingErrorHandler
@@ -68,7 +65,10 @@ const AnnouncementPage: React.FC = () => {
             name: 'unit_id',
             label: 'Unit',
             type: 'select',
-            options: isUnitsData?.map(unit => ({ ...unit, id: unit.id ?? '' })),
+            options: isUnitsData?.map((unit) => ({
+              ...unit,
+              id: unit.id ?? '',
+            })),
           },
           { name: 'description', label: 'Description', type: 'textarea' },
           { name: 'image_url', label: 'imageURL', type: 'text' },

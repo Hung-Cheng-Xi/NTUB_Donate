@@ -5,20 +5,20 @@
  * 包含地址需要提交的所有字段。
  */
 export type AddressData = {
-    address: string;
+  address: string;
 };
 
 export type Announcement = {
-    id?: number;
-    date: string;
-    title: string;
-    description: string;
-    is_show: boolean;
-    /**
-     * S3 圖片的 URL 或相對路徑
-     */
-    image_url?: (string | null);
-    unit_id?: (number | null);
+  id?: number;
+  date: string;
+  title: string;
+  description: string;
+  is_show: boolean;
+  /**
+   * S3 圖片的 URL 或相對路徑
+   */
+  image_url?: string | null;
+  unit_id?: number | null;
 };
 
 /**
@@ -26,12 +26,12 @@ export type Announcement = {
  * 包含公告需要提交的所有字段。
  */
 export type AnnouncementCreate = {
-    date: string;
-    title: string;
-    description: string;
-    is_show: boolean;
-    image_url?: (string | null);
-    unit_id: number;
+  date: string;
+  title: string;
+  description: string;
+  is_show: boolean;
+  image_url?: string | null;
+  unit_id: number;
 };
 
 /**
@@ -39,13 +39,13 @@ export type AnnouncementCreate = {
  * 適用於讀取操作。
  */
 export type AnnouncementInfo = {
-    date: string;
-    title: string;
-    description: string;
-    is_show: boolean;
-    image_url?: (string | null);
-    id: number;
-    unit: UnitInfo;
+  date: string;
+  title: string;
+  description: string;
+  is_show: boolean;
+  image_url?: string | null;
+  id: number;
+  unit: UnitInfo;
 };
 
 /**
@@ -53,21 +53,21 @@ export type AnnouncementInfo = {
  * 允許公告更新。
  */
 export type AnnouncementUpdate = {
-    date: string;
-    title: string;
-    description: string;
-    is_show: boolean;
-    image_url?: (string | null);
-    id: number;
-    unit_id: number;
+  date: string;
+  title: string;
+  description: string;
+  is_show: boolean;
+  image_url?: string | null;
+  id: number;
+  unit_id: number;
 };
 
 export type AuthRequest = {
-    code: string;
+  code: string;
 };
 
 export type AuthResponse = {
-    access_token: string;
+  access_token: string;
 };
 
 /**
@@ -75,55 +75,55 @@ export type AuthResponse = {
  * 包含 BarCode 需要提交的所有字段。
  */
 export type BarCodeData = {
-    Group: string;
-    SerialNumber: string;
-    Time: string;
-    Money: string;
+  Group: string;
+  SerialNumber: string;
+  Time: string;
+  Money: string;
 };
 
 export type Donation = {
-    id?: number;
-    username: string;
-    user_birthday: string;
-    id_card: string;
-    phone_number: string;
-    email: string;
-    /**
-     * 捐款者身分
-     */
-    identity?: DonorType;
-    year?: (string | null);
-    gept?: (string | null);
-    res_address: string;
-    registered_address: string;
-    /**
-     * 公開狀態
-     */
-    public_status?: PubicStatus;
-    memo?: (string | null);
-    amount: number;
-    account: string;
-    /**
-     * 捐款方式
-     */
-    type?: DonationType;
-    transaction_id?: (string | null);
-    input_date?: (string | null);
-    purpose_id?: number;
+  id?: number;
+  username: string;
+  user_birthday: string;
+  id_card: string;
+  phone_number: string;
+  email: string;
+  /**
+   * 捐款者身分
+   */
+  identity?: DonorType;
+  year?: string | null;
+  gept?: string | null;
+  res_address: string;
+  registered_address: string;
+  /**
+   * 公開狀態
+   */
+  public_status?: PubicStatus;
+  memo?: string | null;
+  amount: number;
+  account: string;
+  /**
+   * 捐款方式
+   */
+  type?: DonationType;
+  transaction_id?: string | null;
+  input_date?: string | null;
+  purpose_id?: number;
 };
 
 export type DonationPurpose = {
-    id?: number;
-    title: string;
-    lump_sum: number;
-    description: string;
-    memo?: (string | null);
-    is_show: boolean;
-    /**
-     * S3 圖片的 URL 或相對路徑
-     */
-    image_url?: (string | null);
-    unit_id?: number;
+  id?: number;
+  title: string;
+  lump_sum: number;
+  description: string;
+  memo?: string | null;
+  is_show: boolean;
+  /**
+   * S3 圖片的 URL 或相對路徑
+   */
+  image_url?: string | null;
+  unit_id?: number;
 };
 
 /**
@@ -131,13 +131,13 @@ export type DonationPurpose = {
  * 包含捐款目的提交的所有必要字段。
  */
 export type DonationPurposeCreate = {
-    title: string;
-    lump_sum: number;
-    description: string;
-    memo?: (string | null);
-    is_show: boolean;
-    image_url?: (string | null);
-    unit_id: number;
+  title: string;
+  lump_sum: number;
+  description: string;
+  memo?: string | null;
+  is_show: boolean;
+  image_url?: string | null;
+  unit_id: number;
 };
 
 /**
@@ -145,8 +145,8 @@ export type DonationPurposeCreate = {
  * 適用於讀取操作。
  */
 export type DonationPurposeInfo = {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 };
 
 /**
@@ -154,13 +154,13 @@ export type DonationPurposeInfo = {
  * 允許捐款目的更新。
  */
 export type DonationPurposeUpdate = {
-    title: string;
-    lump_sum: number;
-    description: string;
-    memo?: (string | null);
-    is_show: boolean;
-    image_url?: (string | null);
-    unit_id: number;
+  title: string;
+  lump_sum: number;
+  description: string;
+  memo?: string | null;
+  is_show: boolean;
+  image_url?: string | null;
+  unit_id: number;
 };
 
 /**
@@ -172,28 +172,39 @@ export type DonationPurposeUpdate = {
 export type DonationType = '實體店支付' | '銀行支付';
 
 /**
+ * 表示捐款方式的 Enum。
+ *
+ * STORE: 使用實體店支付。
+ * BANK: 使用銀行支付。
+ */
+export const DonationType = {
+  實體店支付: '實體店支付',
+  銀行支付: '銀行支付',
+} as const;
+
+/**
  * 用於更新 Donation 的 schema，
  * 允許捐款更新。
  */
 export type DonationUpdate = {
-    username: string;
-    user_birthday: string;
-    id_card: string;
-    phone_number: string;
-    email: string;
-    identity?: DonorType;
-    year?: (string | null);
-    gept?: (string | null);
-    res_address: string;
-    registered_address: string;
-    public_status?: PubicStatus;
-    memo?: (string | null);
-    amount: number;
-    account: string;
-    type?: DonationType;
-    transaction_id?: (string | null);
-    input_date?: (string | null);
-    purpose_id: number;
+  username: string;
+  user_birthday: string;
+  id_card: string;
+  phone_number: string;
+  email: string;
+  identity?: DonorType;
+  year?: string | null;
+  gept?: string | null;
+  res_address: string;
+  registered_address: string;
+  public_status?: PubicStatus;
+  memo?: string | null;
+  amount: number;
+  account: string;
+  type?: DonationType;
+  transaction_id?: string | null;
+  input_date?: string | null;
+  purpose_id: number;
 };
 
 /**
@@ -201,24 +212,24 @@ export type DonationUpdate = {
  * 包含用戶需要提交的所有字段。
  */
 export type DonationsCreate = {
-    username: string;
-    user_birthday: string;
-    id_card: string;
-    phone_number: string;
-    email: string;
-    identity?: DonorType;
-    year?: (string | null);
-    gept?: (string | null);
-    res_address: string;
-    registered_address: string;
-    public_status?: PubicStatus;
-    memo?: (string | null);
-    amount: number;
-    account: string;
-    type?: DonationType;
-    transaction_id?: (string | null);
-    input_date?: (string | null);
-    purpose_id: number;
+  username: string;
+  user_birthday: string;
+  id_card: string;
+  phone_number: string;
+  email: string;
+  identity?: DonorType;
+  year?: string | null;
+  gept?: string | null;
+  res_address: string;
+  registered_address: string;
+  public_status?: PubicStatus;
+  memo?: string | null;
+  amount: number;
+  account: string;
+  type?: DonationType;
+  transaction_id?: string | null;
+  input_date?: string | null;
+  purpose_id: number;
 };
 
 /**
@@ -231,10 +242,35 @@ export type DonationsCreate = {
  * CORPORATION: 公司
  * OTHER: 其他
  */
-export type DonorType = '校友' | '教職員' | '家長' | '社區成員' | '公司' | '其他';
+export type DonorType =
+  | '校友'
+  | '教職員'
+  | '家長'
+  | '社區成員'
+  | '公司'
+  | '其他';
+
+/**
+ * 表示捐款者身份的 Enum。
+ *
+ * ALUMNI: 校友
+ * STAFF: 教職員
+ * PARENT: 家長
+ * COMMUNITY: 社區成員
+ * CORPORATION: 公司
+ * OTHER: 其他
+ */
+export const DonorType = {
+  校友: '校友',
+  教職員: '教職員',
+  家長: '家長',
+  社區成員: '社區成員',
+  公司: '公司',
+  其他: '其他',
+} as const;
 
 export type HTTPValidationError = {
-    detail?: Array<ValidationError>;
+  detail?: Array<ValidationError>;
 };
 
 /**
@@ -242,8 +278,8 @@ export type HTTPValidationError = {
  * 適用於讀取操作，可返回總筆數。
  */
 export type PaginatedAnnouncementInfoResponse = {
-    total_count: number;
-    items: Array<AnnouncementInfo>;
+  total_count: number;
+  items: Array<AnnouncementInfo>;
 };
 
 /**
@@ -251,8 +287,8 @@ export type PaginatedAnnouncementInfoResponse = {
  * 適用於讀取操作，可返回總筆數。
  */
 export type PaginatedRegulationInfoResponse = {
-    total_count: number;
-    items: Array<RegulationInfo>;
+  total_count: number;
+  items: Array<RegulationInfo>;
 };
 
 /**
@@ -264,15 +300,28 @@ export type PaginatedRegulationInfoResponse = {
  */
 export type PubicStatus = '公開' | '匿名' | '匿名但受捐單位知曉';
 
+/**
+ * 表示公開狀態的 Enum。
+ *
+ * PUBLIC: 公開
+ * ANONYMOUS: 匿名
+ * PARTIALLY: 匿名但受捐單位知曉
+ */
+export const PubicStatus = {
+  公開: '公開',
+  匿名: '匿名',
+  匿名但受捐單位知曉: '匿名但受捐單位知曉',
+} as const;
+
 export type Regulation = {
-    id?: number;
-    title: string;
-    /**
-     * 相關法規類別
-     */
-    category?: RegulationCategory;
-    description_link: string;
-    is_show: boolean;
+  id?: number;
+  title: string;
+  /**
+   * 相關法規類別
+   */
+  category?: RegulationCategory;
+  description_link: string;
+  is_show: boolean;
 };
 
 /**
@@ -284,17 +333,39 @@ export type Regulation = {
  * TAX_RELATED_LAWS: 相關稅法
  * DONATION_FORMS_DOWNLOAD: 捐款相關表單下載
  */
-export type RegulationCategory = 'ALL' | 'DEPARTMENT_LAWS' | 'COMMERCIAL_LAW' | 'TAX_RELATED_LAWS' | 'DONATION_FORMS_DOWNLOAD';
+export type RegulationCategory =
+  | 'ALL'
+  | 'DEPARTMENT_LAWS'
+  | 'COMMERCIAL_LAW'
+  | 'TAX_RELATED_LAWS'
+  | 'DONATION_FORMS_DOWNLOAD';
+
+/**
+ * 表示相關法規方式的 Enum。
+ *
+ * ALL: 全部
+ * DEPARTMENT_LAWS: 各部法規
+ * COMMERCIAL_LAW: 北商大法規
+ * TAX_RELATED_LAWS: 相關稅法
+ * DONATION_FORMS_DOWNLOAD: 捐款相關表單下載
+ */
+export const RegulationCategory = {
+  ALL: 'ALL',
+  DEPARTMENT_LAWS: 'DEPARTMENT_LAWS',
+  COMMERCIAL_LAW: 'COMMERCIAL_LAW',
+  TAX_RELATED_LAWS: 'TAX_RELATED_LAWS',
+  DONATION_FORMS_DOWNLOAD: 'DONATION_FORMS_DOWNLOAD',
+} as const;
 
 /**
  * 用於創建 Regulationt 記錄的 schema，
  * 包含用戶提交的所有必要字段。
  */
 export type RegulationCreate = {
-    title: string;
-    category?: RegulationCategory;
-    description_link: string;
-    is_show: boolean;
+  title: string;
+  category?: RegulationCategory;
+  description_link: string;
+  is_show: boolean;
 };
 
 /**
@@ -302,11 +373,11 @@ export type RegulationCreate = {
  * 適用於讀取操作。
  */
 export type RegulationInfo = {
-    title: string;
-    category?: RegulationCategory;
-    description_link: string;
-    is_show: boolean;
-    id: number;
+  title: string;
+  category?: RegulationCategory;
+  description_link: string;
+  is_show: boolean;
+  id: number;
 };
 
 /**
@@ -314,15 +385,15 @@ export type RegulationInfo = {
  * 允許法規更新。
  */
 export type RegulationtUpdate = {
-    title: string;
-    category?: RegulationCategory;
-    description_link: string;
-    is_show: boolean;
+  title: string;
+  category?: RegulationCategory;
+  description_link: string;
+  is_show: boolean;
 };
 
 export type Unit = {
-    id?: number;
-    name: string;
+  id?: number;
+  name: string;
 };
 
 /**
@@ -330,15 +401,15 @@ export type Unit = {
  * 包含單位提交的所有必要字段。
  */
 export type UnitCreate = {
-    name: string;
+  name: string;
 };
 
 /**
  * 用於返回 Unit 的基本信息，適用於讀取操作。
  */
 export type UnitInfo = {
-    name: string;
-    id: number;
+  name: string;
+  id: number;
 };
 
 /**
@@ -346,12 +417,12 @@ export type UnitInfo = {
  * 允許單位更新。
  */
 export type UnitUpdate = {
-    name: string;
+  name: string;
 };
 
 export type User = {
-    id?: number;
-    account: string;
+  id?: number;
+  account: string;
 };
 
 /**
@@ -359,13 +430,13 @@ export type User = {
  * 包含用戶提交的所有必要字段。
  */
 export type UserCreate = {
-    account: string;
+  account: string;
 };
 
 export type ValidationError = {
-    loc: Array<(string | number)>;
-    msg: string;
-    type: string;
+  loc: Array<string | number>;
+  msg: string;
+  type: string;
 };
 
 /**
@@ -373,518 +444,532 @@ export type ValidationError = {
  * 適用於讀取操作。
  */
 export type app__application__admin__schemas__donation__DonationInfo = {
-    username: string;
-    user_birthday: string;
-    id_card: string;
-    phone_number: string;
-    email: string;
-    identity?: DonorType;
-    year?: (string | null);
-    gept?: (string | null);
-    res_address: string;
-    registered_address: string;
-    public_status?: PubicStatus;
-    memo?: (string | null);
-    amount: number;
-    account: string;
-    type?: DonationType;
-    status?: (number | null);
-    transaction_id?: (string | null);
-    input_date?: (string | null);
-    id: number;
-    purpose_id: number;
+  username: string;
+  user_birthday: string;
+  id_card: string;
+  phone_number: string;
+  email: string;
+  identity?: DonorType;
+  year?: string | null;
+  gept?: string | null;
+  res_address: string;
+  registered_address: string;
+  public_status?: PubicStatus;
+  memo?: string | null;
+  amount: number;
+  account: string;
+  type?: DonationType;
+  status?: number | null;
+  transaction_id?: string | null;
+  input_date?: string | null;
+  id: number;
+  purpose_id: number;
 };
 
 /**
  * 用於返回分頁的 Donation 的基本信息，
  * 適用於讀取操作，可返回總筆數。
  */
-export type app__application__admin__schemas__donation__PaginatedDonationInfoResponse = {
+export type app__application__admin__schemas__donation__PaginatedDonationInfoResponse =
+  {
     total_count: number;
     items: Array<app__application__admin__schemas__donation__DonationInfo>;
-};
+  };
 
 /**
  * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
  */
-export type app__application__admin__schemas__donation_purpose__DonationPurposeItem = {
+export type app__application__admin__schemas__donation_purpose__DonationPurposeItem =
+  {
     title: string;
     lump_sum: number;
     description: string;
-    memo?: (string | null);
+    memo?: string | null;
     is_show: boolean;
-    image_url?: (string | null);
+    image_url?: string | null;
     id: number;
-};
+  };
 
 /**
  * 用於返回分頁的 DonationPurpose 的基本信息，
  * 適用於讀取操作，可返回總筆數。
  */
-export type app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse = {
+export type app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse =
+  {
     total_count: number;
     items: Array<app__application__admin__schemas__donation_purpose__DonationPurposeItem>;
-};
+  };
 
 /**
  * 用於返回 Donations 的基本信息，
  * 適用於讀取操作。
  */
 export type app__application__client__schemas__donation__DonationInfo = {
-    username: string;
-    amount: number;
-    input_date?: (string | null);
-    purpose: DonationPurposeInfo;
+  username: string;
+  amount: number;
+  input_date?: string | null;
+  purpose: DonationPurposeInfo;
 };
 
 /**
  * 用於返回分頁的 Donation 的基本信息，
  * 適用於讀取操作，可返回總筆數。
  */
-export type app__application__client__schemas__donation__PaginatedDonationInfoResponse = {
+export type app__application__client__schemas__donation__PaginatedDonationInfoResponse =
+  {
     total_count: number;
     items: Array<app__application__client__schemas__donation__DonationInfo>;
-};
+  };
 
 /**
  * 用於返回 DonationPurpose 的基本信息，適用於讀取操作。
  */
-export type app__application__client__schemas__donation_purpose__DonationPurposeItem = {
+export type app__application__client__schemas__donation_purpose__DonationPurposeItem =
+  {
     title: string;
     lump_sum: number;
     description: string;
-    memo?: (string | null);
+    memo?: string | null;
     is_show: boolean;
-    image_url?: (string | null);
+    image_url?: string | null;
     total_donation: number;
     achieved_percentage: number;
     id: number;
-};
+  };
 
 /**
  * 用於返回分頁的 DonationPurpose 的基本信息，
  * 適用於讀取操作，可返回總筆數。
  */
-export type app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse = {
+export type app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse =
+  {
     total_count: number;
     items: Array<app__application__client__schemas__donation_purpose__DonationPurposeItem>;
+  };
+
+export type ClientGetDonationsData = {
+  query?: {
+    limit?: number;
+    skip?: number;
+  };
 };
 
-export type GetDonationsApiClientDonationGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type ClientGetDonationsResponse =
+  app__application__client__schemas__donation__PaginatedDonationInfoResponse;
+
+export type ClientGetDonationsError = HTTPValidationError;
+
+export type ClientCreateDonationData = {
+  body: DonationsCreate;
 };
 
-export type GetDonationsApiClientDonationGetResponse = (app__application__client__schemas__donation__PaginatedDonationInfoResponse);
+export type ClientCreateDonationResponse = Donation;
 
-export type GetDonationsApiClientDonationGetError = (HTTPValidationError);
+export type ClientCreateDonationError = HTTPValidationError;
 
-export type CreateDonationApiClientDonationPostData = {
-    body: DonationsCreate;
+export type ClientGetDonationPurposesData = {
+  query?: {
+    limit?: number;
+    skip?: number;
+  };
 };
 
-export type CreateDonationApiClientDonationPostResponse = (Donation);
+export type ClientGetDonationPurposesResponse =
+  app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse;
 
-export type CreateDonationApiClientDonationPostError = (HTTPValidationError);
+export type ClientGetDonationPurposesError = HTTPValidationError;
 
-export type GetDonationPurposesApiClientDonationPurposeGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type ClientGetDonationPurposeData = {
+  path: {
+    donation_purpose_id: number;
+  };
 };
 
-export type GetDonationPurposesApiClientDonationPurposeGetResponse = (app__application__client__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse);
+export type ClientGetDonationPurposeResponse = DonationPurpose;
 
-export type GetDonationPurposesApiClientDonationPurposeGetError = (HTTPValidationError);
+export type ClientGetDonationPurposeError = HTTPValidationError;
 
-export type GetDonationPurposeApiClientDonationPurposeDonationPurposeIdGetData = {
-    path: {
-        donation_purpose_id: number;
-    };
+export type ClientGetAnnouncementsData = {
+  query?: {
+    limit?: number;
+    skip?: number;
+  };
 };
 
-export type GetDonationPurposeApiClientDonationPurposeDonationPurposeIdGetResponse = (DonationPurpose);
+export type ClientGetAnnouncementsResponse = Array<AnnouncementInfo>;
 
-export type GetDonationPurposeApiClientDonationPurposeDonationPurposeIdGetError = (HTTPValidationError);
+export type ClientGetAnnouncementsError = HTTPValidationError;
 
-export type GetAnnouncementsApiClientAnnouncementGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type ClientGetAnnouncementData = {
+  path: {
+    announcement_id: number;
+  };
 };
 
-export type GetAnnouncementsApiClientAnnouncementGetResponse = (Array<AnnouncementInfo>);
+export type ClientGetAnnouncementResponse = Announcement;
 
-export type GetAnnouncementsApiClientAnnouncementGetError = (HTTPValidationError);
+export type ClientGetAnnouncementError = HTTPValidationError;
 
-export type GetAnnouncementApiClientAnnouncementAnnouncementIdGetData = {
-    path: {
-        announcement_id: number;
-    };
+export type ClientGetRegulationsData = {
+  query?: {
+    limit?: number;
+    skip?: number;
+  };
 };
 
-export type GetAnnouncementApiClientAnnouncementAnnouncementIdGetResponse = (Announcement);
+export type ClientGetRegulationsResponse = PaginatedRegulationInfoResponse;
 
-export type GetAnnouncementApiClientAnnouncementAnnouncementIdGetError = (HTTPValidationError);
+export type ClientGetRegulationsError = HTTPValidationError;
 
-export type GetRegulationsApiClientRegulationGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type ClientGetRegulationData = {
+  path: {
+    regulation_id: number;
+  };
 };
 
-export type GetRegulationsApiClientRegulationGetResponse = (PaginatedRegulationInfoResponse);
+export type ClientGetRegulationResponse = Regulation;
 
-export type GetRegulationsApiClientRegulationGetError = (HTTPValidationError);
+export type ClientGetRegulationError = HTTPValidationError;
 
-export type GetRegulationApiClientRegulationRegulationIdGetData = {
-    path: {
-        regulation_id: number;
-    };
+export type ClientGenerateBarcodeData = {
+  body: BarCodeData;
 };
 
-export type GetRegulationApiClientRegulationRegulationIdGetResponse = (Regulation);
+export type ClientGenerateBarcodeResponse = Array<string>;
 
-export type GetRegulationApiClientRegulationRegulationIdGetError = (HTTPValidationError);
+export type ClientGenerateBarcodeError = HTTPValidationError;
 
-export type GenerateBarcodeApiClientBarcodeGenerateBarcodePostData = {
-    body: BarCodeData;
+export type ClientGetZipcodeData = {
+  body: AddressData;
 };
 
-export type GenerateBarcodeApiClientBarcodeGenerateBarcodePostResponse = (Array<(string)>);
-
-export type GenerateBarcodeApiClientBarcodeGenerateBarcodePostError = (HTTPValidationError);
-
-export type GetZipcodeApiClientAddressGetZipcodePostData = {
-    body: AddressData;
+export type ClientGetZipcodeResponse = {
+  [key: string]: unknown;
 };
 
-export type GetZipcodeApiClientAddressGetZipcodePostResponse = ({
-    [key: string]: unknown;
-});
+export type ClientGetZipcodeError = HTTPValidationError;
 
-export type GetZipcodeApiClientAddressGetZipcodePostError = (HTTPValidationError);
-
-export type LoginApiAdminAuthLoginPostData = {
-    body: AuthRequest;
+export type AdminLoginData = {
+  body: AuthRequest;
 };
 
-export type LoginApiAdminAuthLoginPostResponse = (unknown);
+export type AdminLoginResponse = unknown;
 
-export type LoginApiAdminAuthLoginPostError = (HTTPValidationError);
+export type AdminLoginError = HTTPValidationError;
 
-export type RefreshApiAdminAuthRefreshPostResponse = (AuthResponse);
+export type AdminRefreshResponse = AuthResponse;
 
-export type RefreshApiAdminAuthRefreshPostError = unknown;
+export type AdminRefreshError = unknown;
 
-export type ExcelExportApiAdminExcelExportPostData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type AdminExcelExportData = {
+  query?: {
+    limit?: number;
+    skip?: number;
+  };
 };
 
-export type ExcelExportApiAdminExcelExportPostResponse = ({
-    [key: string]: unknown;
-});
-
-export type ExcelExportApiAdminExcelExportPostError = (HTTPValidationError);
-
-export type RefreshFtpDataApiAdminFtpRefreshDataPostResponse = (unknown);
-
-export type RefreshFtpDataApiAdminFtpRefreshDataPostError = unknown;
-
-export type ListFilesApiAdminFtpListFilesPostResponse = (unknown);
-
-export type ListFilesApiAdminFtpListFilesPostError = unknown;
-
-export type GetRegulationsApiAdminRegulationGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type AdminExcelExportResponse = {
+  [key: string]: unknown;
 };
 
-export type GetRegulationsApiAdminRegulationGetResponse = (PaginatedRegulationInfoResponse);
+export type AdminExcelExportError = HTTPValidationError;
 
-export type GetRegulationsApiAdminRegulationGetError = (HTTPValidationError);
+export type AdminRefreshFtpDataResponse = unknown;
 
-export type CreateRegulationApiAdminRegulationPostData = {
-    body: RegulationCreate;
+export type AdminRefreshFtpDataError = unknown;
+
+export type AdminListFilesResponse = unknown;
+
+export type AdminListFilesError = unknown;
+
+export type AdminGetRegulationsData = {
+  query?: {
+    limit?: number;
+    search?: string;
+    skip?: number;
+  };
 };
 
-export type CreateRegulationApiAdminRegulationPostResponse = (Regulation);
+export type AdminGetRegulationsResponse = PaginatedRegulationInfoResponse;
 
-export type CreateRegulationApiAdminRegulationPostError = (HTTPValidationError);
+export type AdminGetRegulationsError = HTTPValidationError;
 
-export type GetRegulationApiAdminRegulationRegulationIdGetData = {
-    path: {
-        regulation_id: number;
-    };
+export type AdminCreateRegulationData = {
+  body: RegulationCreate;
 };
 
-export type GetRegulationApiAdminRegulationRegulationIdGetResponse = (Regulation);
+export type AdminCreateRegulationResponse = Regulation;
 
-export type GetRegulationApiAdminRegulationRegulationIdGetError = (HTTPValidationError);
+export type AdminCreateRegulationError = HTTPValidationError;
 
-export type UpdateRegulationApiAdminRegulationRegulationIdPutData = {
-    body: RegulationtUpdate;
-    path: {
-        regulation_id: number;
-    };
+export type AdminGetRegulationData = {
+  path: {
+    regulation_id: number;
+  };
 };
 
-export type UpdateRegulationApiAdminRegulationRegulationIdPutResponse = (Regulation);
+export type AdminGetRegulationResponse = Regulation;
 
-export type UpdateRegulationApiAdminRegulationRegulationIdPutError = (HTTPValidationError);
+export type AdminGetRegulationError = HTTPValidationError;
 
-export type DeleteRegulationApiAdminRegulationRegulationIdDeleteData = {
-    path: {
-        regulation_id: number;
-    };
+export type AdminUpdateRegulationData = {
+  body: RegulationtUpdate;
+  path: {
+    regulation_id: number;
+  };
 };
 
-export type DeleteRegulationApiAdminRegulationRegulationIdDeleteResponse = (Regulation);
+export type AdminUpdateRegulationResponse = Regulation;
 
-export type DeleteRegulationApiAdminRegulationRegulationIdDeleteError = (HTTPValidationError);
+export type AdminUpdateRegulationError = HTTPValidationError;
 
-export type GetDonationPurposesApiAdminDonationPurposeGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type AdminDeleteRegulationData = {
+  path: {
+    regulation_id: number;
+  };
 };
 
-export type GetDonationPurposesApiAdminDonationPurposeGetResponse = (app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse);
+export type AdminDeleteRegulationResponse = Regulation;
 
-export type GetDonationPurposesApiAdminDonationPurposeGetError = (HTTPValidationError);
+export type AdminDeleteRegulationError = HTTPValidationError;
 
-export type CreateDonationPurposeApiAdminDonationPurposePostData = {
-    body: DonationPurposeCreate;
+export type AdminGetDonationPurposesData = {
+  query?: {
+    limit?: number;
+    search?: string;
+    skip?: number;
+  };
 };
 
-export type CreateDonationPurposeApiAdminDonationPurposePostResponse = (DonationPurpose);
+export type AdminGetDonationPurposesResponse =
+  app__application__admin__schemas__donation_purpose__PaginatedDonationPurposeInfoResponse;
 
-export type CreateDonationPurposeApiAdminDonationPurposePostError = (HTTPValidationError);
+export type AdminGetDonationPurposesError = HTTPValidationError;
 
-export type GetDonationPurposeApiAdminDonationPurposeDonationPurposeIdGetData = {
-    path: {
-        donation_purpose_id: number;
-    };
+export type AdminCreateDonationPurposeData = {
+  body: DonationPurposeCreate;
 };
 
-export type GetDonationPurposeApiAdminDonationPurposeDonationPurposeIdGetResponse = (DonationPurpose);
+export type AdminCreateDonationPurposeResponse = DonationPurpose;
 
-export type GetDonationPurposeApiAdminDonationPurposeDonationPurposeIdGetError = (HTTPValidationError);
+export type AdminCreateDonationPurposeError = HTTPValidationError;
 
-export type UpdateDonationPurposeApiAdminDonationPurposeDonationPurposeIdPutData = {
-    body: DonationPurposeUpdate;
-    path: {
-        donation_purpose_id: number;
-    };
+export type AdminGetDonationPurposeData = {
+  path: {
+    donation_purpose_id: number;
+  };
 };
 
-export type UpdateDonationPurposeApiAdminDonationPurposeDonationPurposeIdPutResponse = (DonationPurpose);
+export type AdminGetDonationPurposeResponse = DonationPurpose;
 
-export type UpdateDonationPurposeApiAdminDonationPurposeDonationPurposeIdPutError = (HTTPValidationError);
+export type AdminGetDonationPurposeError = HTTPValidationError;
 
-export type DeleteDonationPurposeApiAdminDonationPurposeDonationPurposeIdDeleteData = {
-    path: {
-        donation_purpose_id: number;
-    };
+export type AdminUpdateDonationPurposeData = {
+  body: DonationPurposeUpdate;
+  path: {
+    donation_purpose_id: number;
+  };
 };
 
-export type DeleteDonationPurposeApiAdminDonationPurposeDonationPurposeIdDeleteResponse = (DonationPurpose);
+export type AdminUpdateDonationPurposeResponse = DonationPurpose;
 
-export type DeleteDonationPurposeApiAdminDonationPurposeDonationPurposeIdDeleteError = (HTTPValidationError);
+export type AdminUpdateDonationPurposeError = HTTPValidationError;
 
-export type GetDonationsApiAdminDonationGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type AdminDeleteDonationPurposeData = {
+  path: {
+    donation_purpose_id: number;
+  };
 };
 
-export type GetDonationsApiAdminDonationGetResponse = (app__application__admin__schemas__donation__PaginatedDonationInfoResponse);
+export type AdminDeleteDonationPurposeResponse = DonationPurpose;
 
-export type GetDonationsApiAdminDonationGetError = (HTTPValidationError);
+export type AdminDeleteDonationPurposeError = HTTPValidationError;
 
-export type CreateDonationApiAdminDonationPostData = {
-    body: DonationsCreate;
+export type AdminGetDonationsData = {
+  query?: {
+    limit?: number;
+    search?: string;
+    skip?: number;
+  };
 };
 
-export type CreateDonationApiAdminDonationPostResponse = (Donation);
+export type AdminGetDonationsResponse =
+  app__application__admin__schemas__donation__PaginatedDonationInfoResponse;
 
-export type CreateDonationApiAdminDonationPostError = (HTTPValidationError);
+export type AdminGetDonationsError = HTTPValidationError;
 
-export type GetDonationApiAdminDonationDonationIdGetData = {
-    path: {
-        donation_id: number;
-    };
+export type AdminCreateDonationData = {
+  body: DonationsCreate;
 };
 
-export type GetDonationApiAdminDonationDonationIdGetResponse = (Donation);
+export type AdminCreateDonationResponse = Donation;
 
-export type GetDonationApiAdminDonationDonationIdGetError = (HTTPValidationError);
+export type AdminCreateDonationError = HTTPValidationError;
 
-export type UpdateDonationApiAdminDonationDonationIdPutData = {
-    body: DonationUpdate;
-    path: {
-        donation_id: number;
-    };
+export type AdminGetDonationData = {
+  path: {
+    donation_id: number;
+  };
 };
 
-export type UpdateDonationApiAdminDonationDonationIdPutResponse = (Donation);
+export type AdminGetDonationResponse = Donation;
 
-export type UpdateDonationApiAdminDonationDonationIdPutError = (HTTPValidationError);
+export type AdminGetDonationError = HTTPValidationError;
 
-export type DeleteDonationApiAdminDonationDonationIdDeleteData = {
-    path: {
-        donation_id: number;
-    };
+export type AdminUpdateDonationData = {
+  body: DonationUpdate;
+  path: {
+    donation_id: number;
+  };
 };
 
-export type DeleteDonationApiAdminDonationDonationIdDeleteResponse = (Donation);
+export type AdminUpdateDonationResponse = Donation;
 
-export type DeleteDonationApiAdminDonationDonationIdDeleteError = (HTTPValidationError);
+export type AdminUpdateDonationError = HTTPValidationError;
 
-export type GetAnnouncementsApiAdminAnnouncementGetData = {
-    query?: {
-        limit?: number;
-        skip?: number;
-    };
+export type AdminDeleteDonationData = {
+  path: {
+    donation_id: number;
+  };
 };
 
-export type GetAnnouncementsApiAdminAnnouncementGetResponse = (PaginatedAnnouncementInfoResponse);
+export type AdminDeleteDonationResponse = Donation;
 
-export type GetAnnouncementsApiAdminAnnouncementGetError = (HTTPValidationError);
+export type AdminDeleteDonationError = HTTPValidationError;
 
-export type CreateAnnouncementApiAdminAnnouncementPostData = {
-    body: AnnouncementCreate;
+export type AdminGetAnnouncementsData = {
+  query?: {
+    limit?: number;
+    search?: string;
+    skip?: number;
+  };
 };
 
-export type CreateAnnouncementApiAdminAnnouncementPostResponse = (Announcement);
+export type AdminGetAnnouncementsResponse = PaginatedAnnouncementInfoResponse;
 
-export type CreateAnnouncementApiAdminAnnouncementPostError = (HTTPValidationError);
+export type AdminGetAnnouncementsError = HTTPValidationError;
 
-export type GetAnnouncementApiAdminAnnouncementAnnouncementIdGetData = {
-    path: {
-        announcement_id: number;
-    };
+export type AdminCreateAnnouncementData = {
+  body: AnnouncementCreate;
 };
 
-export type GetAnnouncementApiAdminAnnouncementAnnouncementIdGetResponse = (Announcement);
+export type AdminCreateAnnouncementResponse = Announcement;
 
-export type GetAnnouncementApiAdminAnnouncementAnnouncementIdGetError = (HTTPValidationError);
+export type AdminCreateAnnouncementError = HTTPValidationError;
 
-export type UpdateAnnouncementApiAdminAnnouncementAnnouncementIdPutData = {
-    body: AnnouncementUpdate;
-    path: {
-        announcement_id: number;
-    };
+export type AdminGetAnnouncementData = {
+  path: {
+    announcement_id: number;
+  };
 };
 
-export type UpdateAnnouncementApiAdminAnnouncementAnnouncementIdPutResponse = (Announcement);
+export type AdminGetAnnouncementResponse = Announcement;
 
-export type UpdateAnnouncementApiAdminAnnouncementAnnouncementIdPutError = (HTTPValidationError);
+export type AdminGetAnnouncementError = HTTPValidationError;
 
-export type DeleteAnnouncementApiAdminAnnouncementAnnouncementIdDeleteData = {
-    path: {
-        announcement_id: number;
-    };
+export type AdminUpdateAnnouncementData = {
+  body: AnnouncementUpdate;
+  path: {
+    announcement_id: number;
+  };
 };
 
-export type DeleteAnnouncementApiAdminAnnouncementAnnouncementIdDeleteResponse = (Announcement);
+export type AdminUpdateAnnouncementResponse = Announcement;
 
-export type DeleteAnnouncementApiAdminAnnouncementAnnouncementIdDeleteError = (HTTPValidationError);
+export type AdminUpdateAnnouncementError = HTTPValidationError;
 
-export type GetUnitsApiAdminUnitGetResponse = (Array<Unit>);
-
-export type GetUnitsApiAdminUnitGetError = unknown;
-
-export type CreateUnitApiAdminUnitPostData = {
-    body: UnitCreate;
+export type AdminDeleteAnnouncementData = {
+  path: {
+    announcement_id: number;
+  };
 };
 
-export type CreateUnitApiAdminUnitPostResponse = (Unit);
+export type AdminDeleteAnnouncementResponse = Announcement;
 
-export type CreateUnitApiAdminUnitPostError = (HTTPValidationError);
+export type AdminDeleteAnnouncementError = HTTPValidationError;
 
-export type GetUnitApiAdminUnitUnitIdGetData = {
-    path: {
-        unit_id: number;
-    };
+export type AdminGetUnitsResponse = Array<Unit>;
+
+export type AdminGetUnitsError = unknown;
+
+export type AdminCreateUnitData = {
+  body: UnitCreate;
 };
 
-export type GetUnitApiAdminUnitUnitIdGetResponse = (Unit);
+export type AdminCreateUnitResponse = Unit;
 
-export type GetUnitApiAdminUnitUnitIdGetError = (HTTPValidationError);
+export type AdminCreateUnitError = HTTPValidationError;
 
-export type UpdateUnitApiAdminUnitUnitIdPutData = {
-    body: UnitUpdate;
-    path: {
-        unit_id: number;
-    };
+export type AdminGetUnitData = {
+  path: {
+    unit_id: number;
+  };
 };
 
-export type UpdateUnitApiAdminUnitUnitIdPutResponse = (Unit);
+export type AdminGetUnitResponse = Unit;
 
-export type UpdateUnitApiAdminUnitUnitIdPutError = (HTTPValidationError);
+export type AdminGetUnitError = HTTPValidationError;
 
-export type DeleteUnitApiAdminUnitUnitIdDeleteData = {
-    path: {
-        unit_id: number;
-    };
+export type AdminUpdateUnitData = {
+  body: UnitUpdate;
+  path: {
+    unit_id: number;
+  };
 };
 
-export type DeleteUnitApiAdminUnitUnitIdDeleteResponse = (Unit);
+export type AdminUpdateUnitResponse = Unit;
 
-export type DeleteUnitApiAdminUnitUnitIdDeleteError = (HTTPValidationError);
+export type AdminUpdateUnitError = HTTPValidationError;
 
-export type GetUsersApiAdminUserGetResponse = (Array<User>);
-
-export type GetUsersApiAdminUserGetError = unknown;
-
-export type CreateUserApiAdminUserPostData = {
-    body: UserCreate;
+export type AdminDeleteUnitData = {
+  path: {
+    unit_id: number;
+  };
 };
 
-export type CreateUserApiAdminUserPostResponse = (User);
+export type AdminDeleteUnitResponse = Unit;
 
-export type CreateUserApiAdminUserPostError = (HTTPValidationError);
+export type AdminDeleteUnitError = HTTPValidationError;
 
-export type GetUserApiAdminUserUserIdGetData = {
-    path: {
-        user_id: number;
-    };
+export type AdminGetUsersResponse = Array<User>;
+
+export type AdminGetUsersError = unknown;
+
+export type AdminCreateUserData = {
+  body: UserCreate;
 };
 
-export type GetUserApiAdminUserUserIdGetResponse = (User);
+export type AdminCreateUserResponse = User;
 
-export type GetUserApiAdminUserUserIdGetError = (HTTPValidationError);
+export type AdminCreateUserError = HTTPValidationError;
 
-export type UpdateUserApiAdminUserUserIdPutData = {
-    body: UserCreate;
-    path: {
-        user_id: number;
-    };
+export type AdminGetUserData = {
+  path: {
+    user_id: number;
+  };
 };
 
-export type UpdateUserApiAdminUserUserIdPutResponse = (User);
+export type AdminGetUserResponse = User;
 
-export type UpdateUserApiAdminUserUserIdPutError = (HTTPValidationError);
+export type AdminGetUserError = HTTPValidationError;
 
-export type DeleteUserApiAdminUserUserIdDeleteData = {
-    path: {
-        user_id: number;
-    };
+export type AdminUpdateUserData = {
+  body: UserCreate;
+  path: {
+    user_id: number;
+  };
 };
 
-export type DeleteUserApiAdminUserUserIdDeleteResponse = (User);
+export type AdminUpdateUserResponse = User;
 
-export type DeleteUserApiAdminUserUserIdDeleteError = (HTTPValidationError);
+export type AdminUpdateUserError = HTTPValidationError;
+
+export type AdminDeleteUserData = {
+  path: {
+    user_id: number;
+  };
+};
+
+export type AdminDeleteUserResponse = User;
+
+export type AdminDeleteUserError = HTTPValidationError;

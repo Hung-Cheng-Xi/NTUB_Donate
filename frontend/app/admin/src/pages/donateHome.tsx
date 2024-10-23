@@ -47,6 +47,8 @@ const DonationTable: React.FC = () => {
       currentPage={currentPage}
       onSelect={handlePageChange}
       onPageChange={handleSelect}
+      search=""
+      onSearch={() => {}}
     />
   );
 };

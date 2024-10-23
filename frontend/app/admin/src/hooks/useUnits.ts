@@ -1,14 +1,14 @@
 // useUnits.ts
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { getUnitsApiAdminUnitGet } from '../../../shared/openapi/services.gen';
-import { GetUnitsApiAdminUnitGetResponse } from '../../../shared/openapi/types.gen';
+import { adminGetUnits } from '../../../shared/openapi/services.gen';
+import { AdminGetUnitsResponse } from '../../../shared/openapi/types.gen';
 
-export const useUnitsQuery = (): UseQueryResult<GetUnitsApiAdminUnitGetResponse, Error> => {
-  return useQuery<GetUnitsApiAdminUnitGetResponse, Error>({
+export const useUnitsQuery = (): UseQueryResult<AdminGetUnitsResponse, Error> => {
+  return useQuery<AdminGetUnitsResponse, Error>({
     queryKey: ['units'],
     queryFn: async () => {
-      const response = await getUnitsApiAdminUnitGet();
-      return response.data as GetUnitsApiAdminUnitGetResponse;
+      const response = await adminGetUnits();
+      return response.data as AdminGetUnitsResponse;
     },
   });
 };

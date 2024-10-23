@@ -10,8 +10,7 @@
     "build-admin": "tsc -b && vite build --config app/admin/vite.config.ts",
     "build-client": "tsc -b && vite build --config app/client/vite.config.ts",
     "dev-admin": "vite --config app/admin/vite.config.ts",
-    "dev-client": "vite --config app/client/vite.config.ts",
-    "generate-client": "rm -rf ./app/shared/openapi && npx @hey-api/openapi-ts -i http://127.0.0.1:8000/openapi.json -o app/shared/openapi -c @hey-api/client-axios"
+    "dev-client": "vite --config app/client/vite.config.ts"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.1.0",
