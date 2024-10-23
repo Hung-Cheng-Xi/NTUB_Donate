@@ -10,8 +10,10 @@ const TableGeneric = ({
   formFields,
   itemsPerPage,
   currentPage,
+  search,
   onSelect,
   onPageChange,
+  onSearch,
 }: Omit<BaseGenericProps<TableItemType>, 'ItemComponent'>) => { // Omit 作用是排除 renderItems 屬性
   return (
     <BaseGeneric
@@ -21,8 +23,10 @@ const TableGeneric = ({
       isReadOnly={true}
       itemsPerPage={itemsPerPage}
       currentPage={currentPage}
+      search={search}
       onSelect={onSelect}
       onPageChange={onPageChange}
+      onSearch={(onSearch)}
       ItemComponent={TableItem}
     />
   );

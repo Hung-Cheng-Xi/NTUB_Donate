@@ -8,6 +8,8 @@ interface BaseFormModalProps {
   onClose: () => void;
   onSubmit: SubmitHandler<{ [key: string]: string | number | boolean | { id: string | number } }>;
   fields: { name: string; label: string; type: string; options?: { id: string | number; name: string }[]}[];
+  title: string;
+  submitButtonLabel: string;
   defaultValues?: { [key: string]: string | number | boolean | { id: string | number } };
   isReadOnly?: boolean;
 }
@@ -17,6 +19,8 @@ const BaseFormModal: React.FC<BaseFormModalProps> = ({
   onClose,
   onSubmit,
   fields,
+  title,
+  submitButtonLabel,
   defaultValues,
   isReadOnly = false,
 }) => {
@@ -27,7 +31,8 @@ const BaseFormModal: React.FC<BaseFormModalProps> = ({
       // Extract `unit` ID from `defaultValues` if it's an object
       const processedDefaultValues = { ...defaultValues };
       if (defaultValues.unit && typeof defaultValues.unit === 'object') {
-        processedDefaultValues.unit = defaultValues.unit.id;
+        processedDefaultValues.unit_id = defaultValues.unit.id;
+        delete processedDefaultValues.unit;
       }
       reset(processedDefaultValues);
     }
@@ -43,7 +48,7 @@ const BaseFormModal: React.FC<BaseFormModalProps> = ({
       ></div>
       <div className="relative bg-white rounded-lg p-6 w-full max-w-md mx-auto my-8 overflow-y-auto max-h-[80vh]">
         <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-          Form Modal
+          {title}
         </h3>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {fields.map((field) =>
@@ -75,14 +80,14 @@ const BaseFormModal: React.FC<BaseFormModalProps> = ({
               className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
               onClick={onClose}
             >
-              Cancel
+              返回
             </button>
             {!isReadOnly ? (
               <button
                 type="submit"
-                className="inline-flex justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                className="inline-flex justify-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               >
-                Submit
+                {submitButtonLabel}
               </button>
             ) : (
               <button

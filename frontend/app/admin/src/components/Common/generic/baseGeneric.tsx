@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
 import Pagination from '../page/pagination';
-import BaseFormModal from '../modal/baseModal';
 import ItemsPerPage from '../page/itemsPer';
 import { PaginatedResponse } from '../../../types/item';
 import SearchInput from '../page/searchQuery';
+import CreateModal from '../modal/createModal';
+import UpdateModal from '../modal/updateModal';
+import DeleteModal from '../modal/deleteModal';
 
 export interface BaseGenericProps<T> {
   data: PaginatedResponse<T>;
@@ -22,7 +23,7 @@ export interface BaseGenericProps<T> {
   onSelect: (value: number) => void;
   onPageChange: (value: number) => void;
   onSearch: (value: string) => void;
-  ItemComponent: React.ComponentType<{ data: T[]; openModal: (item: T) => void }>;
+  ItemComponent: React.ComponentType<{ data: T[]; openUpdateModal: (item: T) => void; openDeleteModal: (item: T) => void }>;
 }
 
 const BaseGeneric = <T,>({
@@ -38,24 +39,46 @@ const BaseGeneric = <T,>({
   onSearch,
   ItemComponent,
 }: BaseGenericProps<T>) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // 定义各个 Modal 的状态
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
   const totalPages = Math.ceil(data.total_count / itemsPerPage);
 
-  const openModal = (item: T) => {
-    setIsOpen(true);
+  // 打开各个 Modal 的函数
+  const handleOpenCreateModal = () => setIsCreateModalOpen(true);
+  const handleOpenUpdateModal = (item: T) => {
     setSelectedItem(item);
-    console.log(item);
+    setIsUpdateModalOpen(true);
+  };
+  const handleOpenDeleteModal = (item: T) => {
+    setSelectedItem(item);
+    setIsDeleteModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setSelectedItem(null);
+  // 关闭各个 Modal 的函数
+  const handleCloseCreateModal = () => setIsCreateModalOpen(false);
+  const handleCloseUpdateModal = () => setIsUpdateModalOpen(false);
+  const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
+
+  // 提交处理函数
+  const handleCreateSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
+    console.log("Creating item:", data);
+    // 你的创建逻辑
+    handleCloseCreateModal();
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string | number | boolean | { id: string | number } }> = (data) => {
-    console.log(data);
-    closeModal();
+  const handleUpdateSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
+    console.log("Updating item:", data);
+    // 你的更新逻辑
+    handleCloseUpdateModal();
+  };
+
+  const handleDeleteSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
+    console.log("Deleting item:", data);
+    // 你的删除逻辑
+    handleCloseDeleteModal();
   };
 
   return (
@@ -64,6 +87,12 @@ const BaseGeneric = <T,>({
         <div className="w-full bg-white p-6 rounded-md shadow-md">
           <div className="flex justify-between mb-3">
             <h2 className="text-3xl font-bold text-gray-800">{itemTitle}</h2>
+            <button
+              className="px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400"
+              onClick={handleOpenCreateModal}
+            >
+              Create New Item
+            </button>
           </div>
 
           <div className="relative overflow-x-auto sm:rounded-lg">
@@ -85,7 +114,7 @@ const BaseGeneric = <T,>({
               </div>
             </div>
 
-            <ItemComponent data={data.items} openModal={openModal} />
+            <ItemComponent data={data.items} openUpdateModal={handleOpenUpdateModal} openDeleteModal={handleOpenDeleteModal} />
 
             <div className="p-8">
               <Pagination
@@ -98,14 +127,35 @@ const BaseGeneric = <T,>({
         </div>
       </div>
 
-      <BaseFormModal
-        isOpen={isOpen}
-        onClose={closeModal}
-        onSubmit={onSubmit}
+      {/* 使用相应的 Modal 组件 */}
+      <CreateModal
+        isOpen={isCreateModalOpen}
+        onClose={handleCloseCreateModal}
+        onSubmit={handleCreateSubmit}
         fields={formFields ? formFields : []}
-        defaultValues={selectedItem ? (selectedItem as { [key: string]: string | number | boolean }) : undefined}
-        isReadOnly={isReadOnly ? isReadOnly : false}
       />
+
+      {/* Render UpdateModal */}
+      {isUpdateModalOpen && selectedItem && (
+        <UpdateModal
+          isOpen={isUpdateModalOpen}
+          onClose={handleCloseUpdateModal}
+          onSubmit={handleUpdateSubmit}
+          fields={formFields ? formFields : []}
+          defaultValues={selectedItem}
+          isReadOnly={isReadOnly ? isReadOnly : false}
+        />
+      )}
+
+      {/* Render DeleteModal */}
+      {isDeleteModalOpen && selectedItem && (
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={handleCloseDeleteModal}
+          onSubmit={handleDeleteSubmit}
+          defaultValues={selectedItem}
+        />
+      )}
     </>
   );
 };

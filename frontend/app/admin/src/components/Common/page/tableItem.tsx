@@ -4,16 +4,23 @@ import type { TableItemType } from '../../../types/item';
 // TableItem Component
 interface TableItemProps {
   data: TableItemType[];
-  openModal: (item: TableItemType) => void;
+  openUpdateModal: (item: TableItemType) => void;
+  openDeleteModal: (item: TableItemType) => void;
 }
 
-const TableItem: React.FC<TableItemProps> = ({ data, openModal }) => {
+const TableItem: React.FC<TableItemProps> = ({
+  data,
+  openUpdateModal,
+  openDeleteModal,
+}) => {
   return (
     <>
       <div className="shadow-md">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50
-           dark:bg-gray-700 dark:text-gray-400">
+          <thead
+            className="text-xs text-gray-700 uppercase bg-gray-50
+           dark:bg-gray-700 dark:text-gray-400"
+          >
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Create Date</th>
@@ -42,12 +49,24 @@ const TableItem: React.FC<TableItemProps> = ({ data, openModal }) => {
                 <td className="px-6 py-4">{item.amount}</td>
                 <td className="px-6 py-4">{item.paymentCode}</td>
                 <td className="px-6 py-4">
-                  <button
-                    className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700"
-                    onClick={() => openModal(item)}
-                  >
-                    View
-                  </button>
+                  <div>
+                    <button
+                      className="px-4 py-2 text-sm font-semibold
+            text-white bg-blue-600 rounded-md hover:bg-blue-500
+            focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      onClick={() => openUpdateModal(item)}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="px-4 py-2 ml-2 text-sm font-semibold
+            text-white bg-red-600 rounded-md hover:bg-red-500
+            focus:outline-none focus:ring-2 focus:ring-red-400"
+                      onClick={() => openDeleteModal(item)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

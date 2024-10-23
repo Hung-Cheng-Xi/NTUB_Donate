@@ -4,10 +4,15 @@ import type { ListItemType } from '../../../types/item';
 // ListItem Component
 interface ListItemProps {
   data: ListItemType[];
-  openModal: (item: ListItemType) => void;
+  openUpdateModal: (item: ListItemType) => void;
+  openDeleteModal: (item: ListItemType) => void;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ data, openModal }) => (
+const ListItem: React.FC<ListItemProps> = ({
+  data,
+  openUpdateModal,
+  openDeleteModal,
+}) => (
   <ul>
     {data.map((item) => (
       <li
@@ -18,14 +23,24 @@ const ListItem: React.FC<ListItemProps> = ({ data, openModal }) => (
           <h3 className="text-xl font-semibold text-gray-800">
             {'category' in item ? item.category : item.title}
           </h3>
-          <button
-            className="px-4 py-2 text-sm font-semibold
+          <div>
+            <button
+              className="px-4 py-2 text-sm font-semibold
             text-white bg-blue-600 rounded-md hover:bg-blue-500
             focus:outline-none focus:ring-2 focus:ring-blue-400"
-            onClick={() => openModal(item)}
-          >
-            Edit
-          </button>
+              onClick={() => openUpdateModal(item)}
+            >
+              Edit
+            </button>
+            <button
+              className="px-4 py-2 ml-2 text-sm font-semibold
+            text-white bg-red-600 rounded-md hover:bg-red-500
+            focus:outline-none focus:ring-2 focus:ring-red-400"
+              onClick={() => openDeleteModal(item)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
         <p className="mt-2 text-gray-600">
           {'description' in item ? item.description : item.description_link}

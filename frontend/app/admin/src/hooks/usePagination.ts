@@ -16,12 +16,7 @@ export const usePagination = (initialItemsPerPage = 10) => {
     setItemsPerPage(value);
   };
 
+
+
   return { itemsPerPage, currentPage, skip, limit, handlePageChange, handleSelect };
 };
-
-// TODO: "設定總共分頁"
-// const totalPages = Math.ceil(data.length / itemsPerPage);
-// const items = data.slice(
-//   (currentPage - 1) * itemsPerPage,
-//   currentPage * itemsPerPage,
-// );

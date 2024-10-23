@@ -65,12 +65,13 @@ const AnnouncementPage: React.FC = () => {
           { name: 'date', label: 'Date', type: 'date' },
           { name: 'title', label: 'Title', type: 'text' },
           {
-            name: 'unit',
+            name: 'unit_id',
             label: 'Unit',
             type: 'select',
             options: isUnitsData?.map(unit => ({ ...unit, id: unit.id ?? '' })),
           },
           { name: 'description', label: 'Description', type: 'textarea' },
+          { name: 'image_url', label: 'imageURL', type: 'text' },
           { name: 'is_show', label: 'Show', type: 'checkbox' },
         ]}
         itemsPerPage={itemsPerPage}
