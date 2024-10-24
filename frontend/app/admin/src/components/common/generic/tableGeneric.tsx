@@ -13,7 +13,7 @@ const TableGeneric = ({
   onSelect,
   onPageChange,
   onSearch,
-}: Omit<BaseGenericProps<TableItemType>, 'ItemComponent'>) => { // Omit 作用是排除 renderItems 屬性
+}: Omit<BaseGenericProps<TableItemType>, 'ItemComponent'>) => {
   return (
     <BaseGeneric
       data={data}

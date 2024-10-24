@@ -42,14 +42,12 @@ const BaseGeneric = <T,>({
   onSearch,
   ItemComponent,
 }: BaseGenericProps<T>) => {
-  // 定义各个 Modal 的状态
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
   const totalPages = Math.ceil(data.total_count / itemsPerPage);
 
-  // 打开各个 Modal 的函数
   const handleOpenCreateModal = () => setIsCreateModalOpen(true);
   const handleOpenUpdateModal = (item: T) => {
     setSelectedItem(item);
@@ -60,17 +58,14 @@ const BaseGeneric = <T,>({
     setIsDeleteModalOpen(true);
   };
 
-  // 关闭各个 Modal 的函数
   const handleCloseCreateModal = () => setIsCreateModalOpen(false);
   const handleCloseUpdateModal = () => setIsUpdateModalOpen(false);
   const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
-  // 提交处理函数
   const handleCreateSubmit = (data: {
     [key: string]: string | number | boolean | { id: string | number };
   }) => {
     console.log('Creating item:', data);
-    // 你的创建逻辑
     handleCloseCreateModal();
   };
 
@@ -78,7 +73,6 @@ const BaseGeneric = <T,>({
     [key: string]: string | number | boolean | { id: string | number };
   }) => {
     console.log('Updating item:', data);
-    // 你的更新逻辑
     handleCloseUpdateModal();
   };
 
@@ -86,7 +80,6 @@ const BaseGeneric = <T,>({
     [key: string]: string | number | boolean | { id: string | number };
   }) => {
     console.log('Deleting item:', data);
-    // 你的删除逻辑
     handleCloseDeleteModal();
   };
 
@@ -137,7 +130,6 @@ const BaseGeneric = <T,>({
         </div>
       </div>
 
-      {/* 使用相应的 Modal 组件 */}
       <CreateModal
         isOpen={isCreateModalOpen}
         onClose={handleCloseCreateModal}
@@ -145,7 +137,6 @@ const BaseGeneric = <T,>({
         fields={formFields ? formFields : []}
       />
 
-      {/* Render UpdateModal */}
       {isUpdateModalOpen && selectedItem && (
         <UpdateModal
           isOpen={isUpdateModalOpen}
@@ -157,7 +148,6 @@ const BaseGeneric = <T,>({
         />
       )}
 
-      {/* Render DeleteModal */}
       {isDeleteModalOpen && selectedItem && (
         <DeleteModal
           isOpen={isDeleteModalOpen}
