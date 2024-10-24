@@ -1,10 +1,10 @@
 import React from 'react';
 import { AnnouncementCard } from '../components/cards/announcementCard';
 import FAQList from '../components/FQA/FQAList';
-import InfoCard from '../components/cards/infoCard';
-import DonateInfoBanner from '../components/donate/donateInfoBanner';
-import DonateSection from '../components/donate/DonateSection';
 import styled from 'styled-components';
+import InfoCard from '../components/cards/InfoCard';
+import DonateSection from '../components/donate/donateSection';
+import DonateInfoBanner from '../components/donate/donateInfoBanner';
 
 const Container = styled.div`
   margin-left: 97.5px;
