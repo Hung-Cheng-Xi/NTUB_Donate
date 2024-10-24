@@ -8,8 +8,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/admin/api/': {
-        target: 'http://127.0.0.1:8000/',
+      '/api/admin': {
+        target: 'http://120.97.28.11:8081/',
         changeOrigin: true,
       },
     },
