@@ -2,7 +2,7 @@ import React from 'react';
 import { AnnouncementCard } from '../components/cards/announcementCard';
 import FAQList from '../components/FQA/FQAList';
 import styled from 'styled-components';
-import InfoCard from '../components/cards/InfoCard';
+import InfoCard from '../components/cards/infoCard';
 import DonateSection from '../components/donate/donateSection';
 import DonateInfoBanner from '../components/donate/donateInfoBanner';
 
