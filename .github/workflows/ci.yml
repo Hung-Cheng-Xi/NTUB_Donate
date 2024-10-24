@@ -24,11 +24,12 @@ jobs:
         run: npm cache clean --force
 
       - name: Remove node_modules and package-lock.json
+        working-directory: ./frontend
         run: rm -rf node_modules package-lock.json
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm ci
 
       - name: Run ESLint
         working-directory: ./frontend
