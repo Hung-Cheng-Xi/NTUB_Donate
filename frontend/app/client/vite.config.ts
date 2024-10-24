@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         proxy: {
-            '/client/api/': {
+            '/api/client/': {
                 target: 'http://120.97.28.11:8081/',
                 changeOrigin: true,
             },
