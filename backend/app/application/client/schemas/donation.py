@@ -56,3 +56,13 @@ class DonationInfo(SQLModel):
     amount: int
     input_date: Optional[date] = None
     purpose: DonationPurposeInfo  # 嵌入 DonationPurposeInfo 子模型
+
+
+class PaginatedDonationInfoResponse(SQLModel):
+    """
+    用於返回分頁的 Donation 的基本信息，
+    適用於讀取操作，可返回總筆數。
+    """
+
+    total_count: int
+    items: list[DonationInfo]

@@ -1,8 +1,8 @@
-from typing import Annotated, Any, List
+from typing import Annotated, Any
 
 from fastapi import Depends
 
-from app.application.client.schemas.donation_purpose import DonationPurposeItem
+from app.application.client.schemas.donation_purpose import DonationPurposeItem, PaginatedDonationPurposeInfoResponse
 from app.infrastructure.repositories.donation_purpose import (
     DonationPurposeRepository,
 )
@@ -19,8 +19,8 @@ class DonationPurposeService:
         self,
         skip: int,
         limit: int,
-    ) -> List[DonationPurposeItem]:
-        purposes = await self.donation_repository.get_donation_purposes(
+    ) -> PaginatedDonationPurposeInfoResponse:
+        purposes, total_count = await self.donation_repository.client_get_donation_purposes(
             skip, limit
         )
         donation_purposes = []
@@ -28,9 +28,9 @@ class DonationPurposeService:
             total_donation: Any = sum(
                 donation.amount for donation in purpose.donations
             )
-            achieved_percentage: Any = (
-                total_donation / purpose.lump_sum
-                if purpose.lump_sum > 0
+            achieved_percentage = (
+                total_donation / purpose.lump_sum * 100
+                if purpose.lump_sum
                 else 0
             )
 
@@ -49,4 +49,7 @@ class DonationPurposeService:
             reverse=True,
         )
 
-        return sorted_donation_purposes[skip : skip + limit]
+        return PaginatedDonationPurposeInfoResponse(
+            total_count=total_count,
+            items=sorted_donation_purposes,
+        )

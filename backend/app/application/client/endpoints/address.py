@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/get_zipcode/")
-async def get_zipcode(
+async def client_get_zipcode(
     address_data: AddressData,
     address_service: Annotated[AddressService, Depends()],
 ) -> Dict:

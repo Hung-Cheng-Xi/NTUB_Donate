@@ -17,14 +17,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "20.17"
 
-      - name: Remove node_modules and package-lock.json
-        run: rm -rf node_modules package-lock.json
+      - name: Clear npm cache
+        working-directory: ./frontend
+        run: npm cache clean --force
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm ci
 
       - name: Run ESLint
         working-directory: ./frontend

@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[AnnouncementInfo])
-async def get_announcements(
+async def client_get_announcements(
     repository: Annotated[AnnouncementRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
@@ -21,7 +21,7 @@ async def get_announcements(
 
 
 @router.get("/{announcement_id}", response_model=Announcement)
-async def get_announcement(
+async def client_get_announcement(
     announcement_id: int,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):

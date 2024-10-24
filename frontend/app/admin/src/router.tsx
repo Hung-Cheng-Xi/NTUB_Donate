@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/Layout/Layout';
-import DonateLoginPage from './pages/donate.LoginPage';
-import DonateHomePage from './pages/donate.HomePage';
-import DonateNewsPage from './pages/donate.NewsPage';
-import PurposePage from './pages/donate.PurposePage';
-import DocumentPage from './pages/donate.DocumentPage';
+import { Layout } from './components/layout/layout';
+import DonateLoginPage from './pages/donateLogin';
+import DonateHomePage from './pages/donateHome';
+import AnnouncementPage from './pages/donateAnnouncement';
+import PurposePage from './pages/donatePurpose';
+import RegulationPage from './pages/donateRegulation';
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +15,6 @@ export const router = createBrowserRouter([
   },
   {
     Component: Layout,
-    // loader: RequireAuthService,
     children: [
       {
         path: '/admin/',
@@ -24,9 +23,9 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/admin/news/',
+        path: '/admin/announcement/',
         async lazy() {
-          return { Component: DonateNewsPage };
+          return { Component: AnnouncementPage };
         },
       },
       {
@@ -36,9 +35,9 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/admin/document/',
+        path: '/admin/regulation/',
         async lazy() {
-          return { Component: DocumentPage };
+          return { Component: RegulationPage };
         },
       },
     ],

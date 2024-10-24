@@ -1,12 +1,12 @@
 import logging
-from typing import Annotated, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
 from app.application.admin.schemas.announcement import (
     AnnouncementCreate,
-    AnnouncementInfo,
     AnnouncementUpdate,
+    PaginatedAnnouncementInfoResponse,
 )
 from app.domain.models.announcement import Announcement
 from app.infrastructure.repositories.announcement import AnnouncementRepository
@@ -14,18 +14,19 @@ from app.infrastructure.repositories.announcement import AnnouncementRepository
 router = APIRouter()
 
 
-@router.get("/", response_model=List[AnnouncementInfo])
-async def get_announcements(
+@router.get("/", response_model=PaginatedAnnouncementInfoResponse)
+async def admin_get_announcements(
     repository: Annotated[AnnouncementRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[AnnouncementInfo]:
+    search: str = None,
+) -> PaginatedAnnouncementInfoResponse:
     logging.info("取得分頁的 Announcement 資料")
-    return await repository.get_announcements(skip, limit)
+    return await repository.get_announcements(skip, limit, search)
 
 
 @router.post("/", response_model=Announcement)
-async def create_announcement(
+async def admin_create_announcement(
     new_announcement: AnnouncementCreate,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):
@@ -34,7 +35,7 @@ async def create_announcement(
 
 
 @router.get("/{announcement_id}", response_model=Announcement)
-async def get_announcement(
+async def admin_get_announcement(
     announcement_id: int,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):
@@ -43,7 +44,7 @@ async def get_announcement(
 
 
 @router.put("/{announcement_id}", response_model=Announcement)
-async def update_announcement(
+async def admin_update_announcement(
     announcement_id: int,
     new_announcement: AnnouncementUpdate,
     repository: Annotated[AnnouncementRepository, Depends()],
@@ -55,7 +56,7 @@ async def update_announcement(
 
 
 @router.delete("/{announcement_id}", response_model=Announcement)
-async def delete_announcement(
+async def admin_delete_announcement(
     announcement_id: int,
     repository: Annotated[AnnouncementRepository, Depends()],
 ):

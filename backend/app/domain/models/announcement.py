@@ -13,6 +13,10 @@ class Announcement(SQLModel, table=True):
     title: str
     description: str
     is_show: bool
+    image_url: Optional[str] = Field(
+        default=None,
+        description="S3 圖片的 URL 或相對路徑"
+    )
 
     unit_id: Optional[int] = Field(default=None, foreign_key="unit.id")
     unit: Optional["Unit"] = Relationship(back_populates="announcement")

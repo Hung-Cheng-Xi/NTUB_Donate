@@ -1,14 +1,18 @@
-from sqlalchemy.orm import joinedload, selectinload
-from sqlmodel import select
+from sqlalchemy import String, func
+from sqlalchemy.orm import selectinload
+from sqlmodel import cast, or_, select
 
 from app.application.admin.schemas.donation import (
-    DonationInfo as DonationInfoAdmin,
+    DonationUpdate,
+    DonationInfo as AdminDonationInfo,
+    PaginatedDonationInfoResponse as AdminPaginatedDonationInfoResponse,
 )
-from app.application.admin.schemas.donation import DonationUpdate
 from app.application.client.schemas.donation import (
-    DonationInfo as DonationInfoClient,
+    DonationsCreate,
+    DonationInfo as ClientDonationInfo,
+    PaginatedDonationInfoResponse as ClientPaginatedDonationInfoResponse,
 )
-from app.application.client.schemas.donation import DonationsCreate
+
 from app.domain.models.donation import Donation
 from app.domain.models.donation_purpose import DonationPurpose
 from app.infrastructure.repositories.base import BaseRepository
@@ -34,31 +38,91 @@ class DonationRepository(BaseRepository[Donation]):
         self,
         skip,
         limit,
-    ) -> list[DonationInfoAdmin]:
-        """取得所有捐款分頁資料"""
-        donations = await self.get_paginated_all(Donation, skip, limit)
-        return [
-            DonationInfoAdmin.model_dump(donation) for donation in donations
-        ]
+        search,
+    ) -> AdminPaginatedDonationInfoResponse:
+        """取得捐款分頁資料"""
+        statement = self._build_donation_query(skip, limit, search)
+        donations = await self._execute_donation_query(statement)
+        total_count = await self._get_total_count(search)
+
+
+        return AdminPaginatedDonationInfoResponse(
+            total_count=total_count,
+            items=[AdminDonationInfo.model_validate(donation) for donation in donations],
+        )
+
+    def _build_donation_query(self, skip: int, limit: int, search: str = None):
+        """建構查詢 Donation 的 statement"""
+        statement = select(Donation).offset(skip).limit(limit)
+
+        if search:
+            statement = statement.where(
+                or_(
+                    Donation.username.ilike(f"%{search}%"),
+                    Donation.phone_number.ilike(f"%{search}%"),
+                    Donation.email.ilike(f"%{search}%"),
+                    Donation.account.ilike(f"%{search}%"),
+                    Donation.transaction_id.ilike(f"%{search}%"),
+                    cast(Donation.input_date, String).ilike(f"%{search}%")
+                )
+            )
+
+        return statement
+
+    async def _execute_donation_query(self, statement):
+        """執行查詢 Donation 的 statement"""
+        results = await self.session.execute(statement)
+        return results.scalars().all()
+
+    async def _get_total_count(self, search: str = None):
+        """查詢總筆數"""
+        total_count_stmt = select(func.count(Donation.id))
+
+        if search:
+            total_count_stmt = total_count_stmt.where(
+                or_(
+                    Donation.username.ilike(f"%{search}%"),
+                    Donation.phone_number.ilike(f"%{search}%"),
+                    Donation.email.ilike(f"%{search}%"),
+                    Donation.account.ilike(f"%{search}%"),
+                    Donation.transaction_id.ilike(f"%{search}%"),
+                    cast(Donation.input_date, String).ilike(f"%{search}%")
+                )
+            )
+
+        return (await self.session.execute(total_count_stmt)).scalar()
 
     async def client_get_donations(
         self,
         skip,
         limit,
-    ) -> list[DonationInfoClient]:
+    ) -> ClientPaginatedDonationInfoResponse:
         """取得所有捐款分頁資料，包含捐款目的的詳細信息"""
-        donations = await self.model_relations(
-            Donation, skip, limit, [joinedload(Donation.purpose)]
+        statement = (
+            select(Donation)
+            .offset(skip)
+            .limit(limit)
+            .options(selectinload(Donation.purpose))
         )
+        results = await self.session.execute(statement)
+        donations = results.scalars().all()
 
-        # 將結果轉換為 DonationInfoClient 格式
-        donation_info_list = [
-            DonationInfoClient.model_validate(donation)
+        # 查詢總筆數
+        total_count_stmt = select((func.count(DonationPurpose.id)))
+        total_count = (await self.session.execute(total_count_stmt)).scalar()
+
+
+        # 將結果轉換為 ClientDonationInfo 格式
+        items = [
+            ClientDonationInfo.model_validate(donation)
             for donation in donations
             if donation.input_date is not None
         ]
 
-        return donation_info_list
+        return ClientPaginatedDonationInfoResponse(
+            total_count=total_count,
+            items=items
+        )
 
     async def update_donation(
         self,

@@ -1,1 +1,0 @@
-{"root":["./app/admin/vite.config.ts","./app/admin/src/app.tsx","./app/admin/src/main.tsx","./app/admin/src/vite-env.d.ts","./app/client/vite.config.ts","./app/client/src/app.tsx","./app/client/src/main.tsx","./app/client/src/vite-env.d.ts"],"version":"5.6.2"}

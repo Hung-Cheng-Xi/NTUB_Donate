@@ -11,13 +11,13 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[User])
-async def get_users(repository: Annotated[UserRepository, Depends()]):
+async def admin_get_users(repository: Annotated[UserRepository, Depends()]):
     logging.info("取得 User 資料")
     return await repository.get_users()
 
 
 @router.post("/", response_model=User)
-async def create_user(
+async def admin_create_user(
     new_user: UserCreate, repository: Annotated[UserRepository, Depends()]
 ):
     logging.info("新增 User 資料到資料庫")
@@ -25,7 +25,7 @@ async def create_user(
 
 
 @router.get("/{user_id}", response_model=User)
-async def get_user(
+async def admin_get_user(
     user_id: int, repository: Annotated[UserRepository, Depends()]
 ):
     logging.info("取得 User 資料")
@@ -33,7 +33,7 @@ async def get_user(
 
 
 @router.put("/{user_id}", response_model=User)
-async def update_user(
+async def admin_update_user(
     user_id: int,
     new_user: UserCreate,
     repository: Annotated[UserRepository, Depends()],
@@ -43,7 +43,7 @@ async def update_user(
 
 
 @router.delete("/{user_id}", response_model=User)
-async def delete_user(
+async def admin_delete_user(
     user_id: int, repository: Annotated[UserRepository, Depends()]
 ) -> User:
     logging.info("刪除 User 資料")

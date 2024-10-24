@@ -1,9 +1,9 @@
 import logging
-from typing import Annotated, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.application.admin.schemas.donation import DonationInfo, DonationUpdate
+from app.application.admin.schemas.donation import PaginatedDonationInfoResponse, DonationUpdate
 from app.application.client.schemas.donation import DonationsCreate
 from app.domain.models.donation import Donation
 from app.infrastructure.repositories.donation import DonationRepository
@@ -11,18 +11,19 @@ from app.infrastructure.repositories.donation import DonationRepository
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Donation])
-async def get_donations(
+@router.get("/", response_model=PaginatedDonationInfoResponse)
+async def admin_get_donations(
     repository: Annotated[DonationRepository, Depends()],
     skip: int = 0,
     limit: int = 10,
-) -> List[DonationInfo]:
+    search: str = None,
+) -> PaginatedDonationInfoResponse:
     logging.info("取得分頁的 Donation 資料")
-    return await repository.admin_get_donations(skip, limit)
+    return await repository.admin_get_donations(skip, limit, search)
 
 
 @router.post("/", response_model=Donation)
-async def create_donation(
+async def admin_create_donation(
     new_donation: DonationsCreate,
     repository: Annotated[DonationRepository, Depends()],
 ):
@@ -31,7 +32,7 @@ async def create_donation(
 
 
 @router.get("/{donation_id}", response_model=Donation)
-async def get_donation(
+async def admin_get_donation(
     donation_id: int, repository: Annotated[DonationRepository, Depends()]
 ):
     logging.info("取得 Donation 資料")
@@ -39,7 +40,7 @@ async def get_donation(
 
 
 @router.put("/{donation_id}", response_model=Donation)
-async def update_donation(
+async def admin_update_donation(
     donation_id: int,
     new_donation: DonationUpdate,
     repository: Annotated[DonationRepository, Depends()],
@@ -49,7 +50,7 @@ async def update_donation(
 
 
 @router.delete("/{donation_id}", response_model=Donation)
-async def delete_donation(
+async def admin_delete_donation(
     donation_id: int, repository: Annotated[DonationRepository, Depends()]
 ):
     logging.info("刪除 Donation 資料")

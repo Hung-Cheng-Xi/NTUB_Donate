@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Unit])
-async def get_units(
+async def admin_get_units(
     repository: Annotated[UnitRepository, Depends()],
 ):
     logging.info("取得 Unit 資料")
@@ -19,7 +19,7 @@ async def get_units(
 
 
 @router.post("/", response_model=Unit)
-async def create_unit(
+async def admin_create_unit(
     new_unit: UnitCreate, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("新增 Unit 資料到資料庫")
@@ -27,7 +27,7 @@ async def create_unit(
 
 
 @router.get("/{unit_id}", response_model=Unit)
-async def get_unit(
+async def admin_get_unit(
     unit_id: int, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("取得 Unit 資料")
@@ -35,7 +35,7 @@ async def get_unit(
 
 
 @router.put("/{unit_id}", response_model=Unit)
-async def update_unit(
+async def admin_update_unit(
     unit_id: int,
     new_unit: UnitUpdate,
     repository: Annotated[UnitRepository, Depends()],
@@ -45,7 +45,7 @@ async def update_unit(
 
 
 @router.delete("/{unit_id}", response_model=Unit)
-async def delete_unit(
+async def admin_delete_unit(
     unit_id: int, repository: Annotated[UnitRepository, Depends()]
 ):
     logging.info("刪除 Unit 資料")
