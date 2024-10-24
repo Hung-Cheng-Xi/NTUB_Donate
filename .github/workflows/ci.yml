@@ -23,6 +23,9 @@ jobs:
         working-directory: ./frontend
         run: npm cache clean --force
 
+      - name: Remove node_modules and package-lock.json
+        run: rm -rf node_modules package-lock.json
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm install
