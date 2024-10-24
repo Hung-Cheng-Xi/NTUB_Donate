@@ -51,7 +51,7 @@ const DonationTable: React.FC<DonationTableProps> = ({
   });
 
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
     onPaginationChange({
