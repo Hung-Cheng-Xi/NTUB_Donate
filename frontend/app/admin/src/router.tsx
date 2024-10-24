@@ -1,11 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/layout/Layout';
+import { Layout } from './components/layout/layout';
 import DonateLoginPage from './pages/donateLogin';
 import DonateHomePage from './pages/donateHome';
 import AnnouncementPage from './pages/donateAnnouncement';
 import PurposePage from './pages/donatePurpose';
 import RegulationPage from './pages/donateRegulation';
-// import { RequireAuthService } from './libs/services/RequireAuthService';
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +15,6 @@ export const router = createBrowserRouter([
   },
   {
     Component: Layout,
-    // loader: RequireAuthService,
     children: [
       {
         path: '/admin/',

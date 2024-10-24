@@ -6,7 +6,11 @@ type SearchInputProps = {
   placeholder?: string;
 };
 
-const SearchInput: React.FC<SearchInputProps> = ({ search, onSearch, placeholder = 'Search for items' }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  search,
+  onSearch,
+  placeholder = 'Search for items',
+}) => {
   const [inputValue, setInputValue] = useState(search);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

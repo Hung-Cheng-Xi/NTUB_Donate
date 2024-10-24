@@ -9,8 +9,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/admin/api/': {
-        // target: 'http://120.97.28.11:8081/',
-        target: process.env.VITE_API_BASE_URL, // 使用 .env 中設置的 API 基本 URL,
+        target: 'http://127.0.0.1:8000/',
         changeOrigin: true,
       },
     },

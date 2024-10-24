@@ -1,4 +1,3 @@
-// Updated TableGeneric Component
 import BaseGeneric from './baseGeneric';
 import type {BaseGenericProps} from './baseGeneric';
 import TableItem from '../page/tableItem';

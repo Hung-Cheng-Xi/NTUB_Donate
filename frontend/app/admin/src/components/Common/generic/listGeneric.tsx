@@ -1,4 +1,3 @@
-// Updated ListItem Component
 import BaseGeneric from './baseGeneric';
 import type {BaseGenericProps} from './baseGeneric';
 import ListItem from '../page/listItem';

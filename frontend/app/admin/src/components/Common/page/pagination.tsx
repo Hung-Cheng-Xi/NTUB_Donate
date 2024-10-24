@@ -1,19 +1,16 @@
 import React from 'react';
 
-// types.ts
 export interface PaginationProps {
   totalItems: number;
   currentPage: number;
   onPageChange: (page: number) => void;
 }
-// Pagination.tsx
+
 const Pagination: React.FC<PaginationProps> = ({
   totalItems,
   currentPage,
   onPageChange,
 }) => {
-  
-
   const handlePageClick = (page: number) => {
     if (page >= 1 && page <= totalItems) {
       onPageChange(page);

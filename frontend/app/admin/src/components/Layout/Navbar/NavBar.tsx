@@ -2,12 +2,10 @@ import React from 'react';
 import NavBarItem from './navBarItem';
 import { NavBarProps } from '../../../types/nav';
 
-const HomeNavBar: React.FC<NavBarProps> = ({ links }) => {
+export const HomeNavBar: React.FC<NavBarProps> = ({ links }) => {
   return (
     <div className="flex justify-center mb-[24px]">
-      <div
-        className="bg-white mx-auto flex justify-between items-center shadow-md h-[84px] w-full rounded-none"
-      >
+      <div className="bg-white mx-auto flex justify-between items-center shadow-md h-[84px] w-full rounded-none">
         <div className="flex items-center">
           <img
             className="w-[304px] h-[44px] my-5 ml-14"
@@ -20,5 +18,3 @@ const HomeNavBar: React.FC<NavBarProps> = ({ links }) => {
     </div>
   );
 };
-
-export default HomeNavBar;
