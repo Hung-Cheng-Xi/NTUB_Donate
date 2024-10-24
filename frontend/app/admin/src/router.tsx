@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './components/layout/layout';
 import DonateLoginPage from './pages/donateLogin';
-import DonateHomePage from './pages/donateHome';
+import DonateHomePage from './pages/donateHome/donateHome.page';
 import AnnouncementPage from './pages/donateAnnouncement';
 import PurposePage from './pages/donatePurpose';
 import RegulationPage from './pages/donateRegulation';
