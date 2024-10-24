@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Clear npm cache
+        working-directory: ./frontend
+        run: npm cache clean --force
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm install
