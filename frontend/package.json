@@ -13,11 +13,16 @@
     "dev-client": "vite --config app/client/vite.config.ts"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.1.0",
     "@hey-api/client-axios": "^0.2.7",
     "@hey-api/openapi-ts": "^0.53.5",
+    "@mui/icons-material": "^6.1.5",
+    "@mui/material": "^6.1.5",
     "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-query-devtools": "^5.59.16",
+    "@tanstack/react-table": "^8.20.5",
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.10.0",
     "@typescript-eslint/typescript-estree": "^8.8.1",
