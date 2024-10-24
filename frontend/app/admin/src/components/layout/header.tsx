@@ -1,10 +1,10 @@
-import NavBar from './navbar/NavBar';
+import { HomeNavBar } from './navbar';
 import { NavBarProps } from '../../types/nav';
 
 const Header: React.FC<NavBarProps> = ({ links }) => {
   return (
     <header>
-      <NavBar links={links} />
+      <HomeNavBar links={links} />
     </header>
   );
 };

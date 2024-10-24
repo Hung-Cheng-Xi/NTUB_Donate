@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { loginWithGoogle } from '../libs/services/authService';
+import { loginWithGoogle } from '../services/authService';
 
 const LoginPage: React.FC = () => {
   const location = useLocation();

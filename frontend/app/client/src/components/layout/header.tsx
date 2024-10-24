@@ -1,6 +1,6 @@
-import HeroSection from '../donate/heroSection';
-import HomeNavBar from './navbar/HomeNavBar';
+import HomeNavBar from './navbar/homeNavBar';
 import { NavBarProps } from '../../types/nav';
+import HeroSection from '../donate/heroSection';
 
 const Header: React.FC<NavBarProps> = ({ links }) => {
   return (

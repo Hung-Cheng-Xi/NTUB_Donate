@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import CategorySelect from './CategorySelect';
 import { DonationCards } from '../cards/donationCards';
+import CategorySelect from './categorySelect';
 
 const SectionTitle = styled.h1`
   font-size: 48px;

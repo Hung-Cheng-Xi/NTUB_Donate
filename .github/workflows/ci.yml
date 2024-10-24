@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Clear npm cache
+        working-directory: ./frontend
+        run: npm cache clean --force
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm install
@@ -26,6 +30,9 @@ jobs:
       - name: Run ESLint
         working-directory: ./frontend
         run: npm run lint
+
+      - name: Clean TypeScript build cache
+        run: tsc --build --clean
 
       - name: Build admin
         working-directory: ./frontend

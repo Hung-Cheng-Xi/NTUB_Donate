@@ -2,10 +2,9 @@ import { useState } from 'react';
 import Pagination from '../page/pagination';
 import ItemsPerPage from '../page/itemsPer';
 import { PaginatedResponse } from '../../../types/item';
+import { UpdateModal, CreateModal } from '../modal/';
 import SearchInput from '../page/searchQuery';
-import CreateModal from '../modal/createModal';
-import UpdateModal from '../modal/updateModal';
-import DeleteModal from '../modal/deleteModal';
+import { DeleteModal } from '../modal/deleteModal';
 
 export interface BaseGenericProps<T> {
   data: PaginatedResponse<T>;
@@ -23,7 +22,11 @@ export interface BaseGenericProps<T> {
   onSelect: (value: number) => void;
   onPageChange: (value: number) => void;
   onSearch: (value: string) => void;
-  ItemComponent: React.ComponentType<{ data: T[]; openUpdateModal: (item: T) => void; openDeleteModal: (item: T) => void }>;
+  ItemComponent: React.ComponentType<{
+    data: T[];
+    openUpdateModal: (item: T) => void;
+    openDeleteModal: (item: T) => void;
+  }>;
 }
 
 const BaseGeneric = <T,>({
@@ -63,20 +66,26 @@ const BaseGeneric = <T,>({
   const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
   // 提交处理函数
-  const handleCreateSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
-    console.log("Creating item:", data);
+  const handleCreateSubmit = (data: {
+    [key: string]: string | number | boolean | { id: string | number };
+  }) => {
+    console.log('Creating item:', data);
     // 你的创建逻辑
     handleCloseCreateModal();
   };
 
-  const handleUpdateSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
-    console.log("Updating item:", data);
+  const handleUpdateSubmit = (data: {
+    [key: string]: string | number | boolean | { id: string | number };
+  }) => {
+    console.log('Updating item:', data);
     // 你的更新逻辑
     handleCloseUpdateModal();
   };
 
-  const handleDeleteSubmit = (data: { [key: string]: string | number | boolean | { id: string | number } }) => {
-    console.log("Deleting item:", data);
+  const handleDeleteSubmit = (data: {
+    [key: string]: string | number | boolean | { id: string | number };
+  }) => {
+    console.log('Deleting item:', data);
     // 你的删除逻辑
     handleCloseDeleteModal();
   };
@@ -107,14 +116,15 @@ const BaseGeneric = <T,>({
                   </div>
                 </div>
 
-                <SearchInput
-                  search={search}
-                  onSearch={onSearch}
-                />
+                <SearchInput search={search} onSearch={onSearch} />
               </div>
             </div>
 
-            <ItemComponent data={data.items} openUpdateModal={handleOpenUpdateModal} openDeleteModal={handleOpenDeleteModal} />
+            <ItemComponent
+              data={data.items}
+              openUpdateModal={handleOpenUpdateModal}
+              openDeleteModal={handleOpenDeleteModal}
+            />
 
             <div className="p-8">
               <Pagination

@@ -6,11 +6,18 @@ import { SubmitHandler } from 'react-hook-form';
 interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: SubmitHandler<{ [key: string]: string | number | boolean | { id: string | number } }>;
-  fields: { name: string; label: string; type: string; options?: { id: string | number; name: string }[] }[];
+  onSubmit: SubmitHandler<{
+    [key: string]: string | number | boolean | { id: string | number };
+  }>;
+  fields: {
+    name: string;
+    label: string;
+    type: string;
+    options?: { id: string | number; name: string }[];
+  }[];
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({
+export const CreateModal: React.FC<CreateModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
@@ -27,5 +34,3 @@ const CreateModal: React.FC<CreateModalProps> = ({
     />
   );
 };
-
-export default CreateModal;

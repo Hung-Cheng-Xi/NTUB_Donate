@@ -1,7 +1,6 @@
 import React from 'react';
 import type { ListItemType } from '../../../types/item';
 
-// ListItem Component
 interface ListItemProps {
   data: ListItemType[];
   openUpdateModal: (item: ListItemType) => void;

@@ -1,10 +1,9 @@
-// Updated ListItem Component
 import BaseGeneric from './baseGeneric';
 import type {BaseGenericProps} from './baseGeneric';
-import ListItem from '../page/listItem';
-import { ListItemType } from '../../../types/item';
+import TableItem from '../page/tableItem';
+import { TableItemType } from '../../../types/item';
 
-const ListGeneric = ({
+const TableGeneric = ({
   data,
   itemTitle,
   formFields,
@@ -14,21 +13,22 @@ const ListGeneric = ({
   onSelect,
   onPageChange,
   onSearch,
-}: Omit<BaseGenericProps<ListItemType>, 'ItemComponent'>) => {
+}: Omit<BaseGenericProps<TableItemType>, 'ItemComponent'>) => { // Omit 作用是排除 renderItems 屬性
   return (
     <BaseGeneric
       data={data}
       itemTitle={itemTitle}
       formFields={formFields}
+      isReadOnly={true}
       itemsPerPage={itemsPerPage}
       currentPage={currentPage}
       search={search}
       onSelect={onSelect}
       onPageChange={onPageChange}
-      onSearch={onSearch}
-      ItemComponent={ListItem}
+      onSearch={(onSearch)}
+      ItemComponent={TableItem}
     />
   );
 };
 
-export default ListGeneric;
+export default TableGeneric;
